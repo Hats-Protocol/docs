@@ -1,5 +1,5 @@
 ---
-title: Test for Hats Protocol
+title: Hats Protocol Docs
 ---
 
 # {% $markdoc.frontmatter.title %}
