@@ -1,8 +1,8 @@
 # Hats Trees
 
-The ability of a hat to be an admin of other Hats creates the possibility for a "tree" of hats, a structure of hats serving as admins of other hats. This is useful because it enables a DAO to snip off, but not destroy, a rogue branch by revoking the offending Hat. It could then re-assign that Admin Hat to another wearer.
+The fact that all hat's have hats as admins means that every hat exist within a "tree" of hats. This tree structure forms the basis for an organization's hats
 
-Within a given branch of a hat tree, Hats closer to the root of the tree have admin authorities for Hats further down the branch. This is consistent with the direction of delegation of authority for DAOs, and combats the tendency for accountability to dilute as delegated authorities reach the edges of a network.
+Within a given branch of a hat tree, hats closer to the root of the tree have admin authorities for hats further down the branch. This is consistent with the direction of delegation of authority for DAOs, and combats the tendency for accountability to dilute as delegated authorities reach the edges of a network.
 
 ### **Top Hats**
 
@@ -12,8 +12,6 @@ The root of a Hat tree is always a Top Hat. Typically, a DAO will wear the Top H
 
 ### Hat Trees and Hat Ids
 
-Every hat's id describes its location within it's tree. See the following page for more detail on hat ids.
+Each hat tree has a max depth of 15 and a branching factor of 2^16. This means that each hat can have up to 2^16 = 65,536 children, and this pattern can repeat 14 times.
 
-{% content-ref url="hat-ids.md" %}
-[hat-ids.md](hat-ids.md)
-{% endcontent-ref %}
+Every hat's id includes the id of its tree and its location within the tree. See the following page for more detail on [hat ids](hat-ids.md).

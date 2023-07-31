@@ -1,41 +1,39 @@
 # Hat IDs
 
-Hat IDs are uint256 bitmaps that create an "address" — more like an web or IP address than an Ethereum address — that includes information about the entire branch of admins for a given hat.
+Hat ids are semantic. They have meaning.
+
+Hat ids uint256 bitmaps that create an "address" — more like an web or IP address than an Ethereum address — that includes information about where in the tree a hat is located, including its entire branch of admins.
 
 The 32 bytes of a hat's id are structured as follows:
 
 * The first 4 bytes are reserved for the top hat id. Since top hat ids are unique across a given deployment of Hats Protocol, we can also think of them as the top level "domain" for a hat tree.
 * Each of the next chunks of 16 bits refers to a single "Hat Level".
 
-This means there are 15 total hat levels, beginning with the top hat at level 0 and going up to level 14.&#x20;
+There are 15 total hat levels, beginning with the top hat at level 0 and going up to level 14.
 
-A hat at level 6 will have 6 admins in its branch of the tree, and therefore its id will have non-zero values at levels 0-5 as well as its own level. Since these values correspond to its admins, all that is needed to know which hats have admin authorities over a given hat is to know that given hat's id.
+#### Example
+
+Consider the following hat id (in hex): 0x<mark style="color:red;">0000000f</mark><mark style="color:blue;">00020005000a00010000000000000000000000000000000000000000</mark>
+
+For convenience, we can reformat it into shorthand, just like an IP address: <mark style="color:red;">15</mark>.<mark style="color:blue;">2</mark>.<mark style="color:blue;">5</mark>.<mark style="color:blue;">10</mark>.<mark style="color:blue;">1</mark>
+
+From the id alone, we know a lot about this hat:
+
+* It is in hat tree 15
+* It is a level 4 hat
+* Its immediate admin (aka parent) is <mark style="color:red;">15</mark>.<mark style="color:blue;">2</mark>.<mark style="color:blue;">5</mark>.<mark style="color:blue;">10</mark>
+* Its grandparent is <mark style="color:red;">15</mark>.<mark style="color:blue;">2</mark>.<mark style="color:blue;">5</mark>
+
+#### Other hat id formats
+
+<table><thead><tr><th width="146">Format</th><th>Example</th></tr></thead><tbody><tr><td>Integer ("raw")</td><td>6470400364654781217010529864562902351218663490360806944392503307010048</td></tr><tr><td>Hexadecimal</td><td>0x<mark style="color:red;">0000000f000200050000a00010000000000000000000000000000000000000000</mark></td></tr><tr><td>Hexadecimal with level delimiters</td><td>0x<mark style="color:red;">0000000f</mark>.<mark style="color:blue;">0002</mark>.<mark style="color:blue;">0005</mark>.<mark style="color:blue;">000a</mark>.<mark style="color:blue;">0001</mark>.<mark style="color:blue;">0000</mark>.<mark style="color:blue;">0000</mark>.<mark style="color:blue;">0000</mark>.<mark style="color:blue;">0000</mark>.<mark style="color:blue;">0000</mark>.<mark style="color:blue;">0000</mark>.<mark style="color:blue;">0000</mark>.<mark style="color:blue;">0000</mark>.<mark style="color:blue;">0000</mark>.<mark style="color:blue;">0000</mark><br><br>0x<mark style="color:red;">0000000f</mark>_<mark style="color:blue;">0002</mark>_<mark style="color:blue;">0005</mark>_<mark style="color:blue;">000a</mark>_<mark style="color:blue;">0001</mark>_<mark style="color:blue;">0000</mark>_<mark style="color:blue;">0000</mark>_<mark style="color:blue;">0000</mark>_<mark style="color:blue;">0000</mark>_<mark style="color:blue;">0000</mark>_<mark style="color:blue;">0000</mark>_<mark style="color:blue;">0000</mark>_<mark style="color:blue;">0000</mark>_<mark style="color:blue;">0000</mark>_<mark style="color:blue;">0000</mark></td></tr><tr><td>"IP address"</td><td><mark style="color:red;">15</mark>.<mark style="color:blue;">2</mark>.<mark style="color:blue;">5</mark>.<mark style="color:blue;">10</mark>.<mark style="color:blue;">1</mark></td></tr></tbody></table>
 
 ### **Hat Tree Space**
 
-A hat tree can have up to 14 levels, plus the top hat (tree root). Within those 14 levels are 224 bits of address space (remember, one level contains 16 bits of space), so the maximum number of hats in a single hat tree is:
+A hat tree can have up to 14 levels, plus the top hat (tree root). Within those 14 levels are 224 bits of address space (remember, one level contains 16 bits of space), so the maximum number of hats in a single hat tree is approximately:
 
 $$
 2^{224} + 1 \approx ~2.696 * 10^{67}
 $$
 
 which is well beyond the number of stars in the universe.
-
-### **Displaying Hat Ids**
-
-It is recommended for front ends to instead convert hat ids to hexadecimal, revealing the values of the bytes — and therefore the hat levels — directly.
-
-For example, instead of a hat id looking like this under base 10: `26960769438260605603848134863118277618512635038780455604427388092416`
-
-...under hexadecimal it would look like this: `0x0000000100020003000000000000000000000000000000000000000000000000`
-
-In this second version, you can see that this hat is...
-
-* a level 2 hat
-* is in the first hat tree (top hat id = 1)
-* is the third hat created at level 2 within this tree
-* admin'd by the second hat created at level 1 within this tree
-
-We can also prettify this even further by separating hat levels with periods, a la IP addresses:
-
-`0x00000001.0002.0003.0000.0000.0000.0000.0000.0000.0000.0000.0000.0000.0000.0000`
