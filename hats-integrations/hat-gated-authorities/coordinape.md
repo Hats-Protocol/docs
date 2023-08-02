@@ -16,5 +16,3 @@ To hat-gate access for a Coordinape circle, you will need to complete the follow
 <figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p>Found in your Coordinape circle Admin settings under Integrations</p></figcaption></figure>
 
 For additional details, see the [Coordinape guide](https://docs.coordinape.com/info/integrations/guild) for token-gating access with Guild.
-
-_\*Note: There is currently a bug where the Guild role selected in Coordinape reverts back to "All Roles" instead of maintaining access only for the selected role. Coordinape is aware of the bug and will fix it soon._
