@@ -29,8 +29,8 @@ description: Key shortcuts for those who know their way around Hats
 [setting-accountabilities](using-hats/setting-accountabilities/)
 {% endcontent-ref %}
 
-{% content-ref url="using-hats/connecting-hats-with-authorities.md" %}
-[connecting-hats-with-authorities.md](using-hats/connecting-hats-with-authorities.md)
+{% content-ref url="using-hats/connecting-hats-with-authorities/" %}
+[connecting-hats-with-authorities](using-hats/connecting-hats-with-authorities/)
 {% endcontent-ref %}
 
 {% content-ref url="using-hats/adding-wearers.md" %}

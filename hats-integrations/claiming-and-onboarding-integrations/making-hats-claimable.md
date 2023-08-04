@@ -68,7 +68,7 @@ To create a new instance of a ClaimsHatter contract for your soon-to-be-claimabl
 Then, under "Contract" and "Write Contract":
 
 * open the "createClaimsHatter" function
-* enter the token ID for the hat you want to make claimable _(see_ [#finding-a-hats-token-id](../../using-hats/connecting-hats-with-authorities.md#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs)_
+* enter the token ID for the hat you want to make claimable _(see_ [#finding-a-hats-token-id](../../using-hats/connecting-hats-with-authorities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs)_
 * write transaction
 
 Once the transaction has confirmed:&#x20;

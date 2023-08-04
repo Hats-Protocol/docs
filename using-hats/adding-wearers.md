@@ -1,6 +1,6 @@
 # 🥳 Adding Wearers
 
-Hats tokens can be held by any address including an EOA, multisig, or contract. When an address has a balance of 1 of a given Hats token, it is considered a "wearer" of that "hat". Then, by way of various token-gates, that address is granted the [authorities](connecting-hats-with-authorities.md) that have been associated with that hat.
+Hats tokens can be held by any address including an EOA, multisig, or contract. When an address has a balance of 1 of a given Hats token, it is considered a "wearer" of that "hat". Then, by way of various token-gates, that address is granted the [authorities](connecting-hats-with-authorities/) that have been associated with that hat.
 
 Each hat can have any number of wearers up to the hat’s max supply. Hats are granted and revoked by the organization, or agents/smart contracts that are designated by the org. Wearers can renounce a hat, but they cannot transfer it.
 

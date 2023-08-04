@@ -6,7 +6,7 @@ Hats are ERC-1155 tokens, so they can be plugged into token gates to grant the w
 
 You can think of it this way: token gates have two parts, the token and the gate. Hats provides the token, which gets plugged into the necessary gates, to give the hat wearer access to the proper authorities.&#x20;
 
-<figure><img src="../.gitbook/assets/Group 167.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Group 167.png" alt=""><figcaption></figcaption></figure>
 
 ## Types of Hat-Powered Authorities
 
@@ -29,7 +29,7 @@ Authorities can be linked to hats in a number of ways, including via:
 
 Hats are the tokens that give wearers access to token-gated permissions. Plugging a hat's token ID into a token gate will give all wearers of that hat access to the specified credential, as long as the wearer remains eligible to wear that hat and the hat remains active.
 
-To connect a hat to a token-gate, locate the token-gating permissions for the platform or application you wish to use. In many cases, the process requires that you create a specific role in the platform that has special permissions associated with that role, and then add a specific requirement necessary for a user to hold that role (e.g., holding a particular Hats token). _See the_ [_Hat-Gated Authorities_](../hats-integrations/hat-gated-authorities/) _section of these docs for guides for connecting hats to specific authorities and platforms._
+To connect a hat to a token-gate, locate the token-gating permissions for the platform or application you wish to use. In many cases, the process requires that you create a specific role in the platform that has special permissions associated with that role, and then add a specific requirement necessary for a user to hold that role (e.g., holding a particular Hats token). _See the_ [_Hat-Gated Authorities_](../../hats-integrations/hat-gated-authorities/) _section of these docs for guides for connecting hats to specific authorities and platforms._
 
 At Guild.xyz, for example, which provides token-gating for Discord, Telegram, Github, and Google Workspace, you will create a role within your Guild, provide that Guild role with specific "rewards" (aka permissions), and then add a requirement that an address must have possession of a particular NFT to hold that Guild role.
 
@@ -59,7 +59,7 @@ See below for links to the specific contracts for each chain:
 
 To find a hat's token ID, locate and select that hat in the [Hats app](https://app.hatsprotocol.xyz) and click the copy icon to the right of the hat's "pretty ID" (found in the green box below).&#x20;
 
-<figure><img src="../.gitbook/assets/hat ID.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/hat ID.png" alt=""><figcaption></figcaption></figure>
 
 In decimal format, the hat's token ID will look something like this: `2588155291428878043886873276096123268223378170452611674367766728540160`.
 
@@ -72,4 +72,4 @@ The Hats app converts the hexadecimal version to the "pretty id" format `96.1.1.
 * `0x0001` converts to `1`
 * `0x0002` converts to `2`
 
-_For more technical details on how the Hats addressable ID system works, see the_ [_Hat IDs_](../for-developers/hats-protocol-overview/hat-ids.md) _page within the "For Developers" section of these docs._
+_For more technical details on how the Hats addressable ID system works, see the_ [_Hat IDs_](../../for-developers/hats-protocol-overview/hat-ids.md) _page within the "For Developers" section of these docs._

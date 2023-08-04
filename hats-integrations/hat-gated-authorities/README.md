@@ -10,7 +10,7 @@ You can think of it this way: token gates have two parts, the token and the gate
 
 <figure><img src="../../.gitbook/assets/Group 167 (2).png" alt=""><figcaption></figcaption></figure>
 
-For general information on types of authorities and how to connect authorities to specific hats, see the guide for [Connecting Hats With Authorities](../../using-hats/connecting-hats-with-authorities.md).
+For general information on types of authorities and how to connect authorities to specific hats, see the guide for [Connecting Hats With Authorities](../../using-hats/connecting-hats-with-authorities/).
 
 To connect a hat to a token-gate, you will need to add an NFT (ERC-1155) requirement. Then, you'll need to enter two details:
 

@@ -28,8 +28,8 @@ Wherever you begin, the docs found here will walk you through it.
 [setting-hat-properties.md](using-hats/setting-hat-properties.md)
 {% endcontent-ref %}
 
-{% content-ref url="using-hats/connecting-hats-with-authorities.md" %}
-[connecting-hats-with-authorities.md](using-hats/connecting-hats-with-authorities.md)
+{% content-ref url="using-hats/connecting-hats-with-authorities/" %}
+[connecting-hats-with-authorities](using-hats/connecting-hats-with-authorities/)
 {% endcontent-ref %}
 
 {% content-ref url="using-hats/setting-accountabilities/" %}
