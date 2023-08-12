@@ -2,7 +2,7 @@
 description: Requirements for Wearers
 ---
 
-# 🤠 Eligibility Modules
+# 🌟 Eligibility Modules
 
 A hat’s eligibility module is an address that determines which addresses are eligible to wear that hat, and can revoke the hat if the wearer is no longer eligible. Eligibility modules can be humanistic (as in an EOA or multisig) or mechanistic (as in a contract with custom logic) to automatically and instantly revoke the hat based on pre-defined triggers.
 

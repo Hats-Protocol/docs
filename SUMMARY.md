@@ -6,12 +6,13 @@
 
 ## Using Hats
 
+* [🤠 Essentials For Hat Wearers](using-hats/essentials-for-hat-wearers.md)
 * [🎩 Creating My First Hat](using-hats/creating-my-first-hat.md)
 * [👥 What Hats Do I Need?](using-hats/what-hats-do-i-need.md)
 * [🏗 Setting Hat Properties](using-hats/setting-hat-properties.md)
 * [✅ Setting Accountabilities](using-hats/setting-accountabilities/README.md)
   * [🧙 Admins: Creating, Issuing, and Revising Hats](using-hats/setting-accountabilities/admins-creating-issuing-and-revising-hats.md)
-  * [🤠 Eligibility: Requirements for Wearers](using-hats/setting-accountabilities/eligibility-requirements-for-wearers.md)
+  * [🌟 Eligibility: Requirements for Wearers](using-hats/setting-accountabilities/eligibility-requirements-for-wearers.md)
   * [⚡ Toggle: Activating & Deactivating Hats](using-hats/setting-accountabilities/toggle-activating-and-deactivating-hats.md)
 * [🔐 Connecting Hats With Authorities](using-hats/connecting-hats-with-authorities/README.md)
   * [Hats Protocol Contract Addresses](using-hats/connecting-hats-with-authorities/hats-protocol-contract-addresses.md)
@@ -37,7 +38,7 @@
     * [Guild.xyz --> Telegram](hats-integrations/hat-gated-authorities/telegram/guild.xyz-greater-than-telegram.md)
   * [Snapshot: Voting, Weight & Proposal Creation](hats-integrations/hat-gated-authorities/snapshot-voting-weight-and-proposal-creation.md)
   * [Wonderverse](hats-integrations/hat-gated-authorities/wonderverse.md)
-* [🤠 Eligibility Modules](hats-integrations/eligibility-modules/README.md)
+* [🌟 Eligibility Modules](hats-integrations/eligibility-modules/README.md)
   * [ERC1155 Eligibility](hats-integrations/eligibility-modules/erc1155-eligibility.md)
   * [ERC20 Eligibility](hats-integrations/eligibility-modules/erc20-eligibility.md)
   * [ERC721 Eligibility](hats-integrations/eligibility-modules/erc721-eligibility.md)
@@ -51,7 +52,7 @@
 
 ## For Developers
 
-* [👷♀ Hats Protocol Overview](for-developers/hats-protocol-overview/README.md)
+* [👷 Hats Protocol Overview](for-developers/hats-protocol-overview/README.md)
   * [Hat Properties](for-developers/hats-protocol-overview/hat-properties.md)
   * [Wearing a Hat](for-developers/hats-protocol-overview/wearing-a-hat.md)
   * [Hat Admins & Hatter Contracts](for-developers/hats-protocol-overview/hat-admins-and-hatter-contracts.md)

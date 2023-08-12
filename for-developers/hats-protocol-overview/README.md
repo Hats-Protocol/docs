@@ -1,4 +1,4 @@
-# 👷♀ Hats Protocol Overview
+# 👷 Hats Protocol Overview
 
 Put on your hardhats and lets get into the nitty gritty of Hats Protocol!
 

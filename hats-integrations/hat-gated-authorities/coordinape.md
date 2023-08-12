@@ -13,6 +13,6 @@ To hat-gate access for a Coordinape circle, you will need to complete the follow
 5. Select **Save Settings**
 6. Under **Members** select **Add Members,** and then select **Guild.xyz.** Copy the link provided: **this is the invite link you should use** to provide hat-gated access into your Coordinape circle.
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p>Found in your Coordinape circle Admin settings under Integrations</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption><p>Found in your Coordinape circle Admin settings under Integrations</p></figcaption></figure>
 
 For additional details, see the [Coordinape guide](https://docs.coordinape.com/info/integrations/guild) for token-gating access with Guild.
