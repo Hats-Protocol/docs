@@ -16,9 +16,9 @@ At their core, hats are programmable roles which can be imbued with responsibili
 
 To learn what kind of hat you have, visit the [Hats App](https://app.hatsprotocol.xyz), connect your wallet, and click My Hats.
 
-<figure><img src="../.gitbook/assets/Screenshot 2023-08-12 at 12.01.25 PM.png" alt="" width="346"><figcaption><p>The My Hats page is your portal to accessing all your hats. If you don't see the My Hats link, be sure to connect to the app with the right wallet address and on the right networks.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/Screenshot 2023-08-14 at 4.25.08 PM.png" alt="" width="348"><figcaption><p>The My Hats page is your portal to accessing all your hats. If you don't see the My Hats link, be sure to connect to the app with the correct wallet address.</p></figcaption></figure>
 
-You'll see all the hats your wallet address is holding in your My Hats page. Hats are ERC1155-compatible tokens that can be held by any address including an EOA, multisig, or contract. When an address has a balance of 1 of a given Hats token, it is considered a "wearer" of that "hat".
+You'll see all the hats your wallet address is holding in your My Hats page. Hats are ERC1155-compatible tokens that can be held by any address including an EOA or a contract (e.g. a multisig). When an address has a balance of 1 of a given Hats token, it is considered a "wearer" of that "hat".
 
 ### **Now that you have a hat, you might be wondering... what can this hat do?**
 
