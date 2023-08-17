@@ -19,6 +19,7 @@
   * [Finding a Hat's Token ID](using-hats/connecting-hats-with-authorities/finding-a-hats-token-id.md)
 * [🥳 Adding Wearers](using-hats/adding-wearers.md)
 * [🔗 Linking Trees Together](using-hats/linking-trees-together.md)
+* [⛓ Hats Protocol Supported Chains](using-hats/hats-protocol-supported-chains.md)
 * [❓ Glossary & FAQ](using-hats/glossary-and-faq.md)
 
 ## Hats Integrations
