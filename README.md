@@ -1,5 +1,7 @@
 ---
-description: The roles and authorities primitive for Web3
+description: >-
+  The onchain roles protocol. Empower contributors and code with the
+  responsibility, authority, and accountability needed to get things done.
 ---
 
 # 👋 Welcome to Hats Protocol
