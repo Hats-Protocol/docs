@@ -70,6 +70,7 @@
   * [Batch Actions](for-developers/hats-protocol-overview/batch-actions.md)
   * [Hat Image URIs](for-developers/hats-protocol-overview/hat-image-uris.md)
   * [ERC1155 Compatibility](for-developers/hats-protocol-overview/erc1155-compatibility.md)
+  * [⛓ Supported Chains](for-developers/hats-protocol-overview/supported-chains.md)
 * [🤖 v1 Protocol Spec](for-developers/v1-protocol-spec/README.md)
   * [Hats.sol](for-developers/v1-protocol-spec/hats.sol.md)
   * [HatsEvents.sol](for-developers/v1-protocol-spec/hatsevents.sol.md)
