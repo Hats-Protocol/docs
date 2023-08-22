@@ -39,7 +39,7 @@ B) **Signers cannot execute transactions that remove the constraint in (A)**. Sp
 
 For more details on Hats Signer Gate including security audit results, [see here](https://github.com/Hats-Protocol/hats-zodiac/blob/main/README.md).
 
-## Conditions for Safe Use of Hats Signer Gate
+## Conditions for Safe Use of Hats Signer Gate <a href="#conditions-for-safe-use" id="conditions-for-safe-use"></a>
 
 The following conditions apply to all versions of Hats Signer Gate and Multi Hats Signer Gate. These conditions must be met to safely use Hats Signer Gate and avoid accidental bricking of your safe.
 
