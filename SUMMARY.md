@@ -91,3 +91,4 @@
 * [🔭 v1 Subgraphs](for-developers/v1-subgraphs.md)
 * [🧩 Building Hats Modules](for-developers/building-hats-modules/README.md)
   * [🏭 Hats Module Factory](for-developers/building-hats-modules/hats-module-factory.md)
+* [🌐 Hats Security Audits](for-developers/hats-security-audits.md)
