@@ -1,6 +1,6 @@
 # 🌐 Hats Security Audits
 
-Hats Protocol v1 has received two security audits, listed below. See the [audits](https://github.com/Hats-Protocol/hats-protocol/tree/main/audits) directory for the detailed reports.
+Both [Hats Protocol v1](https://github.com/Hats-Protocol/hats-protocol) and [Hats Signer Gate](https://github.com/Hats-Protocol/hats-zodiac#security-audits) have received two security audits, listed below. See the [audits](https://github.com/Hats-Protocol/hats-protocol/tree/main/audits) directory for the detailed reports.&#x20;
 
 | Auditor        | Report Date  | Review Commit Hash                                                                                        |
 | -------------- | ------------ | --------------------------------------------------------------------------------------------------------- |

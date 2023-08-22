@@ -59,8 +59,8 @@ See the subpages within this section for detailed guides for connecting specific
 [hats-wallet.md](hats-wallet.md)
 {% endcontent-ref %}
 
-{% content-ref url="safe-multisig-signing-authority.md" %}
-[safe-multisig-signing-authority.md](safe-multisig-signing-authority.md)
+{% content-ref url="hats-signer-gate-safe-multisig-signing-authority.md" %}
+[hats-signer-gate-safe-multisig-signing-authority.md](hats-signer-gate-safe-multisig-signing-authority.md)
 {% endcontent-ref %}
 
 {% content-ref url="telegram/" %}

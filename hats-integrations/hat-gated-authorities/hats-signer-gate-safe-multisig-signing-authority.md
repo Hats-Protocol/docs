@@ -2,7 +2,7 @@
 description: How to hat-gate signing authority on a Safe multisig
 ---
 
-# Safe Multisig Signing Authority
+# Hats Signer Gate: Safe Multisig Signing Authority
 
 [Hats Signer Gate](https://github.com/Hats-Protocol/hats-zodiac#hats-signer-gate) is a contract that grants Safe multisig signing rights to addresses wearing a given hat, enabling on-chain organizations (such as DAOs) to delegate revocable constrained signing authority and responsibility to individuals.
 
@@ -33,17 +33,38 @@ B) **Signers cannot execute transactions that remove the constraint in (A)**. Sp
 3. Changing the multisig threshold
 4. Changing the multisig owners
 
-> Warning Protections against (3) and (4) above only hold if the Safe does not have any authority over the signer hat(s). If it does — e.g. it wears an admin hat of the signer hat(s) or is an eligibility or toggle module on the signer hat(s) — then in some cases the signers may be able to change the multisig threshold or owners.
+> Warning: Protections against (3) and (4) above only hold if the Safe does not have any authority over the signer hat(s). If it does — e.g. it wears an admin hat of the signer hat(s) or is an eligibility or toggle module on the signer hat(s) — then in some cases the signers may be able to change the multisig threshold or owners.
 >
 > Proceed with caution if granting such authority to a Safe attached to HatsSignerGate.
 
 For more details on Hats Signer Gate including security audit results, [see here](https://github.com/Hats-Protocol/hats-zodiac/blob/main/README.md).
 
+## Conditions for Safe Use of Hats Signer Gate
+
+The following conditions apply to all versions of Hats Signer Gate and Multi Hats Signer Gate. These conditions must be met to safely use Hats Signer Gate and avoid accidental bricking of your safe.
+
+**Owner hats**
+
+* The safe should never wear a hat that is an admin of the owner hat
+* The safe should never be the eligibility module/ accountability address or toggle module/ activation address of the owner hat
+
+**Signer hats**
+
+* If signer hats are mutable...
+  * Signer hats must have some admin that is not the safe itself in order to recover from the safe accidentally transferring away too many of its current signers’ hats&#x20;
+  * If signer hats are in the admin path of the safe, they must have an eligibility module/ accountability address not controlled by the safe
+    * _WARNING: in this setup, the safe could accidentally or maliciously brick itself by removing the eligibility and toggle modules (or setting itself as each) and making the signer hat immutable. This setup trusts the signers to not do this._
+* If signer hats are immutable...
+  * Signer hats must have a working eligibility module/ accountability address that is not controlled by the safe
+  * Signer hats must have a working toggle module/ activation address that is not controlled by the safe
+
+Hats Signer Gate is designed to allow an organization to delegate and revoke control over a multisig to a set of signers. When used properly, Hats Signer Gate is secure. With improper configurations, it can behave differently than designed. Use with caution.
+
 ## Using Hats Signer Gate
 
 There are five steps required to properly implement Hats Signer Gate:
 
-1. Create the hats that will have multisig signing authority and note their token IDs. _See_ [#finding-a-hats-token-id](../../using-hats/connecting-hats-with-authorities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs_.
+1. Create the hats that will have multisig signing authority and note their token IDs. _See_ [_Finding a Hat's Token ID_](../../using-hats/connecting-hats-with-authorities/finding-a-hats-token-id.md) _for details on how to find specific hat token IDs_.
 2. Deploy a new Hats Signer Gate contract using the [Hats Signer Gate Factory](https://github.com/Hats-Protocol/hats-zodiac/releases/tag/v1.2-beta)
 3. Set up the Hats Signer Gate Zodiac module
 4. Set up the Hats Signer Gate Zodiac guard

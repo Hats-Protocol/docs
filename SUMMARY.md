@@ -33,7 +33,7 @@
     * [Guild.xyz --> Discord](hats-integrations/hat-gated-authorities/discord/guild.xyz-greater-than-discord.md)
   * [Google Workspace](hats-integrations/hat-gated-authorities/google-workspace.md)
   * [Hats Wallet](hats-integrations/hat-gated-authorities/hats-wallet.md)
-  * [Safe Multisig Signing Authority](hats-integrations/hat-gated-authorities/safe-multisig-signing-authority.md)
+  * [Hats Signer Gate: Safe Multisig Signing Authority](hats-integrations/hat-gated-authorities/hats-signer-gate-safe-multisig-signing-authority.md)
   * [Telegram](hats-integrations/hat-gated-authorities/telegram/README.md)
     * [Collab.Land --> Telegram](hats-integrations/hat-gated-authorities/telegram/collab.land-greater-than-telegram.md)
     * [Guild.xyz --> Telegram](hats-integrations/hat-gated-authorities/telegram/guild.xyz-greater-than-telegram.md)
