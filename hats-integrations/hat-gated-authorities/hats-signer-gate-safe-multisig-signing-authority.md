@@ -6,6 +6,8 @@ description: How to hat-gate signing authority on a Safe multisig
 
 [Hats Signer Gate](https://github.com/Hats-Protocol/hats-zodiac#hats-signer-gate) is a contract that grants Safe multisig signing rights to addresses wearing a given hat, enabling on-chain organizations (such as DAOs) to delegate revocable constrained signing authority and responsibility to individuals.
 
+_When used properly, Hats Signer Gate enables secure transfer of safe signing authority from one address to another. With improper configurations, Hats Signer Gate can behave differently than designed and could result in lost funds. If you are interested in using Hats Signer Gate, contact us at support \[at] hatsprotocol \[dot] xyz for implementation support_. _Otherwise, be sure to heed the_ [_conditions for safe use_](hats-signer-gate-safe-multisig-signing-authority.md#conditions-for-safe-use) _below and proceed at your own risk._
+
 ## An Overview of Hats Signer Gate
 
 There are two components to the Hats Signer Gate contract:
@@ -57,8 +59,6 @@ The following conditions apply to all versions of Hats Signer Gate and Multi Hat
 * If signer hats are immutable...
   * Signer hats must have a working eligibility module/ accountability address that is not controlled by the safe
   * Signer hats must have a working toggle module/ activation address that is not controlled by the safe
-
-Hats Signer Gate is designed to allow an organization to delegate and revoke control over a multisig to a set of signers. When used properly, Hats Signer Gate is secure. With improper configurations, it can behave differently than designed. Use with caution.
 
 ## Using Hats Signer Gate
 
