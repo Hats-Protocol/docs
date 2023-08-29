@@ -6,7 +6,7 @@ description: How to hat-gate signing authority on a Safe multisig
 
 [Hats Signer Gate](https://github.com/Hats-Protocol/hats-zodiac#hats-signer-gate) is a contract that grants Safe multisig signing rights to addresses wearing a given hat, enabling on-chain organizations (such as DAOs) to delegate revocable constrained signing authority and responsibility to individuals.
 
-_NOTE: We take security seriously and our contracts_ [_have been audited_](../../for-developers/hats-security-audits.md)_. When used properly, Hats Signer Gate enables secure transfer of safe signing authority from one address to another. However, with improper configurations, Hats Signer Gate can behave differently than designed and could result in lost funds. If you are interested in using Hats Signer Gate, contact us at support \[at] hatsprotocol \[dot] xyz for implementation support. Otherwise, be sure to heed the conditions for safe use below and use at your own risk._
+_NOTE: We take security seriously and our contracts_ [_have been audited_](../../for-developers/hats-security-audits.md)_. When used properly, Hats Signer Gate enables secure transfer of safe signing authority from one address to another. However, with improper configurations, Hats Signer Gate can behave differently than designed and could result in lost funds. If you are interested in using Hats Signer Gate, contact us at support \[at] hatsprotocol \[dot] xyz for implementation support. Otherwise, be sure to heed the_ [_conditions for safe use_](safe-multisig-signing-authority.md#conditions) _below and use at your own risk._
 
 ## An Overview of Hats Signer Gate
 
@@ -40,35 +40,6 @@ B) **Signers cannot execute transactions that remove the constraint in (A)**. Sp
 > Proceed with caution if granting such authority to a Safe attached to HatsSignerGate.
 
 For more details on Hats Signer Gate including security audit results, [see here](https://github.com/Hats-Protocol/hats-zodiac/blob/main/README.md).
-
-## Conditions for Safe Use of Hats Signer Gate <a href="#conditions" id="conditions"></a>
-
-The following conditions apply to all versions of Hats Signer Gate and Multi Hats Signer Gate. These conditions must be met to safely use Hats Signer Gate and avoid accidental bricking of your safe.
-
-**Context:** It is possible to accidentally brick the Hats Signer Gate-connected safe if your organization loses its ability to transfer the signer hats to new wearers. If that happens, and if too many signers ghost, then the remaining signers won't be able to reach the required signer threshold and funds would get stuck.
-
-In this case, the safe is recoverable if the wearer of the Owner Hat is able to reduce the minimum threshold, or is able to set additional hats as signers in the case of Multi Hats Signer Gate. However, these contingencies require that the wearer of the Owner Hat is not also the safe.
-
-Under certain conditions, it's also possible for the existing signers to accidentally or maliciously brick the safe. Specifically, if the safe is an admin of the signer hat(s), it is possible for the safe to do the following:
-
-* Transfer away too many of its current signer hats, in the case where signer hats are mutable, resulting in a bricked safe.
-* Maliciously changing or removing the eligibility or toggle modules and setting the signer hats to immutable to prevent other admins from changing the hats back. This would result in the existing signers having total control of the safe.
-* In the case where signer hat(s) are immutable, if the safe serves as the eligibility module for the signer hat(s), then the safe could be bricked if there are enough signers that ghost.
-
-**These mistakes are easily avoided using the following guidelines for the Owner Hat and signer hat(s):**
-
-DOs
-
-* DO ensure there is always a functional eligibility module (aka accountability address) for the signer hat(s) that is not controlled by the safe
-* DO ensure there is always a functional toggle module (aka accountability address) for the signer hat(s) that is not controlled by the safe
-
-DON'Ts
-
-* DON'T have the safe wear a hat that is an admin of the Owner Hat
-* DON'T have the safe wear a hat that is an admin of any mutable signer hat(s)
-  * _If signer hats are in the admin path of the safe, they must have a functional eligibility module (aka accountability address) that is not controlled by the safe, AND the signer hats must be immutable such that the safe cannot use its admin powers to remove or change the eligibility and toggle modules for the signer hat(s)._
-* DON'T set the safe as the eligibility module (aka accountability address) of the Owner Hat NOR the signer hat(s)
-* DON'T set the safe as the toggle module (aka activation address) of the Owner Hat NOR the signer hat(s)
 
 ## Using Hats Signer Gate
 
@@ -233,3 +204,32 @@ At any point hereafter, as soon as an address has lost its mutisig signer hat, a
 **Will signers be able to sign and execute transactions if they've lost their multisig signer hat but are still on the Safe?**
 
 No — this is the function of the Guard. The moment an address is no longer wearing its multisig signer hat, it will immediately be unable to sign or execute transactions.
+
+## Conditions for Safe Use of Hats Signer Gate <a href="#conditions" id="conditions"></a>
+
+The following conditions apply to all versions of Hats Signer Gate and Multi Hats Signer Gate. These conditions must be met to safely use Hats Signer Gate and avoid accidental bricking of your safe.
+
+**Context:** It is possible to accidentally brick the Hats Signer Gate-connected safe if your organization loses its ability to transfer the signer hats to new wearers. If that happens, and if too many signers ghost, then the remaining signers won't be able to reach the required signer threshold and funds would get stuck.
+
+In this case, the safe is recoverable if the wearer of the Owner Hat is able to reduce the minimum threshold, or is able to set additional hats as signers in the case of Multi Hats Signer Gate. However, these contingencies require that the wearer of the Owner Hat is not also the safe.
+
+Under certain conditions, it's also possible for the existing signers to accidentally or maliciously brick the safe. Specifically, if the safe is an admin of the signer hat(s), it is possible for the safe to do the following:
+
+* Transfer away too many of its current signer hats, in the case where signer hats are mutable, resulting in a bricked safe.
+* Maliciously changing or removing the eligibility or toggle modules and setting the signer hats to immutable to prevent other admins from changing the hats back. This would result in the existing signers having total control of the safe.
+* In the case where signer hat(s) are immutable, if the safe serves as the eligibility module for the signer hat(s), then the safe could be bricked if there are enough signers that ghost.
+
+**These mistakes are easily avoided using the following guidelines for the Owner Hat and signer hat(s):**
+
+DOs
+
+* DO ensure there is always a functional eligibility module (aka accountability address) for the signer hat(s) that is not controlled by the safe
+* DO ensure there is always a functional toggle module (aka accountability address) for the signer hat(s) that is not controlled by the safe
+
+DON'Ts
+
+* DON'T have the safe wear a hat that is an admin of the Owner Hat
+* DON'T have the safe wear a hat that is an admin of any mutable signer hat(s)
+  * _If signer hats are in the admin path of the safe, they must have a functional eligibility module (aka accountability address) that is not controlled by the safe, AND the signer hats must be immutable such that the safe cannot use its admin powers to remove or change the eligibility and toggle modules for the signer hat(s)._
+* DON'T set the safe as the eligibility module (aka accountability address) of the Owner Hat NOR the signer hat(s)
+* DON'T set the safe as the toggle module (aka activation address) of the Owner Hat NOR the signer hat(s)
