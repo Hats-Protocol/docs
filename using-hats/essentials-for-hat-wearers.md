@@ -42,19 +42,21 @@ Your hat is an admin for any hats in the direct lineage below it.
 
 As an admin, you can change a hat's name, image, description, max supply, authorities, and accountabilities, grant the hat to new wearers, and transfer the hat from one wearer to another -- but ONLY if the hat is [mutable](setting-hat-properties.md#mutability). When hats are [immutable](setting-hat-properties.md#mutability), your admin powers are diminished.
 
-Click on your hat in the My Hats page and take a look at the Hats tree within which your hat exists.
+To see which hats your hat is an admin of, click on your hat in the My Hats page and take a look at the tree within which your hat exists.
 
-You can find the hats you're wearing in this tree based on the little green hat icon seen in the hat cards. For example, in the image below, yours truly is wearing the Product Workstream Facilitator hat in the upper-right, with the hat ID 6.1.2.3 ([for more on hat IDs, see here](../for-developers/hats-protocol-overview/hat-ids.md)).&#x20;
+You can find the hats you're wearing in this tree based on the little green hat icon seen in the hat cards. For example, in the image below, you would see that you are wearing the Product Workstream Facilitator hat 6.1.2.3 ([for more on hat IDs, see here](../for-developers/hats-protocol-overview/hat-ids.md)).&#x20;
 
 <figure><img src="../.gitbook/assets/Screenshot 2023-08-12 at 12.45.09 PM.png" alt=""><figcaption></figcaption></figure>
 
 As a wearer of hat 6.1.2.3 in the tree above, you are an admin for any hats in the direct lineage below it, including 6.1.2.3.1, 6.1.2.3.2, and 6.1.2.3.3.
 
-Similarly, the hats that are direct ancestors of your hat have admin authority over your hat—unless, again, your hat is immutable.
+Similarly, the hats that are direct ancestors of your hat have admin authority over your hat—unless, of course, your hat is immutable.
 
 ## **Can I transfer my hat?**
 
-No. Hats are nontransferrable by the wearer. Hats can only be transferred or revoked by designated [admin hats](setting-accountabilities/admins-creating-issuing-and-revising-hats.md) as well as the [accountability addresses](setting-accountabilities/) for your specific hat. Just like you can't transfer or sell your job online without your organization's approval, you can't transfer your hats unilaterally either.
+No. Hats are nontransferrable by the wearer. Hats can only be transferred or revoked by its [admin hats](setting-accountabilities/admins-creating-issuing-and-revising-hats.md) as well as the [accountability addresses](setting-accountabilities/) for your specific hat.&#x20;
+
+Just like you can't transfer or sell your job online without your organization's approval, you can't transfer your hats unilaterally either.
 
 <figure><img src="../.gitbook/assets/Group 57.png" alt=""><figcaption></figcaption></figure>
 
@@ -70,7 +72,7 @@ Yes! As a hat wearer you can also create new child hats -- these are new hats di
 
 But take note! Any hats that are the admin of your hat will ALSO be the admin of the child hats you create. Additionally, if you are not the sole wearer of your hat (as hats can be worn by multiple addresses up to the [max supply](setting-hat-properties.md#max-supply)), then any of the other wearers of your hat will also have admin powers over the child hat you created.&#x20;
 
-If you'd rather ensure that you are the only admin over the hats you create, it's probably best [to create a new Hats tree](creating-my-first-hat.md) or create a child hat that you then make immutable.
+If you'd rather ensure that you are the only admin over the hats you create, it's probably best [to create a new Hats tree](creating-my-first-hat.md) or create a new child hat that you then make immutable.
 
 <figure><img src="../.gitbook/assets/image (2).png" alt="" width="375"><figcaption><p>Your hat can create new child hats - but be aware who else has admin rights over that hat!</p></figcaption></figure>
 
