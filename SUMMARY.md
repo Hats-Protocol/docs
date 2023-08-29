@@ -95,8 +95,8 @@
 
 ## Legal
 
-* [Terms](legal/terms/README.md)
-  * [Terms of Service](legal/terms/terms-of-service.md)
-  * [Acceptable Use](legal/terms/acceptable-use.md)
-  * [Privacy Policy](legal/terms/privacy-policy.md)
-  * [Cookie Policy](legal/terms/cookie-policy.md)
+* [Terms](more-info/terms/README.md)
+  * [Terms of Service](more-info/terms/terms-of-service.md)
+  * [Acceptable Use](more-info/terms/acceptable-use.md)
+  * [Privacy Policy](more-info/terms/privacy-policy.md)
+  * [Cookie Policy](more-info/terms/cookie-policy.md)
