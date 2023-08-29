@@ -25,6 +25,12 @@ Authorities can be linked to hats in a number of ways, including via:
 * [**HatsSignerGate**](https://github.com/Hats-Protocol/hats-zodiac)**, a Zodiac module that provides Safe multisig signing authority for a given set of hats**
 * **Social agreements or other accountability mechanisms**, including seasonal elections, staking requirements, and/or reputation systems. Authorities that can't be explicitly granted to a hat via token-gating can still be granted to a hat wearer by using the hat as a signal of social agreement that the wearer has that authority.
 
+See the subpages within the [Hat-Gated Authorities](../../hats-integrations/hat-gated-authorities/) section for detailed guides for connecting specific authorities to hats:&#x20;
+
+{% content-ref url="../../hats-integrations/hat-gated-authorities/" %}
+[hat-gated-authorities](../../hats-integrations/hat-gated-authorities/)
+{% endcontent-ref %}
+
 ## Connecting Authorities to Hats
 
 Hats are the tokens that give wearers access to token-gated permissions. Plugging a hat's token ID into a token gate will give all wearers of that hat access to the specified credential, as long as the wearer remains eligible to wear that hat and the hat remains active.
@@ -42,34 +48,10 @@ To connect a hat to a token-gate, you will need to add an NFT (ERC1155) requirem
 
 See below for these details.
 
-### Hats Protocol Contract Addresses
+{% content-ref url="hats-protocol-contract-addresses.md" %}
+[hats-protocol-contract-addresses.md](hats-protocol-contract-addresses.md)
+{% endcontent-ref %}
 
-Hats Protocol has the same contract address for each chain is it deployed to (ENS: v1.hatsprotocol.eth): `0x3bc1A0Ad72417f2d411118085256fC53CBdDd137`
-
-See below for links to the specific contracts for each chain:
-
-* [**Ethereum (mainnet)**](https://etherscan.io/address/0x3bc1A0Ad72417f2d411118085256fC53CBdDd137)
-* [**Arbitrum**](https://arbiscan.io/address/0x3bc1A0Ad72417f2d411118085256fC53CBdDd137)
-* [**Gnosis Chain**](https://gnosisscan.io/address/0x3bc1A0Ad72417f2d411118085256fC53CBdDd137)
-* [**Optimism**](https://optimistic.etherscan.io/address/0x3bc1A0Ad72417f2d411118085256fC53CBdDd137)
-* [**Polygon**](https://polygonscan.com/address/0x3bc1A0Ad72417f2d411118085256fC53CBdDd137)
-* [**Goerli (testnet)**](https://goerli.etherscan.io/address/0x3bc1A0Ad72417f2d411118085256fC53CBdDd137)
-
-### Finding a Hat's Token ID
-
-To find a hat's token ID, locate and select that hat in the [Hats app](https://app.hatsprotocol.xyz) and click the copy icon to the right of the hat's "pretty ID" (found in the green box below).&#x20;
-
-<figure><img src="../../.gitbook/assets/hat ID.png" alt=""><figcaption></figcaption></figure>
-
-In decimal format, the hat's token ID will look something like this: `2588155291428878043886873276096123268223378170452611674367766728540160`.
-
-In hexadecimal format, the same hat's token ID will look something like this: `0x0000006000010001000200000000000000000000000000000000000000000000`.
-
-The Hats app converts the hexadecimal version to the "pretty id" format `96.1.1.2`:
-
-* `0x00000060` converts to `96`
-* `0x0001` converts to `1`
-* `0x0001` converts to `1`
-* `0x0002` converts to `2`
-
-_For more technical details on how the Hats addressable ID system works, see the_ [_Hat IDs_](../../for-developers/hats-protocol-overview/hat-ids.md) _page within the "For Developers" section of these docs._
+{% content-ref url="finding-a-hats-token-id.md" %}
+[finding-a-hats-token-id.md](finding-a-hats-token-id.md)
+{% endcontent-ref %}

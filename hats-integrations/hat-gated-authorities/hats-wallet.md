@@ -6,6 +6,8 @@ description: How to give every hat a wallet
 
 Hats Wallet introduces role-based rewards, tying streamed rewards and compensation with a given role rather than specific addresses.&#x20;
 
+<figure><img src="../../.gitbook/assets/hats wallet.jpg" alt=""><figcaption></figcaption></figure>
+
 ## Overview
 
 One of the biggest challenges for DAOs today is the lack of accountability for paid contributors. It is an easy trap for a DAO to fall into, where contributor compensation is set up via DAO proposal, and some contributors are receiving large or recurring grants, but after some time, stop delivering work that is commensurate with that compensation. Right now, DAOs don't have a good way of holding those contributors accountable to following through on their responsibilities, and stopping compensation when appropriate.
