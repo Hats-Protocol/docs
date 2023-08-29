@@ -93,10 +93,10 @@
   * [🏭 Hats Module Factory](for-developers/building-hats-modules/hats-module-factory.md)
 * [🌐 Hats Security Audits](for-developers/hats-security-audits.md)
 
-## More Info
+## Legal
 
-* [Terms](more-info/terms/README.md)
-  * [Privacy Policy](more-info/terms/privacy-policy.md)
-  * [Terms of Service](more-info/terms/terms-of-service.md)
-  * [Cookie Policy](more-info/terms/cookie-policy.md)
-  * [Acceptable Use](more-info/terms/acceptable-use.md)
+* [Terms](legal/terms/README.md)
+  * [Terms of Service](legal/terms/terms-of-service.md)
+  * [Acceptable Use](legal/terms/acceptable-use.md)
+  * [Privacy Policy](legal/terms/privacy-policy.md)
+  * [Cookie Policy](legal/terms/cookie-policy.md)
