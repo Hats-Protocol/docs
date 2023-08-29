@@ -92,3 +92,11 @@
 * [🧩 Building Hats Modules](for-developers/building-hats-modules/README.md)
   * [🏭 Hats Module Factory](for-developers/building-hats-modules/hats-module-factory.md)
 * [🌐 Hats Security Audits](for-developers/hats-security-audits.md)
+
+## Misc.
+
+* [Terms](misc./terms/README.md)
+  * [Privacy Policy](misc./terms/privacy-policy.md)
+  * [Terms of Service](misc./terms/terms-of-service.md)
+  * [Cookie Policy](misc./terms/cookie-policy.md)
+  * [Acceptable Use](misc./terms/acceptable-use.md)
