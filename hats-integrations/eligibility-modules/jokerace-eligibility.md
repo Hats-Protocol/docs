@@ -10,6 +10,8 @@ description: Tying hat eligibility to the results of a JokeRace Contest
 
 The number of winners of an election, and thus the number of possible wearers made eligible through this integration, is configurable. Additionally, a term period can be set, after which the winners will no longer be eligible to wear the hat.
 
+The module's code is open source and is available [here](https://github.com/Hats-Protocol/jokerace-eligibility).
+
 ## Example
 
 Using this module enables the wearers of the "Elected Role" hat to be the winners of a chosen JokeRace election:
@@ -24,4 +26,4 @@ The top 5 most voted candidates in the election are the ones eligible for the ro
 
 ## **Using the JokeRace Eligibility Integration**&#x20;
 
-_Contact us at support \[at] hatsprotocol \[dot] xyz if you want to explore this module._
+_Contact us at support \[at] hatsprotocol \[dot] xyz if you want to explore this module. You can also check out the open source repository_ [_here_](https://github.com/Hats-Protocol/jokerace-eligibility)_._
