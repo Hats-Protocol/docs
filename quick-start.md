@@ -8,8 +8,8 @@ description: Key shortcuts for those who know their way around Hats
 
 * [Hats App](https://app.hatsprotocol.xyz)
 * [Hats tree templates](https://app.charmverse.io/hats-protocol/page-30981870825242197)
-* [#hats-protocol-contract-address](hats-integrations/hat-gated-authorities/#hats-protocol-contract-address "mention")
-* [#finding-a-hats-token-id](hats-integrations/hat-gated-authorities/#finding-a-hats-token-id "mention")
+* [Hats Protocol contract addresses](using-hats/connecting-hats-with-authorities/hats-protocol-contract-addresses.md)
+* [Finding a hat's token ID](using-hats/connecting-hats-with-authorities/finding-a-hats-token-id.md)
 
 ## **Key Guides**
 
