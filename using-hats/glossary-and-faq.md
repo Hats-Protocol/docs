@@ -26,6 +26,10 @@ _This FAQ will be continuously updated as questions are received_ [_through this
 * [Hats Protocol](https://github.com/Hats-Protocol/hats-protocol): the open-source roles protocol upon which many different apps and integrations will be developed
 * [Hats App](https://app.hatsprotocol.xyz/): a front-end app developed to make it easy for anyone to use the protocol
 
+**How are Hats different from membership NFTs?**
+
+Hats are like membership NFTs in that they are nontransferable, revocable, and grant access to a group of some kind. But they are also highly programmable, automatable, boosted by a wide range of eligibility modules and integrations that are being created, and nested with deterministic IDs to enable flexible governance structures for almost any need you can imagine.
+
 **Can I "claim" my hat or does it have to be granted by someone else?**
 
 Both are possible! Hats can be [granted (aka "minted")](adding-wearers.md) to new wearers by wearers of any existing [admin hat](setting-accountabilities/admins-creating-issuing-and-revising-hats.md), OR hats can be claimed by eligible wearers [provided the hat has been made claimable](../hats-integrations/claiming-and-onboarding-integrations/making-hats-claimable.md).&#x20;
