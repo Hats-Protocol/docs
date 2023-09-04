@@ -56,6 +56,6 @@ Wherever you begin, the docs found here will walk you through it.
 [toggle-modules](hats-integrations/toggle-modules/)
 {% endcontent-ref %}
 
-{% content-ref url="hats-integrations/claiming-and-onboarding-integrations/" %}
-[claiming-and-onboarding-integrations](hats-integrations/claiming-and-onboarding-integrations/)
+{% content-ref url="hats-integrations/hatter-modules/" %}
+[hatter-modules](hats-integrations/hatter-modules/)
 {% endcontent-ref %}

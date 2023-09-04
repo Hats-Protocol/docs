@@ -1,10 +1,10 @@
-# 👷 Claiming & Onboarding Integrations
+# 👷 Hatter Modules
 
 Additional logic can be set to make hats claimable based on specific eligibility criteria, as well as to managing DAOhaus Moloch v3 membership and share allocation using Hats.&#x20;
 
-## Guides
+## Existing Modules
 
-See the subpages within this section for the following guides:
+See the subpages within this section, which include guides for using the following hatter modules:
 
 {% content-ref url="making-hats-claimable.md" %}
 [making-hats-claimable.md](making-hats-claimable.md)

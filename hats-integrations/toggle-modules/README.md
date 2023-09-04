@@ -24,7 +24,7 @@ For instance, it makes good sense to set the eligibility and toggle modules for 
 
 For any hats you're still not sure about, we recommend setting their eligibility and toggle modules to the organization's contract address, at least to start. If the hats in question are mutable, their admins can always change their eligibility and toggle modules later.
 
-## Guides
+## Existing Modules
 
 See the subpages within this section for detailed guides for specific toggle modules you can use with Hats:
 

@@ -21,6 +21,8 @@ Usage of SeasonToggle involves the following phases:
 
 Once in operation, Hats Protocol will retrieve hat status (active or inactive) from an instance of SeasonToggle by calling the `SeasonToggle.getHatStatus()` function.
 
+The module's code is open source and is available [here](https://github.com/Hats-Protocol/season-toggle).
+
 ## **Using the Seasonal / Time-Expiry Toggle Module**
 
-_This toggle module is currently in beta. Contact us at support \[at] hatsprotocol \[dot] xyz if you want to explore this module, or_ [_check out the Seasonal / Time-Expiry Toggle Github repo here_](https://github.com/Hats-Protocol/season-toggle)_._
+_This toggle module is currently in beta. Contact us at support \[at] hatsprotocol \[dot] xyz if you want to explore this module, or check out the Seasonal / Time-Expiry Toggle Github repo_ [_here_](https://github.com/Hats-Protocol/season-toggle)_._

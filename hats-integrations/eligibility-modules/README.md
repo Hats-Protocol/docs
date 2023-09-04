@@ -6,7 +6,7 @@ description: Requirements for Wearers
 
 A hat’s eligibility module is an address that determines which addresses are eligible to wear that hat, and can revoke the hat if the wearer is no longer eligible. Eligibility modules can be humanistic (as in an EOA or multisig) or mechanistic (as in a contract with custom logic) to automatically and instantly revoke the hat based on pre-defined triggers.
 
-Eligibility modules can also be combined with [claimable hats](../claiming-and-onboarding-integrations/making-hats-claimable.md) to enable addresses to claim and wear a given hat _only if_ they fulfill specific eligibility criteria.
+Eligibility modules can also be combined with [claimable hats](../hatter-modules/making-hats-claimable.md) to enable addresses to claim and wear a given hat _only if_ they fulfill specific eligibility criteria.
 
 <figure><img src="../../.gitbook/assets/Screenshot 2023-06-28 at 3.15.24 PM.png" alt="" width="300"><figcaption></figcaption></figure>
 
@@ -31,7 +31,7 @@ For instance, it makes good sense to set the eligibility and toggle modules for 
 
 For any hats you're still not sure about, we recommend setting their eligibility and toggle modules to the organization's contract address, at least to start. If the hats in question are mutable, their admins can always change their eligibility and toggle modules later.
 
-## Guides
+## Existing Modules
 
 See the subpages within this section for detailed guides for specific eligibility modules you can use with Hats:
 
@@ -39,16 +39,32 @@ See the subpages within this section for detailed guides for specific eligibilit
 [erc20-eligibility.md](erc20-eligibility.md)
 {% endcontent-ref %}
 
-{% content-ref url="jokerace-eligibility.md" %}
-[jokerace-eligibility.md](jokerace-eligibility.md)
+{% content-ref url="erc721-eligibility.md" %}
+[erc721-eligibility.md](erc721-eligibility.md)
 {% endcontent-ref %}
 
 {% content-ref url="erc1155-eligibility.md" %}
 [erc1155-eligibility.md](erc1155-eligibility.md)
 {% endcontent-ref %}
 
+{% content-ref url="jokerace-eligibility.md" %}
+[jokerace-eligibility.md](jokerace-eligibility.md)
+{% endcontent-ref %}
+
 {% content-ref url="staking-eligibility.md" %}
 [staking-eligibility.md](staking-eligibility.md)
+{% endcontent-ref %}
+
+{% content-ref url="pass-through-hat-based-eligibility.md" %}
+[pass-through-hat-based-eligibility.md](pass-through-hat-based-eligibility.md)
+{% endcontent-ref %}
+
+{% content-ref url="hat-wearing-eligibility.md" %}
+[hat-wearing-eligibility.md](hat-wearing-eligibility.md)
+{% endcontent-ref %}
+
+{% content-ref url="allow-list-eligibility.md" %}
+[allow-list-eligibility.md](allow-list-eligibility.md)
 {% endcontent-ref %}
 
 ## Digging Deeper

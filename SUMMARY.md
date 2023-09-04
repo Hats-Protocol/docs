@@ -45,11 +45,14 @@
   * [ERC721 Eligibility](hats-integrations/eligibility-modules/erc721-eligibility.md)
   * [Staking Eligibility](hats-integrations/eligibility-modules/staking-eligibility.md)
   * [JokeRace Eligibility](hats-integrations/eligibility-modules/jokerace-eligibility.md)
+  * [Pass-Through (Hat-Based) Eligibility](hats-integrations/eligibility-modules/pass-through-hat-based-eligibility.md)
+  * [Hat-Wearing Eligibility](hats-integrations/eligibility-modules/hat-wearing-eligibility.md)
+  * [Allow-List Eligibility](hats-integrations/eligibility-modules/allow-list-eligibility.md)
 * [⚡ Toggle Modules](hats-integrations/toggle-modules/README.md)
   * [Seasonal/ Time-Expiry Toggle](hats-integrations/toggle-modules/seasonal-time-expiry-toggle.md)
-* [👷 Claiming & Onboarding Integrations](hats-integrations/claiming-and-onboarding-integrations/README.md)
-  * [Making Hats Claimable](hats-integrations/claiming-and-onboarding-integrations/making-hats-claimable.md)
-  * [DAOhaus Moloch v3 Membership & Share Allocation](hats-integrations/claiming-and-onboarding-integrations/daohaus-moloch-v3-membership-and-share-allocation.md)
+* [👷 Hatter Modules](hats-integrations/hatter-modules/README.md)
+  * [Making Hats Claimable](hats-integrations/hatter-modules/making-hats-claimable.md)
+  * [DAOhaus Moloch v3 Membership & Share Allocation](hats-integrations/hatter-modules/daohaus-moloch-v3-membership-and-share-allocation.md)
 
 ## For Developers
 
@@ -90,7 +93,11 @@
   * [Hat & Tree ID Utilities](for-developers/v1-core-sdk/hat-and-tree-id-utilities.md)
 * [🔭 v1 Subgraphs](for-developers/v1-subgraphs.md)
 * [🧩 Building Hats Modules](for-developers/building-hats-modules/README.md)
-  * [🏭 Hats Module Factory](for-developers/building-hats-modules/hats-module-factory.md)
+  * [Inside a Hats Module](for-developers/building-hats-modules/inside-a-hats-module.md)
+  * [Creating New Modules](for-developers/building-hats-modules/creating-new-modules.md)
+  * [How Module Instances Are Deployed](for-developers/building-hats-modules/how-module-instances-are-deployed.md)
+  * [Connecting Modules To User Facing Apps](for-developers/building-hats-modules/connecting-modules-to-user-facing-apps.md)
+  * [About Module Chains](for-developers/building-hats-modules/about-module-chains.md)
 * [🌐 Hats Security Audits](for-developers/hats-security-audits.md)
 
 ## Legal
