@@ -51,8 +51,8 @@
 * [⚡ Toggle Modules](hats-integrations/toggle-modules/README.md)
   * [Seasonal/ Time-Expiry Toggle](hats-integrations/toggle-modules/seasonal-time-expiry-toggle.md)
 * [👷 Hatter Modules](hats-integrations/hatter-modules/README.md)
-  * [Making Hats Claimable](hats-integrations/hatter-modules/making-hats-claimable.md)
-  * [DAOhaus Moloch v3 Membership & Share Allocation](hats-integrations/hatter-modules/daohaus-moloch-v3-membership-and-share-allocation.md)
+  * [Making Hats Claimable](hats-integrations/claiming-and-onboarding-integrations/making-hats-claimable.md)
+  * [DAOhaus Moloch v3 Membership & Share Allocation](hats-integrations/claiming-and-onboarding-integrations/daohaus-moloch-v3-membership-and-share-allocation.md)
 
 ## For Developers
 
@@ -92,6 +92,11 @@
   * [Multicall](for-developers/v1-core-sdk/multicall.md)
   * [Hat & Tree ID Utilities](for-developers/v1-core-sdk/hat-and-tree-id-utilities.md)
 * [🔭 v1 Subgraphs](for-developers/v1-subgraphs.md)
+* [🔌 Modules SDK](for-developers/modules-sdk/README.md)
+  * [Getting Started](for-developers/modules-sdk/getting-started.md)
+  * [Get Available Modules](for-developers/modules-sdk/get-available-modules.md)
+  * [Create New Instance](for-developers/modules-sdk/create-new-instance.md)
+  * [Utilities](for-developers/modules-sdk/utilities.md)
 * [🧩 Building Hats Modules](for-developers/building-hats-modules/README.md)
   * [Inside a Hats Module](for-developers/building-hats-modules/inside-a-hats-module.md)
   * [Creating New Modules](for-developers/building-hats-modules/creating-new-modules.md)

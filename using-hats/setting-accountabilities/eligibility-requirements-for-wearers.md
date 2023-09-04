@@ -2,7 +2,7 @@
 
 A hat’s eligibility module is an address that determines which addresses are eligible to wear that hat, and can revoke the hat if the wearer is no longer eligible. Eligibility modules can be humanistic (as in an EOA or multisig) or mechanistic (as in a contract with custom logic) to automatically and instantly revoke the hat based on pre-defined triggers.
 
-Eligibility modules can also be combined with [claimable hats](../../hats-integrations/hatter-modules/making-hats-claimable.md) to enable addresses to claim and wear a given hat _only if_ they fulfill specific eligibility criteria.
+Eligibility modules can also be combined with [claimable hats](../../hats-integrations/claiming-and-onboarding-integrations/making-hats-claimable.md) to enable addresses to claim and wear a given hat _only if_ they fulfill specific eligibility criteria.
 
 <figure><img src="../../.gitbook/assets/Screenshot 2023-06-28 at 3.15.24 PM.png" alt="" width="300"><figcaption></figcaption></figure>
 

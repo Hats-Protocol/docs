@@ -32,7 +32,7 @@ Hats are like membership NFTs in that they are nontransferable, revocable, and g
 
 **Can I "claim" my hat or does it have to be granted by someone else?**
 
-Both are possible! Hats can be [granted (aka "minted")](adding-wearers.md) to new wearers by wearers of any existing [admin hat](setting-accountabilities/admins-creating-issuing-and-revising-hats.md), OR hats can be claimed by eligible wearers [provided the hat has been made claimable](../hats-integrations/hatter-modules/making-hats-claimable.md).&#x20;
+Both are possible! Hats can be [granted (aka "minted")](adding-wearers.md) to new wearers by wearers of any existing [admin hat](setting-accountabilities/admins-creating-issuing-and-revising-hats.md), OR hats can be claimed by eligible wearers [provided the hat has been made claimable](../hats-integrations/claiming-and-onboarding-integrations/making-hats-claimable.md).&#x20;
 
 **Can I renounce a hat if I no longer want to be part of the DAO?**
 

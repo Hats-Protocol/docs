@@ -6,10 +6,10 @@ Additional logic can be set to make hats claimable based on specific eligibility
 
 See the subpages within this section, which include guides for using the following hatter modules:
 
-{% content-ref url="making-hats-claimable.md" %}
-[making-hats-claimable.md](making-hats-claimable.md)
+{% content-ref url="../claiming-and-onboarding-integrations/making-hats-claimable.md" %}
+[making-hats-claimable.md](../claiming-and-onboarding-integrations/making-hats-claimable.md)
 {% endcontent-ref %}
 
-{% content-ref url="daohaus-moloch-v3-membership-and-share-allocation.md" %}
-[daohaus-moloch-v3-membership-and-share-allocation.md](daohaus-moloch-v3-membership-and-share-allocation.md)
+{% content-ref url="../claiming-and-onboarding-integrations/daohaus-moloch-v3-membership-and-share-allocation.md" %}
+[daohaus-moloch-v3-membership-and-share-allocation.md](../claiming-and-onboarding-integrations/daohaus-moloch-v3-membership-and-share-allocation.md)
 {% endcontent-ref %}
