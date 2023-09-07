@@ -1,8 +1,12 @@
 # ⚒ Building Hats Modules
 
-### Easy To Get Started
+This section provides an overview of how Hats modules are built and deployed into production. In the docs below, you'll learn how to create new modules and about the tools we've developed to make that easier.
 
-Our tools and docs are built in order to help developers to get started easily. Additionally, the Hats developer community is here for anyone to get technical support, answer questions and explore/share ideas. Join [this](https://t.me/+HrcKPUxaWvg3Zjhh) Hats developers channel on Telegram.
+### Developer Community
+
+For technical support, questions, and to explore/share ideas, join the [Hats Protocol Dev Chat](https://t.me/+HrcKPUxaWvg3Zjhh) on Telegram.
+
+### All About Hats Modules
 
 {% content-ref url="inside-a-hats-module/" %}
 [inside-a-hats-module](inside-a-hats-module/)
