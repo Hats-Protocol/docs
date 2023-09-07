@@ -28,5 +28,5 @@ Any address can serve as an eligibility module for a given hat. Hats Protocol su
 
 Unlike admins, eligibility modules are explicitly set as addresses, not hats. This is to avoid long, potentially illegible, chains of revocation authority that can affect wearer penalties (such as slashed stake).
 
-Eligibility modules offer a large design space for developers to extend and customize organizational infrastructure. See [Building Hats Modules](../building-hats-modules/) for more information.
+Eligibility modules offer a large design space for developers to extend and customize organizational infrastructure. See [Building Hats Modules](../hats-modules/building-hats-modules/) for more information.
 

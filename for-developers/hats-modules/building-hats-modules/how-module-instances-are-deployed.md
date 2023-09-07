@@ -1,18 +1,17 @@
 # How Module Instances Are Deployed
 
-[HatsModuleFactory](https://github.com/Hats-Protocol/hats-module/blob/main/src/HatsModuleFactory.sol) is a factory contract that creates new module instances (proxies) and supports any module that inherits from [HatsModule](https://github.com/Hats-Protocol/hats-module/blob/main/src/HatsModule.sol).&#x20;
+All contracts that inherit from [HatsModule](https://github.com/Hats-Protocol/hats-module/blob/main/src/HatsModule.sol) can be deployed as minimal proxy clones via [HatsModuleFactory](https://github.com/Hats-Protocol/hats-module/blob/main/src/HatsModuleFactory.sol), which offers several operations:
 
-Deployments:
+* create a single module instance
+* batch create multiple module instances
+* predict the address of a module instance
+* check if a module instance has already been deployed
 
-* [Goerli](https://goerli.etherscan.io/address/0x6D7E710BDbC80FC164ABA85e242E535c0A54CEc6)
-* [Optimism](https://optimistic.etherscan.io/address/0x6D7E710BDbC80FC164ABA85e242E535c0A54CEc6)
-* [Gnosis Chain](https://gnosisscan.io/address/0x6D7E710BDbC80FC164ABA85e242E535c0A54CEc6)
-
-The following sections describe the factory's functions. However, developers can use the Modules SDK in order to easily deploy new module instances and more.&#x20;
+Each of these functions can be called directly on the HatsModuleFactory contract, or they can be accessed via the [Modules SDK](../modules-sdk/) to easily deploy new module instances and more.
 
 ### Create New Instance
 
-The [createHatsModule](https://github.com/Hats-Protocol/hats-module/blob/5a69da357e70cc2e3727d6ec02097711439ec32b/src/HatsModuleFactory.sol#L69) function deploys a new proxy instance, for the provided implementation, to a deterministic address. The instance's immutable arguments are set its creation. After the instance was deployed, the function calls the `setUp` function of the module with the provided initialization data.
+The [createHatsModule](https://github.com/Hats-Protocol/hats-module/blob/5a69da357e70cc2e3727d6ec02097711439ec32b/src/HatsModuleFactory.sol#L69) function deploys a new proxy instance, for the provided implementation, to a deterministic address. The instance's immutable arguments are set its creation, and then `instance.setUp` is called with the provided initialization data.
 
 ```solidity
 function createHatsModule(
@@ -27,7 +26,7 @@ _Parameters:_
 
 * `_implementation` - The address of the implementation contract for which to deploy a clone.
 * `_hatId` - The hat for which to deploy the module.
-* `_otherImmutableArgs`: Immutable arguments to pass to the clone, packed encoded (via `abi.encodePacked`). These are additional to the ones [already included in HatsModule](inside-a-hats-module.md#immutable-arguments).
+* `_otherImmutableArgs`: Immutable arguments to pass to the clone, packed encoded (via `abi.encodePacked`). These are additional to the ones [already included in HatsModule](inside-a-hats-module/#immutable-arguments).
 * `_initData` - Encoded data (via abi.encode) to pass to the `setUp` function of the new instance.
 
 _Returns_:
@@ -63,7 +62,7 @@ _Parameters:_
 
 * `_implementations` - The addresses of the implementation contracts for which to deploy a clone.
 * `_hatIds` - The hats for which to deploy the modules.
-* `_otherImmutableArgsArray`: Immutable argumentss to pass to the clones, packed encoded (via `abi.encodePacked`). These are additional to the ones [already included in HatsModule](inside-a-hats-module.md#immutable-arguments).
+* `_otherImmutableArgsArray`: Immutable argumentss to pass to the clones, packed encoded (via `abi.encodePacked`). These are additional to the ones [already included in HatsModule](inside-a-hats-module/#immutable-arguments).
 * `_initDataArray` - Encoded data (via abi.encode) to pass to the `setUp` function of each new module instance.
 
 _Returns_:
@@ -95,7 +94,7 @@ _Parameters:_
 
 * `_implementation` - The address of the implementation contract.
 * `_hatId` - The hat for which to deploy a module.
-* `_otherImmutableArgs`: Immutable arguments to pass to the clone, packed encoded (via `abi.encodePacked`). These are additional to the ones [already included in HatsModule](inside-a-hats-module.md#immutable-arguments).
+* `_otherImmutableArgs`: Immutable arguments to pass to the clone, packed encoded (via `abi.encodePacked`). These are additional to the ones [already included in HatsModule](inside-a-hats-module/#immutable-arguments).
 
 _Returns_:
 
@@ -116,8 +115,16 @@ _Parameters:_
 
 * `_implementation` - The address of the implementation contract.
 * `_hatId` - The hat for which to deploy a module.
-* `_otherImmutableArgs`: Immutable arguments to pass to the clone, packed encoded (via `abi.encodePacked`). These are additional to the ones [already included in HatsModule](inside-a-hats-module.md#immutable-arguments).
+* `_otherImmutableArgs`: Immutable arguments to pass to the clone, packed encoded (via `abi.encodePacked`). These are additional to the ones [already included in HatsModule](inside-a-hats-module/#immutable-arguments).
 
 _Returns_:
 
 * `True` if the instance has been deployed, `false` otherwise.&#x20;
+
+### HatsModuleFactory Deployments
+
+HatsModuleFactory [v0.5.0](https://github.com/Hats-Protocol/hats-module/releases/tag/v0.5.0) is deployed to the same address on all networks: `0x6D7E710BDbC80FC164ABA85e242E535c0A54CEc6`. It is known to have been deployed to the following networks:
+
+* [Goerli](https://goerli.etherscan.io/address/0x6D7E710BDbC80FC164ABA85e242E535c0A54CEc6) testnet
+* [Optimism](https://optimistic.etherscan.io/address/0x6D7E710BDbC80FC164ABA85e242E535c0A54CEc6)
+* [Gnosis Chain](https://gnosisscan.io/address/0x6D7E710BDbC80FC164ABA85e242E535c0A54CEc6)

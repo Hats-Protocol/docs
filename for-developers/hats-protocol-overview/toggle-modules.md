@@ -9,4 +9,4 @@ Any address can serve as a hat's toggle. As with eligibility modules, Hats Proto
 
 Unlike admins — and like [eligibility modules](eligibility-modules.md), toggle modules are explicitly set as addresses, not Hats.
 
-Toggle modules offer a large design space for developers to extend and customize organizational infrastructure. See [Building Hats Modules](../building-hats-modules/) for more information.
+Toggle modules offer a large design space for developers to extend and customize organizational infrastructure. See [Building Hats Modules](../hats-modules/building-hats-modules/) for more information.
