@@ -95,8 +95,8 @@
 * [🧩 Hats Modules](for-developers/hats-modules/README.md)
   * [🔌 Modules SDK](for-developers/hats-modules/modules-sdk/README.md)
     * [Getting Started](for-developers/hats-modules/modules-sdk/getting-started.md)
-    * [Get Available Modules](for-developers/hats-modules/modules-sdk/get-available-modules.md)
-    * [Create New Instance](for-developers/hats-modules/modules-sdk/create-new-instance.md)
+    * [Get Available Modules](for-developers/modules-sdk/get-available-modules.md)
+    * [Create New Instance](for-developers/modules-sdk/create-new-instance.md)
     * [Utilities](for-developers/hats-modules/modules-sdk/utilities.md)
   * [⚒ Building Hats Modules](for-developers/hats-modules/building-hats-modules/README.md)
     * [Inside a Hats Module](for-developers/hats-modules/building-hats-modules/inside-a-hats-module/README.md)
@@ -106,7 +106,7 @@
     * [Creating New Modules](for-developers/hats-modules/building-hats-modules/creating-new-modules.md)
     * [How Module Instances Are Deployed](for-developers/hats-modules/building-hats-modules/how-module-instances-are-deployed.md)
     * [Modules Registry](for-developers/hats-modules/building-hats-modules/modules-registry.md)
-    * [About Module Chains](for-developers/hats-modules/building-hats-modules/about-module-chains.md)
+    * [About Module Chains](for-developers/building-hats-modules/about-module-chains.md)
 * [🌐 Hats Security Audits](for-developers/hats-security-audits.md)
 
 ## Legal

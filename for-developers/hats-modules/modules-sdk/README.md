@@ -12,12 +12,12 @@ For documentation about creating new Hats Modules, click [here](../building-hats
 [getting-started.md](getting-started.md)
 {% endcontent-ref %}
 
-{% content-ref url="get-available-modules.md" %}
-[get-available-modules.md](get-available-modules.md)
+{% content-ref url="../../modules-sdk/get-available-modules.md" %}
+[get-available-modules.md](../../modules-sdk/get-available-modules.md)
 {% endcontent-ref %}
 
-{% content-ref url="create-new-instance.md" %}
-[create-new-instance.md](create-new-instance.md)
+{% content-ref url="../../modules-sdk/create-new-instance.md" %}
+[create-new-instance.md](../../modules-sdk/create-new-instance.md)
 {% endcontent-ref %}
 
 {% content-ref url="utilities.md" %}

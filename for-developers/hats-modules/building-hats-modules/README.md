@@ -24,6 +24,6 @@ For technical support, questions, and to explore/share ideas, join the [Hats Pro
 [modules-registry.md](modules-registry.md)
 {% endcontent-ref %}
 
-{% content-ref url="about-module-chains.md" %}
-[about-module-chains.md](about-module-chains.md)
+{% content-ref url="../../building-hats-modules/about-module-chains.md" %}
+[about-module-chains.md](../../building-hats-modules/about-module-chains.md)
 {% endcontent-ref %}
