@@ -5,11 +5,16 @@ The SDK contains methods to get the available modules together with all the nece
 ```typescript
 {
   name: string; // module's name 
-  description: string; // short description
-  github: { // module's source code location 
-    owner: string;
-    repo: string;
-  };
+  details: string[]; // module's details, separated to paragraphs
+  links: { // relevant links, including module's source code
+    label: string; // link's title/description
+    link: string; // link's URL
+  }[];
+  parameters: { // module's parameters to display
+    label: string; // parameter's title/description
+    functionName: string; // function to query in order to get the paramaeter's value
+    displayType: string; // type of value for display purpose
+  }[];
   type: { // type of module
     eligibility: boolean;
     toggle: boolean;
@@ -20,18 +25,20 @@ The SDK contains methods to get the available modules together with all the nece
     chainId: string;
     block: string;
   }[];
-  args: 
+  creationArgs: 
     immutable: { // immutable args for new module instance creation
       name: string; // arg's name
       description: string; // short description
       type: string; // solidity type (e.g. "uint256")
       example: unknown; // example arg 
+      displayType: string; // type of value for display purpose
     }[];
     mutable: {
       name: string; // arg's name
       description: string; // short description
       type: string; // solidity type (e.g. "uint256")
       example: unknown; // example arg 
+      displayType: string; // type of value for display purpose
     }[];
   };
   abi: Abi; // module's ABI
@@ -148,34 +155,25 @@ _**Response**_:
 
 The module that matches the provided address, or `undefined` in case no matching module was found.
 
-### <mark style="color:purple;">getFunctionsInModule</mark>
+### <mark style="color:purple;">getModuleByInstance</mark>
 
-Get a module's functions from its ABI.
+Get the module object of an instance.
 
 ```typescript
-const module = hatsModulesClient.getFunctionsInModule(moduleId);
+const module = await hatsModulesClient.getModuleByInstance(address);
 ```
 
 _**Arguments**_:
 
 ```typescript
-moduleId: string
+address: `0x${string}`
 ```
 
-`moduleId` - Module's ID.
+`address` - Module's instance address.
 
 _**Response**_:
 
-```typescript
-{
-  name: string;
-  type: "write" | "read";
-  inputs: { name: string | undefined; type: string }[];
-}[]
-```
+<pre class="language-typescript"><code class="lang-typescript"><strong>Module | undefined
+</strong></code></pre>
 
-An array of objects, each containing a function's information:
-
-* `name` - The function's name.
-* `type` - "read" for "view" and "pure" functions, "write" otherwise.
-* `inputs` - Array of inputs for the function. For each input, contains its name, and its Solidity type.
+The module that matches the provided address, or `undefined` in case no matching module was found.

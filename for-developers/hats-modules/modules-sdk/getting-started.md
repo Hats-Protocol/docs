@@ -26,7 +26,6 @@ import { HatsModulesClient } from "@hatsprotocol/modules-sdk";
 const hatsModulesClient = new HatsModulesClient({
     publicClient,
     walletClient,
-    registryToken,
 });
 ```
 
@@ -36,13 +35,11 @@ _**Arguments**_:
 {
     publicClient: PublicClient;
     walletClient: WalletClient;
-    registryToken: string
 }
 ```
 
 * `publicClient` - A Viem Public Client, used for onchain read operations.
 * `walletClient` - A Viem Wallet Client, used for onchain write operations.&#x20;
-* `registryToken` - A GitHub token, used to fetch from the [modules registry,](https://github.com/Hats-Protocol/modules-registry) through GitHub's API.
 
 ### _Prepare_
 

@@ -16,8 +16,8 @@ For documentation about creating new Hats Modules, click [here](../building-hats
 [get-available-modules.md](../../modules-sdk/get-available-modules.md)
 {% endcontent-ref %}
 
-{% content-ref url="../../modules-sdk/create-new-instance.md" %}
-[create-new-instance.md](../../modules-sdk/create-new-instance.md)
+{% content-ref url="create-new-instance-s.md" %}
+[create-new-instance-s.md](create-new-instance-s.md)
 {% endcontent-ref %}
 
 {% content-ref url="utilities.md" %}
