@@ -14,7 +14,13 @@ npm:
 npm install @hatsprotocol/modules-sdk viem@1.9.5
 ```
 
-The SDK uses Viem in order to interact with the various chains and includes it as a peer dependency.&#x20;
+The SDK uses Viem in order to interact with the various chains and includes it as a peer dependency.
+
+{% hint style="info" %}
+It is required to use the exact Viem version that the SDK is using internally (v1.9.5). Otherwise, Viem's Typescript types might be incompatible between the SDK and its user. Check their documentation [here](https://viem.sh/docs/typescript.html#typescript) to learn more.&#x20;
+
+One possible approach is having a separate Viem instance, using package aliasing.
+{% endhint %}
 
 ### _HatsModulesClient Initialization_
 

@@ -1,6 +1,8 @@
 # Get Available Modules
 
-The SDK contains methods to get the available modules together with all the necessary information about each one, as a Module object:
+The following functions are used in order to get available modules, as exist in the [Modules Registry](../hats-modules/building-hats-modules/modules-registry.md).
+
+Modules are represented as Module objects, with the following type:
 
 ```typescript
 {

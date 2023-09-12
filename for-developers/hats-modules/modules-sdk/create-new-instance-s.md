@@ -27,10 +27,10 @@ _**Arguments**_:
 ```
 
 * `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
-* `moduleId` - The module ID.
+* `moduleId` - The module ID (`keccak256` hash of the module object).
 * `hatId` - The hat ID for which the module is created.
-* `immutableArgs` - The module's immutable args.
-* `mutableArgs` - The module's mutable args.
+* `immutableArgs` - The module's immutable args. The arguments should be in the same order as in the Module object.
+* `mutableArgs` - The module's mutable args. The arguments should be in the same order as in the Module object.
 
 _**Response**_:
 
@@ -75,10 +75,10 @@ _**Arguments**_:
 ```
 
 * `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
-* `moduleIds` - The module IDs.
+* `moduleIds` - The module IDs (`keccak256` hash of the module object).
 * `hatIds` - The hat IDs for which the modules are created.
-* `immutableArgsArray` - Each module's immutable arguments.
-* `mutableArgsArray` - Each module's mutable arguments.
+* `immutableArgsArray` - Each module's immutable arguments. For each module, the arguments should be in the same order as in the Module object.
+* `mutableArgsArray` - Each module's mutable arguments. For each module, the arguments should be in the same order as in the Module object.
 
 _**Response**_:
 

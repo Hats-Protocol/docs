@@ -97,6 +97,7 @@
     * [Getting Started](for-developers/hats-modules/modules-sdk/getting-started.md)
     * [Get Available Modules](for-developers/modules-sdk/get-available-modules.md)
     * [Create New Instance/s](for-developers/hats-modules/modules-sdk/create-new-instance-s.md)
+    * [Composing Modules](for-developers/hats-modules/modules-sdk/composing-modules.md)
     * [Interact With Instances](for-developers/hats-modules/modules-sdk/interact-with-instances.md)
     * [Utilities](for-developers/hats-modules/modules-sdk/utilities.md)
   * [⚒ Building Hats Modules](for-developers/hats-modules/building-hats-modules/README.md)
