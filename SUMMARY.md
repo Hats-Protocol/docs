@@ -100,6 +100,7 @@
     * [Composing Modules](for-developers/hats-modules/modules-sdk/composing-modules.md)
     * [Interact With Instances](for-developers/hats-modules/modules-sdk/interact-with-instances.md)
     * [Utilities](for-developers/hats-modules/modules-sdk/utilities.md)
+    * [Types](for-developers/hats-modules/modules-sdk/types.md)
   * [⚒ Building Hats Modules](for-developers/hats-modules/building-hats-modules/README.md)
     * [Inside a Hats Module](for-developers/hats-modules/building-hats-modules/inside-a-hats-module/README.md)
       * [Immutable Arguments](for-developers/hats-modules/building-hats-modules/inside-a-hats-module/immutable-arguments.md)

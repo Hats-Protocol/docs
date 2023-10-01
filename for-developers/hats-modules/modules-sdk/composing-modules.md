@@ -6,8 +6,6 @@ The following functions create new Eligibility/Toggle modules that compose other
 
 Create a new eligibilities chain module.&#x20;
 
-The function will create a new Eligibility module, which will compose the logic of the provide&#x20;
-
 ```typescript
 const createInstanceResult = await hatsModulesClient.createEligibilitiesChain({
     account,
