@@ -49,7 +49,7 @@ _**Arguments**_:
 
 ### _Prepare_
 
-The `prepare` function fetches from the [modules registry](https://github.com/Hats-Protocol/modules-registry). This step is necessary in order to be able to use the client. Additionally, the function accepts an optional `modules` input , in order to support user's caching. If provided, then the client will use the given modules instead of fetching from the registry.
+The `prepare` function fetches from the [modules registry](https://github.com/Hats-Protocol/modules-registry). This step is necessary in order to be able to use the client. Additionally, the function accepts an optional `registry` input , in order to support user's caching. If provided, then the client will use the given modules instead of fetching from the registry.
 
 ```typescript
 await hatsModulesClient.prepare();
@@ -58,7 +58,7 @@ await hatsModulesClient.prepare();
 _**Arguments**_:
 
 ```typescript
-modules?: Module[]
+registry?: Registry
 ```
 
-`modules` - Optional array of module objects to use, instead of fetching from the registry.
+`registry` - Optional [registry object](types.md#registry) to use, instead of fetching from the current registry.

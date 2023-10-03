@@ -4,6 +4,74 @@ The following functions provide utilities to support the interaction with module
 
 To get the module's object from an instance address, use [this function](../../modules-sdk/get-available-modules.md#getmodulebyinstance).
 
+### <mark style="color:purple;">predictHatsModuleAddress</mark>
+
+Predict a module's address before/after it was created, using its creation arguments.
+
+```typescript
+const predictedAddress = await hatsModulesClient.predictHatsModuleAddress({
+    moduleId,
+    hatId,
+    immutableArgs,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+   moduleId: string;
+   hatId: bigint;
+   immutableArgs: unknown[];
+}
+```
+
+* `moduleId` - Module's ID.
+* `hatId` - The target hat ID, as provided to the [instance creation function](create-new-instance-s.md#createnewinstance).
+* `immutableArgs` - The module's immutable args, as provided to the [instance creation function](create-new-instance-s.md#createnewinstance).
+
+_**Response**_:
+
+```typescript
+`0x${string}`
+```
+
+The predicted module address.
+
+### <mark style="color:purple;">isModuleDeployed</mark>
+
+Check if a module is already deployed, using its creation arguments.
+
+```typescript
+const isDeployed = await hatsModulesClient.isModuleDeployed({
+    moduleId,
+    hatId,
+    immutableArgs,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+   moduleId: string;
+   hatId: bigint;
+   immutableArgs: unknown[];
+}
+```
+
+* `moduleId` - Module's ID.
+* `hatId` - The target hat ID, as provided to the [instance creation function](create-new-instance-s.md#createnewinstance).
+* `immutableArgs` - The module's immutable args, as provided to the [instance creation function](create-new-instance-s.md#createnewinstance).
+
+_**Response**_:
+
+```typescript
+boolean
+```
+
+`true` if the module was deployed, `false` otherwise.
+
 ### <mark style="color:purple;">getInstanceParameters</mark>
 
 Get a module's instance live parameters.&#x20;
