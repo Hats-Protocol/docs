@@ -20,8 +20,8 @@ Wherever you begin, the docs found here will walk you through it.
 [creating-my-first-hat.md](using-hats/creating-my-first-hat.md)
 {% endcontent-ref %}
 
-{% content-ref url="using-hats/admins-creating-issuing-and-revising-hats.md" %}
-[admins-creating-issuing-and-revising-hats.md](using-hats/admins-creating-issuing-and-revising-hats.md)
+{% content-ref url="using-hats/setting-accountabilities/admins-creating-issuing-and-revising-hats.md" %}
+[admins-creating-issuing-and-revising-hats.md](using-hats/setting-accountabilities/admins-creating-issuing-and-revising-hats.md)
 {% endcontent-ref %}
 
 {% content-ref url="using-hats/what-hats-do-i-need.md" %}
@@ -36,16 +36,16 @@ Wherever you begin, the docs found here will walk you through it.
 [adding-wearers.md](using-hats/adding-wearers.md)
 {% endcontent-ref %}
 
-{% content-ref url="using-hats/connecting-hats-w-authorities-and-responsibilities/" %}
-[connecting-hats-w-authorities-and-responsibilities](using-hats/connecting-hats-w-authorities-and-responsibilities/)
+{% content-ref url="using-hats/connecting-hats-with-authorities/" %}
+[connecting-hats-with-authorities](using-hats/connecting-hats-with-authorities/)
 {% endcontent-ref %}
 
-{% content-ref url="using-hats/revocation-and-eligibility-requirements-for-wearers.md" %}
-[revocation-and-eligibility-requirements-for-wearers.md](using-hats/revocation-and-eligibility-requirements-for-wearers.md)
+{% content-ref url="using-hats/setting-accountabilities/eligibility-requirements-for-wearers.md" %}
+[eligibility-requirements-for-wearers.md](using-hats/setting-accountabilities/eligibility-requirements-for-wearers.md)
 {% endcontent-ref %}
 
-{% content-ref url="using-hats/deactivating-and-reactivating-hats.md" %}
-[deactivating-and-reactivating-hats.md](using-hats/deactivating-and-reactivating-hats.md)
+{% content-ref url="using-hats/setting-accountabilities/toggle-activating-and-deactivating-hats.md" %}
+[toggle-activating-and-deactivating-hats.md](using-hats/setting-accountabilities/toggle-activating-and-deactivating-hats.md)
 {% endcontent-ref %}
 
 {% content-ref url="using-hats/linking-trees-together.md" %}

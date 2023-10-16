@@ -8,10 +8,10 @@ You can think of it this way: token gates have two parts, the token and the gate
 
 <figure><img src="../../.gitbook/assets/Group 167.png" alt=""><figcaption></figcaption></figure>
 
-{% content-ref url="types-of-hat-powered-authorities.md" %}
-[types-of-hat-powered-authorities.md](types-of-hat-powered-authorities.md)
+{% content-ref url="../connecting-hats-w-authorities-and-responsibilities/types-of-hat-powered-authorities.md" %}
+[types-of-hat-powered-authorities.md](../connecting-hats-w-authorities-and-responsibilities/types-of-hat-powered-authorities.md)
 {% endcontent-ref %}
 
-{% content-ref url="connecting-authorities-to-hats/" %}
-[connecting-authorities-to-hats](connecting-authorities-to-hats/)
+{% content-ref url="../connecting-hats-w-authorities-and-responsibilities/connecting-authorities-to-hats/" %}
+[connecting-authorities-to-hats](../connecting-hats-w-authorities-and-responsibilities/connecting-authorities-to-hats/)
 {% endcontent-ref %}

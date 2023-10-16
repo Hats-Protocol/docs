@@ -9,7 +9,7 @@ While there are many ways you can deploy Hats to support your decentralized work
 1. Creating a new tree
 2. Creating your first child hat
 
-After you've created a new Hats tree and your first child hat, you will be ready to [add wearers](adding-wearers.md) to give all wearers of the hat the [authorities](connecting-hats-w-authorities-and-responsibilities/) and accountabilities they need to get things done.
+After you've created a new Hats tree and your first child hat, you will be ready to [add wearers](adding-wearers.md) to give all wearers of the hat the [authorities](connecting-hats-with-authorities/) and accountabilities they need to get things done.
 
 Following are instructions for creating a new Hats tree and your first child hat.
 
@@ -45,7 +45,7 @@ Once your new tree is created with the tree's Top Hat minted to an address you c
 
 <figure><img src="../.gitbook/assets/Create Hat.png" alt=""><figcaption></figcaption></figure>
 
-* You'll be able to [set the hat's basic details](setting-a-hats-basic-properties.md), [add wearers](adding-wearers.md), create/add [eligibility](revocation-and-eligibility-requirements-for-wearers.md) and/or [toggle](deactivating-and-reactivating-hats.md) modules and more. As long as you keep the hat [mutable](setting-a-hats-basic-properties.md#editable-mutability) for now, you can always change these properties later as long as you're wearing a hat that is an admin of this new hat (such as the Top Hat, which is an admin for all other hats in the tree).&#x20;
+* You'll be able to [set the hat's basic details](setting-a-hats-basic-properties.md), [add wearers](adding-wearers.md), create/add [eligibility](setting-accountabilities/eligibility-requirements-for-wearers.md) and/or [toggle](setting-accountabilities/toggle-activating-and-deactivating-hats.md) modules and more. As long as you keep the hat [mutable](setting-a-hats-basic-properties.md#editable-mutability) for now, you can always change these properties later as long as you're wearing a hat that is an admin of this new hat (such as the Top Hat, which is an admin for all other hats in the tree).&#x20;
 
 <figure><img src="../.gitbook/assets/New Hat Details.png" alt=""><figcaption></figcaption></figure>
 
@@ -54,5 +54,5 @@ Once your new tree is created with the tree's Top Hat minted to an address you c
 
 **Congratulations, you've created a new Hats tree and your first child hat!** You can now continue to create additional hats throughout the tree. See [What Hats Do I Need?](what-hats-do-i-need.md) for suggestions on which hats your group may need.
 
-Each of the hats you create can then be [connected with authorities](connecting-hats-w-authorities-and-responsibilities/) and [minted to one or more wearers](adding-wearers.md) to give them the authorities associated with those hats.&#x20;
+Each of the hats you create can then be [connected with authorities](connecting-hats-with-authorities/) and [minted to one or more wearers](adding-wearers.md) to give them the authorities associated with those hats.&#x20;
 

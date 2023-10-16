@@ -6,8 +6,8 @@ Hatter contracts can serve as the admin or one or more hats to implement specifi
 
 See the subpages within this section, which include guides for using the following hatter modules:
 
-{% content-ref url="multi-claims-hatter.md" %}
-[multi-claims-hatter.md](multi-claims-hatter.md)
+{% content-ref url="../claiming-and-onboarding-integrations/making-hats-claimable.md" %}
+[making-hats-claimable.md](../claiming-and-onboarding-integrations/making-hats-claimable.md)
 {% endcontent-ref %}
 
 {% content-ref url="../claiming-and-onboarding-integrations/daohaus-moloch-v3-membership-and-share-allocation.md" %}

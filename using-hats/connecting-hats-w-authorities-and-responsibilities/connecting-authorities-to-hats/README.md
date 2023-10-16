@@ -10,15 +10,15 @@ At Guild.xyz, for example, which provides token-gating for Discord, Telegram, Gi
 
 To connect a hat to a token-gate, you will need to add an NFT (ERC1155) requirement. Then, you'll need to enter two details:
 
-1. [The Hats Protocol contract address](hats-protocol-contract-addresses.md), and
-2. [The Hats token ID](finding-a-hats-token-id.md) (sometimes called a Custom ID) for the appropriate hat. This token ID will be the same for all wearers of a single hat.
+1. [The Hats Protocol contract address](../../connecting-hats-with-authorities/hats-protocol-contract-addresses.md), and
+2. [The Hats token ID](../../connecting-hats-with-authorities/finding-a-hats-token-id.md) (sometimes called a Custom ID) for the appropriate hat. This token ID will be the same for all wearers of a single hat.
 
 See below for these details.
 
-{% content-ref url="hats-protocol-contract-addresses.md" %}
-[hats-protocol-contract-addresses.md](hats-protocol-contract-addresses.md)
+{% content-ref url="../../connecting-hats-with-authorities/hats-protocol-contract-addresses.md" %}
+[hats-protocol-contract-addresses.md](../../connecting-hats-with-authorities/hats-protocol-contract-addresses.md)
 {% endcontent-ref %}
 
-{% content-ref url="finding-a-hats-token-id.md" %}
-[finding-a-hats-token-id.md](finding-a-hats-token-id.md)
+{% content-ref url="../../connecting-hats-with-authorities/finding-a-hats-token-id.md" %}
+[finding-a-hats-token-id.md](../../connecting-hats-with-authorities/finding-a-hats-token-id.md)
 {% endcontent-ref %}

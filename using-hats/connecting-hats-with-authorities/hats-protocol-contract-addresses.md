@@ -4,6 +4,6 @@ Hats Protocol has the same contract address for each chain is it deployed to (EN
 
 Visit the page linked below to access a complete list of the chains Hats Protocol is currently deployed to along with their associated contracts.
 
-{% content-ref url="../../hats-protocol-supported-chains.md" %}
-[hats-protocol-supported-chains.md](../../hats-protocol-supported-chains.md)
+{% content-ref url="../hats-protocol-supported-chains.md" %}
+[hats-protocol-supported-chains.md](../hats-protocol-supported-chains.md)
 {% endcontent-ref %}

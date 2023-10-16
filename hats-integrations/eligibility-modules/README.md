@@ -6,9 +6,9 @@ description: Requirements for Wearers
 
 Hats Modules are programmable extensions for roles. Modules can be connected to hats to expand their functionality, such as enabling automatic granting and revocation of hats (and their associated permissions) based on specific conditions.&#x20;
 
-For more details on Hats Modules, including what they can unlock and how builders can create new modules, [see this blog post](https://hats.mirror.xyz/xAk\_yb7dDL1OLBx8nq47Ni7V1SuiC6L6B-49u7vz520) and follow this [link](../../using-hats/revocation-and-eligibility-requirements-for-wearers.md) for a general guide about Eligibility Modules.
+For more details on Hats Modules, including what they can unlock and how builders can create new modules, [see this blog post](https://hats.mirror.xyz/xAk\_yb7dDL1OLBx8nq47Ni7V1SuiC6L6B-49u7vz520) and follow this [link](../../using-hats/setting-accountabilities/eligibility-requirements-for-wearers.md) for a general guide about Eligibility Modules.
 
-See the subpages within this section for detailed guides for specific eligibility modules you can use with Hats:
+See the subpages within this section for detailed guides for specific eligibility modules you can currently use with Hats:
 
 {% content-ref url="erc20-eligibility.md" %}
 [erc20-eligibility.md](erc20-eligibility.md)
@@ -42,7 +42,14 @@ See the subpages within this section for detailed guides for specific eligibilit
 [allow-list-eligibility.md](allow-list-eligibility.md)
 {% endcontent-ref %}
 
-Eligibility modules can also be combined with claimable hats to enable addresses to claim and wear a given hat _only if_ they fulfill specific eligibility criteria. For more information, check out the guide [here](../hatter-modules/multi-claims-hatter.md).
+Eligibility modules can also be combined with claimable hats to enable addresses to claim and wear a given hat _only if_ they fulfill specific eligibility criteria. For more information, check out the guide [here](../claiming-and-onboarding-integrations/making-hats-claimable.md).
+
+## **Modules Coming Soon**
+
+* Onchain signature of an agreement
+* Attestations
+* Combine multiple criteria!
+* Request a new module [here](https://hatsprotocol.deform.cc/getintouch/) or [create your own!](https://docs.hatsprotocol.xyz/for-developers/hats-modules)
 
 ## Digging Deeper
 

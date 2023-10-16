@@ -2,7 +2,7 @@
 
 A hat’s eligibility module is an address that determines which addresses are eligible to wear that hat, and can revoke the hat if the wearer is no longer eligible. Eligibility modules can be humanistic (as in an EOA or multisig) or mechanistic (as in a contract with custom logic) to automatically and instantly revoke the hat based on pre-defined triggers.
 
-<figure><img src="../.gitbook/assets/Screenshot 2023-06-28 at 3.15.24 PM.png" alt="" width="300"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Screenshot 2023-06-28 at 3.15.24 PM.png" alt="" width="300"><figcaption></figcaption></figure>
 
 ## **Eligibility Criteria Examples**
 
@@ -31,7 +31,7 @@ Coming soon:
 * Locate and select the hat
 * Open the "Revocation & Eligibility" section
 
-<figure><img src="../.gitbook/assets/Revocation And Eligibility.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Revocation And Eligibility.png" alt=""><figcaption></figcaption></figure>
 
 You can choose between two types of modules:
 
@@ -45,7 +45,7 @@ You can choose between two types of modules:
 
 * Choose "Automatically" in order to set a mechanistic type of eligibility (e.g. ownership of a token), enabling the automatic granting and revocation of hats (and their associated permissions) based on specific conditions&#x20;
 
-<figure><img src="../.gitbook/assets/Create Module (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Create Module (1).png" alt=""><figcaption></figcaption></figure>
 
 ## Hats Modules: Programmable Extensions for Roles & Permissions
 
@@ -55,18 +55,18 @@ To deploy an eligibility module for a given hat, first open the "Revocation and 
 
 * Choose "Create new Module"
 
-<figure><img src="../.gitbook/assets/Create New Module.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Create New Module.png" alt=""><figcaption></figcaption></figure>
 
 * Choose one of the available modules ([see module descriptions here](https://docs.hatsprotocol.xyz/hats-integrations/eligibility-modules)). As an example, we'll use the ERC20 Eligibility module below, which defines eligibility by ownership of a minimum balance of a chosen amount of an ERC20 token
 
-<figure><img src="../.gitbook/assets/ERC20 Eligibility.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/ERC20 Eligibility.png" alt=""><figcaption></figcaption></figure>
 
 * Choose the module-specific parameters
 * Choose "Deploy & Return" to deploy the module and return to the hat edit form.&#x20;
 
 You'll be able to continue making any edits to the hat(s) and deploy them once ready.
 
-Go [here](../hats-integrations/eligibility-modules/) to check the complete list of available Eligibility modules, including a step-by-step creation guide for each. Additionally, it includes a guide on how to make hats claimable by eligible wearers.
+Go [here](../../hats-integrations/eligibility-modules/) to check the complete list of available Eligibility modules, including a step-by-step creation guide for each. Additionally, it includes a guide on how to make hats claimable by eligible wearers.
 
 ## Unsure of Where to Start?
 
@@ -78,4 +78,4 @@ For any hats you're still not sure about, we recommend setting their eligibility
 
 ## Digging Deeper
 
-For more technical details on how Hats eligibility modules work, see the [Eligibility Modules](../for-developers/hats-protocol-overview/eligibility-modules.md) page within the "For Developers" section of these docs.
+For more technical details on how Hats eligibility modules work, see the [Eligibility Modules](../../for-developers/hats-protocol-overview/eligibility-modules.md) page within the "For Developers" section of these docs.

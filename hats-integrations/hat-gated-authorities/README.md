@@ -10,7 +10,7 @@ You can think of it this way: token gates have two parts, the token and the gate
 
 <figure><img src="../../.gitbook/assets/Group 167 (2).png" alt=""><figcaption></figcaption></figure>
 
-For general information on types of authorities and how to connect authorities to specific hats, see the guide for [Connecting Hats With Authorities](../../using-hats/connecting-hats-w-authorities-and-responsibilities/).
+For general information on types of authorities and how to connect authorities to specific hats, see the guide for [Connecting Hats With Authorities](../../using-hats/connecting-hats-with-authorities/).
 
 To connect a hat to a token-gate, you will need to add an NFT (ERC-1155) requirement. Then, you'll need to enter two details:
 
@@ -23,12 +23,12 @@ See below for these details.
 
 To connect specific hats to token gates, you will need the Hats Protocol contract address as well as the specific token IDs for the relevant hats you want to associated with that token gate.&#x20;
 
-{% content-ref url="../../using-hats/connecting-hats-w-authorities-and-responsibilities/connecting-authorities-to-hats/hats-protocol-contract-addresses.md" %}
-[hats-protocol-contract-addresses.md](../../using-hats/connecting-hats-w-authorities-and-responsibilities/connecting-authorities-to-hats/hats-protocol-contract-addresses.md)
+{% content-ref url="../../using-hats/connecting-hats-with-authorities/hats-protocol-contract-addresses.md" %}
+[hats-protocol-contract-addresses.md](../../using-hats/connecting-hats-with-authorities/hats-protocol-contract-addresses.md)
 {% endcontent-ref %}
 
-{% content-ref url="../../using-hats/connecting-hats-w-authorities-and-responsibilities/connecting-authorities-to-hats/finding-a-hats-token-id.md" %}
-[finding-a-hats-token-id.md](../../using-hats/connecting-hats-w-authorities-and-responsibilities/connecting-authorities-to-hats/finding-a-hats-token-id.md)
+{% content-ref url="../../using-hats/connecting-hats-with-authorities/finding-a-hats-token-id.md" %}
+[finding-a-hats-token-id.md](../../using-hats/connecting-hats-with-authorities/finding-a-hats-token-id.md)
 {% endcontent-ref %}
 
 ## Guides for Connecting Authorities to Hats
