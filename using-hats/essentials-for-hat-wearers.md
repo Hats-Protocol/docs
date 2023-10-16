@@ -12,7 +12,7 @@ We hope this hat gives you the context, authorities, and accountabilities you ne
 
 ## **What are hats?**
 
-A hat is a "role in a box". More specifically, hats are programmable roles which can be imbued with responsibilities, [authorities](connecting-hats-with-authorities/), and [accountabilities](setting-accountabilities/). [Roles](what-hats-do-i-need.md) can be big and ongoing, or small and discrete.&#x20;
+A hat is a "role in a box". More specifically, hats are programmable roles which can be imbued with responsibilities, [authorities](connecting-hats-w-authorities-and-responsibilities/), and accountabilities. [Roles](what-hats-do-i-need.md) can be big and ongoing, or small and discrete.&#x20;
 
 <figure><img src="../.gitbook/assets/Screenshot 2023-08-28 at 11.53.33 AM.png" alt=""><figcaption></figcaption></figure>
 
@@ -40,7 +40,7 @@ Your hat is an admin for any hats in the direct lineage below it.
 
 <figure><img src="../.gitbook/assets/image (1).png" alt="" width="375"><figcaption><p>Admin relationships</p></figcaption></figure>
 
-As an admin, you can change a hat's name, image, description, max supply, authorities, and accountabilities, grant the hat to new wearers, and transfer the hat from one wearer to another -- but ONLY if the hat is [mutable](setting-hat-properties.md#mutability). When hats are [immutable](setting-hat-properties.md#mutability), your admin powers are diminished.
+As an admin, you can change a hat's name, image, description, max supply, authorities, and accountabilities, grant the hat to new wearers, and transfer the hat from one wearer to another -- but ONLY if the hat is [mutable](setting-a-hats-basic-properties.md#editable-mutability). When hats are immutable, your admin powers are diminished.
 
 To see which hats your hat is an admin of, click on your hat in the My Hats page and take a look at the tree within which your hat exists.
 
@@ -54,7 +54,7 @@ Similarly, the hats that are direct ancestors of your hat have admin authority o
 
 ## **Can I transfer my hat?**
 
-No. Hats are nontransferrable by the wearer. Hats can only be transferred or revoked by its [admin hats](setting-accountabilities/admins-creating-issuing-and-revising-hats.md) as well as the [accountability addresses](setting-accountabilities/) for your specific hat.&#x20;
+No. Hats are nontransferrable by the wearer. Hats can only be transferred or revoked by its [admin hats](admins-creating-issuing-and-revising-hats.md) as well as the accountability addresses for your specific hat.&#x20;
 
 Just like you can't transfer or sell your job online without your organization's approval, you can't transfer your hats unilaterally either.
 
@@ -62,7 +62,7 @@ Just like you can't transfer or sell your job online without your organization's
 
 ## **How do I keep this hat?**
 
-To keep your hat, you'll need to fulfill whatever responsibilities are associated with your hat, as well as remain eligible according to [the accountabilities embedded in your hat](setting-accountabilities/eligibility-requirements-for-wearers.md). Accountabilities could include things like holding certain tokens or NFTs in your wallet, staking, winning an organizational election, or agreeing to specific conditions. If you don't follow these accountabilities, your hat could be manually or automatically revoked or deactivated.&#x20;
+To keep your hat, you'll need to fulfill whatever responsibilities are associated with your hat, as well as remain eligible according to [the accountabilities embedded in your hat](revocation-and-eligibility-requirements-for-wearers.md). Accountabilities could include things like holding certain tokens or NFTs in your wallet, staking, winning an organizational election, or agreeing to specific conditions. If you don't follow these accountabilities, your hat could be manually or automatically revoked or deactivated.&#x20;
 
 To see the accountabilities embedded in your hat, view your hat's information panel or contact your organization.
 
@@ -70,7 +70,7 @@ To see the accountabilities embedded in your hat, view your hat's information pa
 
 Yes! As a hat wearer you can also create new child hats -- these are new hats directly beneath yours that you can set up and manage however you wish.&#x20;
 
-But take note! Any hats that are the admin of your hat will ALSO be the admin of the child hats you create. Additionally, if you are not the sole wearer of your hat (as hats can be worn by multiple addresses up to the [max supply](setting-hat-properties.md#max-supply)), then any of the other wearers of your hat will also have admin powers over the child hat you created.&#x20;
+But take note! Any hats that are the admin of your hat will ALSO be the admin of the child hats you create. Additionally, if you are not the sole wearer of your hat (as hats can be worn by multiple addresses up to the [max supply](adding-wearers.md#max-wearers)), then any of the other wearers of your hat will also have admin powers over the child hat you created.&#x20;
 
 If you'd rather ensure that you are the only admin over the hats you create, it's probably best [to create a new Hats tree](creating-my-first-hat.md) or create a new child hat that you then make immutable.
 

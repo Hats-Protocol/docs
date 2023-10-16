@@ -8,4 +8,17 @@ The module's code is open source and is available [here](https://github.com/Hats
 
 ## **Using the** Hat-Wearing **Eligibility Module**
 
-_This eligibility module is currently in beta. Contact us at support \[at] hatsprotocol \[dot] xyz if you want to explore this module, or check out the_ Hat-Wearing eligibility _Github repo_ [_here_](https://github.com/Hats-Protocol/hat-wearing-eligibility/tree/main)_._
+* Go to the tree that includes the hat you wish to create the module for
+* Select "Edit Tree"
+* Locate and select the hat
+* Open the "Revocation & Eligibility" section
+
+<figure><img src="../../.gitbook/assets/Revocation And Eligibility Zoom.png" alt=""><figcaption></figcaption></figure>
+
+* Choose "Automatically" and then choose "Create new Module". This will open the module creation form
+* Choose "Hat Wearing Eligibility" in the module type
+
+<figure><img src="../../.gitbook/assets/Hat Wearing Eligibility.png" alt=""><figcaption></figcaption></figure>
+
+* Fill in the module-specific parameters
+* Choose "Deploy & Return" to deploy the module and return to the hat edit form

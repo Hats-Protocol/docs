@@ -24,6 +24,19 @@ Any JokeRace election can be used for any hat, even elections that were held in 
 
 The top 5 most voted candidates in the election are the ones eligible for the role, for a term period of 1 year, as defined in the module.
 
-## **Using the JokeRace Eligibility Integration**&#x20;
+## **Using the JokeRace Eligibility Module**&#x20;
 
-_Contact us at support \[at] hatsprotocol \[dot] xyz if you want to explore this module. You can also check out the open source repository_ [_here_](https://github.com/Hats-Protocol/jokerace-eligibility)_._
+* Go to the tree that includes the hat you wish to create the module for
+* Select "Edit Tree"
+* Locate and select the hat
+* Open the "Revocation & Eligibility" section
+
+<figure><img src="../../.gitbook/assets/Revocation And Eligibility Zoom.png" alt=""><figcaption></figcaption></figure>
+
+* Choose "Automatically" and then choose "Create new Module". This will open the module creation form
+* Choose "JokeRace Eligibility" in the module type
+
+<figure><img src="../../.gitbook/assets/Jokerace Eligibility Guide.png" alt=""><figcaption></figcaption></figure>
+
+* Fill in the module-specific parameters
+* Choose "Deploy & Return" to deploy the module and return to the hat edit form

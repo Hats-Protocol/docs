@@ -20,24 +20,32 @@ Wherever you begin, the docs found here will walk you through it.
 [creating-my-first-hat.md](using-hats/creating-my-first-hat.md)
 {% endcontent-ref %}
 
+{% content-ref url="using-hats/admins-creating-issuing-and-revising-hats.md" %}
+[admins-creating-issuing-and-revising-hats.md](using-hats/admins-creating-issuing-and-revising-hats.md)
+{% endcontent-ref %}
+
 {% content-ref url="using-hats/what-hats-do-i-need.md" %}
 [what-hats-do-i-need.md](using-hats/what-hats-do-i-need.md)
 {% endcontent-ref %}
 
-{% content-ref url="using-hats/setting-hat-properties.md" %}
-[setting-hat-properties.md](using-hats/setting-hat-properties.md)
-{% endcontent-ref %}
-
-{% content-ref url="using-hats/connecting-hats-with-authorities/" %}
-[connecting-hats-with-authorities](using-hats/connecting-hats-with-authorities/)
-{% endcontent-ref %}
-
-{% content-ref url="using-hats/setting-accountabilities/" %}
-[setting-accountabilities](using-hats/setting-accountabilities/)
+{% content-ref url="using-hats/setting-a-hats-basic-properties.md" %}
+[setting-a-hats-basic-properties.md](using-hats/setting-a-hats-basic-properties.md)
 {% endcontent-ref %}
 
 {% content-ref url="using-hats/adding-wearers.md" %}
 [adding-wearers.md](using-hats/adding-wearers.md)
+{% endcontent-ref %}
+
+{% content-ref url="using-hats/connecting-hats-w-authorities-and-responsibilities/" %}
+[connecting-hats-w-authorities-and-responsibilities](using-hats/connecting-hats-w-authorities-and-responsibilities/)
+{% endcontent-ref %}
+
+{% content-ref url="using-hats/revocation-and-eligibility-requirements-for-wearers.md" %}
+[revocation-and-eligibility-requirements-for-wearers.md](using-hats/revocation-and-eligibility-requirements-for-wearers.md)
+{% endcontent-ref %}
+
+{% content-ref url="using-hats/deactivating-and-reactivating-hats.md" %}
+[deactivating-and-reactivating-hats.md](using-hats/deactivating-and-reactivating-hats.md)
 {% endcontent-ref %}
 
 {% content-ref url="using-hats/linking-trees-together.md" %}

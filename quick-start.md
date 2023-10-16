@@ -8,8 +8,8 @@ description: Key shortcuts for those who know their way around Hats
 
 * [Hats App](https://app.hatsprotocol.xyz)
 * [Hats tree templates](https://app.charmverse.io/hats-protocol/page-30981870825242197)
-* [Hats Protocol contract addresses](using-hats/connecting-hats-with-authorities/hats-protocol-contract-addresses.md)
-* [Finding a hat's token ID](using-hats/connecting-hats-with-authorities/finding-a-hats-token-id.md)
+* [Hats Protocol contract addresses](using-hats/connecting-hats-w-authorities-and-responsibilities/connecting-authorities-to-hats/hats-protocol-contract-addresses.md)
+* [Finding a hat's token ID](using-hats/connecting-hats-w-authorities-and-responsibilities/connecting-authorities-to-hats/finding-a-hats-token-id.md)
 
 ## **Key Guides**
 
@@ -21,16 +21,16 @@ description: Key shortcuts for those who know their way around Hats
 [what-hats-do-i-need.md](using-hats/what-hats-do-i-need.md)
 {% endcontent-ref %}
 
-{% content-ref url="using-hats/setting-hat-properties.md" %}
-[setting-hat-properties.md](using-hats/setting-hat-properties.md)
+{% content-ref url="using-hats/connecting-hats-w-authorities-and-responsibilities/" %}
+[connecting-hats-w-authorities-and-responsibilities](using-hats/connecting-hats-w-authorities-and-responsibilities/)
 {% endcontent-ref %}
 
-{% content-ref url="using-hats/setting-accountabilities/" %}
-[setting-accountabilities](using-hats/setting-accountabilities/)
+{% content-ref url="using-hats/revocation-and-eligibility-requirements-for-wearers.md" %}
+[revocation-and-eligibility-requirements-for-wearers.md](using-hats/revocation-and-eligibility-requirements-for-wearers.md)
 {% endcontent-ref %}
 
-{% content-ref url="using-hats/connecting-hats-with-authorities/" %}
-[connecting-hats-with-authorities](using-hats/connecting-hats-with-authorities/)
+{% content-ref url="using-hats/deactivating-and-reactivating-hats.md" %}
+[deactivating-and-reactivating-hats.md](using-hats/deactivating-and-reactivating-hats.md)
 {% endcontent-ref %}
 
 {% content-ref url="using-hats/adding-wearers.md" %}

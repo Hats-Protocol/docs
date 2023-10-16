@@ -47,7 +47,7 @@ Then enter the following under Params:
 }
 ```
 
-Replace Hat-ID-1, Hat-ID-2, and Hat-ID-3 with the specific hat token IDs that you want to give permission to post a new Snapshot proposal in this space (be sure to keep the quotations around each ID). You can add as many different hat token IDs as you want, using the convention above. _See_[#finding-a-hats-token-id](../../using-hats/connecting-hats-with-authorities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs._
+Replace Hat-ID-1, Hat-ID-2, and Hat-ID-3 with the specific hat token IDs that you want to give permission to post a new Snapshot proposal in this space (be sure to keep the quotations around each ID). You can add as many different hat token IDs as you want, using the convention above. _See_[#finding-a-hats-token-id](../../using-hats/connecting-hats-w-authorities-and-responsibilities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs._
 
 ### 2 & 3: Only allowing certain hats to vote on a proposal + assigning different voting weights to different hats
 
@@ -78,7 +78,7 @@ To set up a strategy:
 }
 ```
 
-Replace Hat-ID-1 and Hat-ID-2 with the specific hat token IDs that you want to give permission to vote on Snapshot proposals in this space (be sure to keep the quotations around each ID). You can add as many different Hat IDs as you want, using the convention above. _See_[#finding-a-hats-token-id](../../using-hats/connecting-hats-with-authorities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs._
+Replace Hat-ID-1 and Hat-ID-2 with the specific hat token IDs that you want to give permission to vote on Snapshot proposals in this space (be sure to keep the quotations around each ID). You can add as many different Hat IDs as you want, using the convention above. _See_[#finding-a-hats-token-id](../../using-hats/connecting-hats-w-authorities-and-responsibilities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs._
 
 And where X = the voting weight you want to assign to Hat-ID-1, Y = the voting weight for Hat-ID-3, and so on.&#x20;
 

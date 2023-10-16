@@ -2,7 +2,7 @@
 
 A Hats Protocol module that enables an authorized hat to serve as the eligibility and/or toggle module for other hat(s).
 
-In Hats Protocol v1, eligibility and toggle modules are set as addresses. This creates a lot of flexibility, since addresses can be EOAs, multisigs, DAOs, or even other smart contracts. But hats themselves cannot be set explicitly as eligibility or toggle modules because hats are identified by a uint256 hatId, not an address.
+In Hats Protocol v1, eligibility and toggle modules are set as addresses. This creates a lot of flexibility, since addresses can be EOAs, multisigs, DAOs, or even other smart contracts. But hats themselves cannot be set explicitly as eligibility or toggle modules because hats are identified by uint256 hat IDs, not addresses.
 
 Passthrough Module is a contract that can be set as the eligibility and/or toggle module for a target hat, and allows the wearer(s) of another hat to call the eligibility and/or toggle functions of the target hat. This allows hats themselves to be used as eligibility and toggle modules.
 
@@ -12,4 +12,17 @@ The module's code is open source and is available [here](https://github.com/Hats
 
 ## **Using the** Pass-Through **Eligibility Module**
 
-_This eligibility module is currently in beta. Contact us at support \[at] hatsprotocol \[dot] xyz if you want to explore this module, or check out the_ Pass-Through eligibility _Github repo_ [_here_](https://github.com/Hats-Protocol/passthrough-modules)_._
+* Go to the tree that includes the hat you wish to create the module for
+* Select "Edit Tree"
+* Locate and select the hat
+* Open the "Revocation & Eligibility" section
+
+<figure><img src="../../.gitbook/assets/Revocation And Eligibility Zoom.png" alt=""><figcaption></figcaption></figure>
+
+* Choose "Automatically" and then choose "Create new Module". This will open the module creation form
+* Choose "Passthrough Eligibility and/or Toggle" in the module type
+
+<figure><img src="../../.gitbook/assets/Pass-through Eligibility Guide.png" alt=""><figcaption></figcaption></figure>
+
+* Fill in the module-specific parameters
+* Choose "Deploy & Return" to deploy the module and return to the hat edit form

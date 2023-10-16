@@ -45,7 +45,7 @@ For more details on Hats Signer Gate including security audit results, [see here
 
 There are five steps required to properly implement Hats Signer Gate:
 
-1. Create the hats that will have multisig signing authority and note their token IDs. _See_ [_Finding a Hat's Token ID_](../../using-hats/connecting-hats-with-authorities/finding-a-hats-token-id.md) _for details on how to find specific hat token IDs_.
+1. Create the hats that will have multisig signing authority and note their token IDs. _See_ [_Finding a Hat's Token ID_](../../using-hats/connecting-hats-w-authorities-and-responsibilities/connecting-authorities-to-hats/finding-a-hats-token-id.md) _for details on how to find specific hat token IDs_.
 2. Deploy a new Hats Signer Gate contract using the [Hats Signer Gate Factory](https://github.com/Hats-Protocol/hats-zodiac/releases/tag/v1.2-beta)
 3. Set up the Hats Signer Gate Zodiac module
 4. Set up the Hats Signer Gate Zodiac guard
@@ -59,7 +59,7 @@ Before continuing onto subsequent steps, it is first necessary to create the hat
 
 You can easily create new Hats using the [Hats app](https://app.hatsprotocol.xyz) (but you do not need to mint them to any wearers yet). For a detailed guide for creating new Hats, see the [Getting Started](../../for-developers/v1-core-sdk/getting-started.md) page within these docs.
 
-Once the owner and signer Hats are created, note their hat token IDs. _See_ [#finding-a-hats-token-id](../../using-hats/connecting-hats-with-authorities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs_.
+Once the owner and signer Hats are created, note their hat token IDs. _See_ [#finding-a-hats-token-id](../../using-hats/connecting-hats-w-authorities-and-responsibilities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs_.
 
 ### 2a. Deploy a new Hats Signer Gate contract using the Hats Signer Gate Factory
 
@@ -90,7 +90,7 @@ Then, complete the fields found in the contract you select, as seen below _(not 
 3. Add other Zodiac modules to the multisig
 4. In Multi-Hats Signer Gate, add other hats as valid signer hats
 
-**Signer Hat IDs:** The IDs of the hats that will have signing authority on the multisig. If you are using a Multi Hats Signer Gate, you will need to enter the hat token IDs using the convention shown above and copied below _(see_ [#finding-a-hats-token-id](../../using-hats/connecting-hats-with-authorities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs)_.
+**Signer Hat IDs:** The IDs of the hats that will have signing authority on the multisig. If you are using a Multi Hats Signer Gate, you will need to enter the hat token IDs using the convention shown above and copied below _(see_ [#finding-a-hats-token-id](../../using-hats/connecting-hats-w-authorities-and-responsibilities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs)_.
 
 * \[Hat-ID-1,Hat-ID-2,etc.]
 
@@ -188,7 +188,7 @@ Once these hats are minted, all wearers need to do to claim signing authority is
 * Select **Contract** and **Write Contract**
 * **Connect their wallet** using the address that is wearing the relevant hat
 * Select **claimSigner**
-* **For a Multi Hats Signer Gate, Enter the token ID of their hat** into the field that appears _(see_ [#finding-a-hats-token-id](../../using-hats/connecting-hats-with-authorities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs)._&#x20;
+* **For a Multi Hats Signer Gate, Enter the token ID of their hat** into the field that appears _(see_ [#finding-a-hats-token-id](../../using-hats/connecting-hats-w-authorities-and-responsibilities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs)._&#x20;
 * Select **Write**
 
 Once the transaction has confirmed, their address will automatically be added as a signer of the Safe multisig (_as long as the max signers cap has not already been reached_).

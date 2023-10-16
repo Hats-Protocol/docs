@@ -1,7 +1,5 @@
 ---
-description: >-
-  Requiring addresses to stake a minimum amount of a specified ERC20 token in
-  order to wear and retain a given hat
+description: Tying hat eligibility to staking criteria
 ---
 
 # Staking Eligibility
@@ -14,4 +12,17 @@ The module's code is open source and is available [here](https://github.com/Hats
 
 ## **Using the Staking Eligibility Module**
 
-_This eligibility module is currently in beta. Contact us at support \[at] hatsprotocol \[dot] xyz if you want to explore this module, or check out the Staking Eligibility Github repo_ [_here_](https://github.com/Hats-Protocol/staking-eligibility)_._
+* Go to the tree that includes the hat you wish to create the module for
+* Select "Edit Tree"
+* Locate and select the hat
+* Open the "Revocation & Eligibility" section
+
+<figure><img src="../../.gitbook/assets/Revocation And Eligibility Zoom.png" alt=""><figcaption></figcaption></figure>
+
+* Choose "Automatically" and then choose "Create new Module". This will open the module creation form
+* Choose "Staking Eligibility" in the module type
+
+<figure><img src="../../.gitbook/assets/Staking Eligibility Guide.png" alt=""><figcaption></figcaption></figure>
+
+* Fill in the module-specific parameters
+* Choose "Deploy & Return" to deploy the module and return to the hat edit form

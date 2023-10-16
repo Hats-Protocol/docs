@@ -14,11 +14,11 @@ You can be decentralized AND get things done. This is the power of Hats Protocol
 
 ## What Are Hats?
 
-Hats are programmable, revocable, and legible roles, which can be collectively controlled by the wearer of the "Top Hat", which could be an individual or a group, such as a DAO. Hat-based roles can be flexibly imbued with responsibilities, [authorities](using-hats/connecting-hats-with-authorities/), [accountabilities](using-hats/setting-accountabilities/), context, and more.
+Hats are programmable, revocable, and legible roles, which can be collectively controlled by the wearer of the "Top Hat", which could be an individual or a group, such as a DAO. Hat-based roles can be flexibly imbued with responsibilities, authorities, accountabilities, context, and more.
 
 Hats are represented onchain by tokens that conform to the ERC-1155 standard. They are connected together in a tree structure (aka a "Hats tree") to create flexible operational and governance structures that are controlled by an organization or its designees, which can then be visualized in any Hats front-end.
 
-Hats tokens can be held by any address including an EOA, multisig, or contract. When an address has a balance of 1 of a given Hats token, it is considered a "wearer" of that "hat". Then, by way of various token-gates, that address is granted the [authorities](using-hats/connecting-hats-with-authorities/) that have been associated with that hat.
+Hats tokens can be held by any address including an EOA, multisig, or contract. When an address has a balance of 1 of a given Hats token, it is considered a "wearer" of that "hat". Then, by way of various token-gates, that address is granted the [authorities](using-hats/connecting-hats-w-authorities-and-responsibilities/) that have been associated with that hat.
 
 Each hat can have any number of wearers up to the hat’s max supply. Hats are granted and revoked by the organization, or agents/smart contracts that are designated by the org. Wearers can renounce a hat, but they cannot transfer it.
 
