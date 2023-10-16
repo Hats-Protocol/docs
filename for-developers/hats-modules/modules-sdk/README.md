@@ -20,6 +20,18 @@ For documentation about creating new Hats Modules, click [here](../building-hats
 [create-new-instance-s.md](create-new-instance-s.md)
 {% endcontent-ref %}
 
+{% content-ref url="composing-modules.md" %}
+[composing-modules.md](composing-modules.md)
+{% endcontent-ref %}
+
+{% content-ref url="interact-with-instances.md" %}
+[interact-with-instances.md](interact-with-instances.md)
+{% endcontent-ref %}
+
 {% content-ref url="utilities.md" %}
 [utilities.md](utilities.md)
+{% endcontent-ref %}
+
+{% content-ref url="types.md" %}
+[types.md](types.md)
 {% endcontent-ref %}
