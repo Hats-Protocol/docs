@@ -6,7 +6,11 @@ description: Activating and deactivating hats
 
 Hats Modules are programmable extensions for roles. Modules can be connected to hats to expand their functionality, such as enabling automatic deactivation and reactivation of hats (and their associated permissions) based on specific conditions.&#x20;
 
-For more details on Hats Modules, including what they can unlock and how builders can create new modules, [see this blog post](https://hats.mirror.xyz/xAk\_yb7dDL1OLBx8nq47Ni7V1SuiC6L6B-49u7vz520) and follow this [link](../../using-hats/setting-accountabilities/toggle-activating-and-deactivating-hats.md) for a general guide about Toggle Modules.
+A hat’s toggle module is an address that determines whether the hat is active or inactive for all wearers. Toggle modules can activate or deactivate hats automatically based on pre-defined triggers.
+
+<figure><img src="../../.gitbook/assets/Screenshot 2023-06-28 at 3.13.01 PM.png" alt="" width="563"><figcaption></figcaption></figure>
+
+For more details on Hats Modules, including what they can unlock and how builders can create new modules, [see this blog post](https://hats.mirror.xyz/xAk\_yb7dDL1OLBx8nq47Ni7V1SuiC6L6B-49u7vz520). You can also [visit this docs page](../../using-hats/setting-accountabilities/toggle-activating-and-deactivating-hats.md) for a general guide about Toggle Modules.
 
 See the subpages within this section for detailed guides for specific Toggle modules you can use with Hats:
 

@@ -9,7 +9,7 @@ This powerful feature lets you graft two separate Hats trees together, by linkin
 **Example use cases for linking Hats trees include:**
 
 * Onchain organizational mergers (e.g. one DAO joining another DAO)
-* Emergent subDAOs (subgroups can create their own Hats tree and then petition to link to the main organization upon maturity, and unlink again to go independent)
+* Emergent subgroups (e.g., subDAOs can create their own Hats tree and then petition to link to the main DAO anization upon maturity, and unlink again to go independent)
 * Enabling experimentation with Hats within subgroups before scaling to the whole organization (e.g. enable a subgroup to build out its own Hats tree and try out new Hats features with different authorities and responsibilities before merging into organization's main tree)
 * "Refactor" your organization (e.g. fork your Hats tree to try different Hats configurations before merging with the main tree)
 

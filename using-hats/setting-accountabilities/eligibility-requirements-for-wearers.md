@@ -22,8 +22,8 @@ Coming soon:
 
 * Onchain signature of an agreement
 * Attestations
-* Combine multiple criteria!
-* Request a new module [here](https://hatsprotocol.deform.cc/getintouch/) or [create your own!](https://docs.hatsprotocol.xyz/for-developers/hats-modules) (see more details below in the “For Builders” section)
+* Combine multiple criteria
+* Request a new module [here](https://hatsprotocol.deform.cc/getintouch/) or [create your own](https://docs.hatsprotocol.xyz/for-developers/hats-modules)
 
 ## How to Set the Eligibility for a given Hat
 
