@@ -96,3 +96,28 @@ const multiCallResult = await hatsClient.multicall({
     calls: [mintTopHatCallData, createHatCallData, mintHatCallData],
 });
 ```
+
+### <mark style="color:purple;">multicallPreFlightCheck</mark>
+
+Simulates the multicall function with the provided calls.  The function has no return value, will revert on failure, with a custom error.&#x20;
+
+<pre class="language-typescript"><code class="lang-typescript"><strong>await hatsClient.multicallPreFlightCheck({
+</strong>    account,
+    calls,
+});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    calls: {
+      functionName: string;
+      callData: Hex;
+    }[];
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `calls` - An array of call data objects, each one includes the function name and the call data to pass to the function.

@@ -57,7 +57,7 @@ There are five steps required to properly implement Hats Signer Gate:
 
 Before continuing onto subsequent steps, it is first necessary to create the hats that you want to A) have signing authority on the multisig, and B) be the owners of the Hats Signer Gate contract (see below). You will need to enter the token IDs for each of these hats when first deploying your instance of the Hats Signer Gate contract.
 
-You can easily create new Hats using the [Hats app](https://app.hatsprotocol.xyz) (but you do not need to mint them to any wearers yet). For a detailed guide for creating new Hats, see the [Getting Started](../../for-developers/v1-core-sdk/getting-started.md) page within these docs.
+You can easily create new Hats using the [Hats app](https://app.hatsprotocol.xyz) (but you do not need to mint them to any wearers yet). For a detailed guide for creating new Hats, see the [Getting Started](../../for-developers/v1-sdk/core/getting-started.md) page within these docs.
 
 Once the owner and signer Hats are created, note their hat token IDs. _See_ [#finding-a-hats-token-id](../../using-hats/connecting-hats-with-authorities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs_.
 

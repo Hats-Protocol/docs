@@ -5,13 +5,13 @@
 yarn:
 
 ```bash
-yarn add @hatsprotocol/sdk-v1-core viem@1.2.6
+yarn add @hatsprotocol/sdk-v1-core viem
 ```
 
 npm:
 
 ```bash
-npm install @hatsprotocol/sdk-v1-core viem@1.2.6
+npm install @hatsprotocol/sdk-v1-core viem
 ```
 
 The SDK uses Viem in order to interact with the various chains and includes it as a peer dependency.

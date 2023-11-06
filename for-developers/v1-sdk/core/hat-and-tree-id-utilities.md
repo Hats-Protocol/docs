@@ -1,6 +1,6 @@
 # Hat & Tree ID Utilities
 
-Following are utility functions to handle various hat & tree ID formats. More information about hat IDs can be found [here](../hats-protocol-overview/hat-ids.md).
+Following are utility functions to handle various hat & tree ID formats. More information about hat IDs can be found [here](../../hats-protocol-overview/hat-ids.md).
 
 ### <mark style="color:purple;">hatIdDecimalToHex</mark>
 
