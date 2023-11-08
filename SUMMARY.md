@@ -10,6 +10,7 @@
 * [🎩 Creating My First Hat](using-hats/creating-my-first-hat.md)
 * [🧙 Admins: Creating, Issuing, and Revising Hats](using-hats/setting-accountabilities/admins-creating-issuing-and-revising-hats.md)
 * [👥 What Hats Do I Need?](using-hats/what-hats-do-i-need.md)
+* [🌳 Drafting, Exporting, and Deploying Tree Changes](using-hats/drafting-exporting-and-deploying-tree-changes.md)
 * [🏗 Setting a Hat's Basic Properties](using-hats/setting-a-hats-basic-properties.md)
 * [🥳 Adding Wearers](using-hats/adding-wearers.md)
 * [🔐 Connecting Hats w/ Authorities & Responsibilities](using-hats/connecting-hats-with-authorities/README.md)
