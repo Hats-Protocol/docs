@@ -28,6 +28,10 @@ Wherever you begin, the docs found here will walk you through it.
 [what-hats-do-i-need.md](using-hats/what-hats-do-i-need.md)
 {% endcontent-ref %}
 
+{% content-ref url="using-hats/drafting-exporting-and-deploying-tree-changes.md" %}
+[drafting-exporting-and-deploying-tree-changes.md](using-hats/drafting-exporting-and-deploying-tree-changes.md)
+{% endcontent-ref %}
+
 {% content-ref url="using-hats/setting-a-hats-basic-properties.md" %}
 [setting-a-hats-basic-properties.md](using-hats/setting-a-hats-basic-properties.md)
 {% endcontent-ref %}
@@ -46,6 +50,10 @@ Wherever you begin, the docs found here will walk you through it.
 
 {% content-ref url="using-hats/setting-accountabilities/toggle-activating-and-deactivating-hats.md" %}
 [toggle-activating-and-deactivating-hats.md](using-hats/setting-accountabilities/toggle-activating-and-deactivating-hats.md)
+{% endcontent-ref %}
+
+{% content-ref url="using-hats/making-hats-claimable.md" %}
+[making-hats-claimable.md](using-hats/making-hats-claimable.md)
 {% endcontent-ref %}
 
 {% content-ref url="using-hats/linking-trees-together.md" %}

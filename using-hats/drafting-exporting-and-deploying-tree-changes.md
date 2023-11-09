@@ -44,8 +44,6 @@ To share your suggested changes with others, click the “Export” button found
 
 <figure><img src="https://lh7-us.googleusercontent.com/HTP0014QPYzyHMq6-JkW4e571VT-dpMx9dBIwqYhIVVgIDE_EzZBqcDnQqQteARn0qR0Z781ExFN46DpLn8yIvy_huRfulj5WgyFFk4JicvRJLhBAzO6SDBm93JEudzt7ZefqfuiE3HtRqIm19VsmF0" alt=""><figcaption><p>Export and import changes to a tree using the buttons seen above</p></figcaption></figure>
 
-**Important note importing a JSON:** Do not change the file name of the JSON file once exported. To successfully import a JSON file, its file name must match exactly the convention "chain-\[N]-tree-\[M]", as in "chain-10-tree-23", depending on the chain of your tree and the ID of your tree's Top Hat. That JSON file must then be imported into the same tree from which it was exported.
-
 ### Exporting Call Data to Deploy Changes Onchain
 
 To deploy changes via a DAO or multisig-controlled hat (e.g. a DAO contract wearing the top-hat), copy the transaction call data using the information found in edit mode as seen in the screenshot below.&#x20;
