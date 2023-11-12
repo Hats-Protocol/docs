@@ -28,6 +28,7 @@ Modules are represented as Module objects, with the following type:
     block: string;
   }[];
   creationArgs: 
+    useHatId: boolean // Whether the hatId immutable arg should be set with the target's hat ID
     immutable: { // immutable args for new module instance creation
       name: string; // arg's name
       description: string; // short description
