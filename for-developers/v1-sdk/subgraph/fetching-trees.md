@@ -9,7 +9,6 @@ const tree = await hatsSubgraphClient.getTree({
     chainId,
     treeId,
     props,
-    filters,
 });
 ```
 
@@ -19,15 +18,13 @@ _**Arguments**_:
 {
     chainId: number;
     treeId: number;
-    props: TreeConfig;
-    filters?: Filters;
+    props: TreePropsConfig;
 }
 ```
 
 * `chainId` - ID of the chain to fetch from.
 * `treeId` - ID of the Tree to fetch (Tree's top-hat domain - first 4 bytes of the top-hat ID).
-* `props` - Tree's properties to fetch, including the ones of nested objects. Check the [TreeConfig](types.md#treeconfig) type for the available properties.
-* `filters` - Optional filters to include in the GraphQL query. Check the [Filters](types.md#filters) type for the available filters.
+* `props` - Tree's properties to fetch, including the ones of nested objects. Check the [TreePropsConfig](types.md#treepropsconfig) type for the available properties and query filters.
 
 _**Response**_:
 
@@ -36,6 +33,22 @@ Tree
 ```
 
 A [Tree object](types.md#tree), containing the chosen properties.
+
+_**Example:**_
+
+```typescript
+// get a tree's top-hat
+const res = await client.getTree({
+  chainId: 10, // optimism
+  treeId: 1, 
+  props: {
+    hats: { // get the tree's hats
+      props: {}, // for each hat, include only its ID
+      filters: { first: 1 }, // fetch only the first hat (the top-hat)
+    },
+  },
+});
+```
 
 ### <mark style="color:purple;">getTreesByIds</mark>
 
@@ -46,7 +59,6 @@ const trees = await hatsSubgraphClient.getTreesByIds({
     chainId,
     treeIds,
     props,
-    filters,
 });
 ```
 
@@ -56,15 +68,13 @@ _**Arguments**_:
 {
     chainId: number;
     treeIds: number[];
-    props: TreeConfig;
-    filters?: Filters;
+    props: TreePropsConfig;
 }
 ```
 
 * `chainId` - ID of the chain to fetch from.
 * `treeIds` - IDs of the Trees to fetch (Tree's top-hat domain - first 4 bytes of the top-hat ID).
-* `props` - Tree's properties to fetch, including the ones of nested objects. Check the [TreeConfig](types.md#treeconfig) type for the available properties.
-* `filters` - Optional filters to include in the GraphQL query. Check the [Filters](types.md#filters) type for the available filters.
+* `props` - Tree's properties to fetch, including the ones of nested objects. Check the [TreePropsConfig](types.md#treepropsconfig) type for the available properties and query filters.
 
 _**Response**_:
 
@@ -73,6 +83,23 @@ Tree[]
 ```
 
 An array of [Tree objects](types.md#tree), containing the chosen properties.
+
+_**Example:**_&#x20;
+
+```typescript
+const res = await client.getTreesByIds({
+  chainId: 10, // optimism
+  treeIds: [1, 2],
+  props: {
+    hats: { // for each tree, fetch its hats
+      props: {
+        status: true, // for each hat, include its status (active/inactive)
+      },
+      filters: { first: 200 }, // fetch only the first 200 hats
+    },
+  },
+});
+```
 
 ### <mark style="color:purple;">getTreesPaginated</mark>
 
@@ -84,7 +111,6 @@ const trees = await hatsSubgraphClient.getTreesPaginated({
     props,
     page,
     perPage,
-    filters,
 });
 ```
 
@@ -93,18 +119,16 @@ _**Arguments**_:
 ```typescript
 {
     chainId: number;
-    props: TreeConfig;
+    props: TreePropsConfig;
     page: number;
     perPage: number;
-    filters?: Filters;
 }
 ```
 
 * `chainId` - ID of the chain to fetch from.
-* `props` - Tree's properties to fetch, including the ones of nested objects. Check the [TreeConfig](types.md#treeconfig) type for the available properties.
+* `props` - Tree's properties to fetch, including the ones of nested objects. Check the [TreePropsConfig](types.md#treepropsconfig) type for the available properties and query filters.
 * page - Number of page to fetch.
 * perPage - Number of Trees to fetch in each page.
-* `filters` - Optional filters to include in the GraphQL query. Check the [Filters](types.md#filters) type for the available filters.
 
 _**Response**_:
 
@@ -113,3 +137,19 @@ Tree[]
 ```
 
 An array of [Tree objects](types.md#tree), containing the chosen properties.
+
+_**Example:**_
+
+```typescript
+const res = await client.getTreesPaginated({
+  chainId: 10, // optimism
+  props: {
+    hats: { // for each tree, get its hats
+      props: {}, // for each hat, include only its ID 
+      filters: { first: 1 }, // fetch only the first hat of every tree (the top-hat)
+    },
+  },
+  page: 3, // get the third page
+  perPage: 10, // each page contains 10 trees
+});
+```

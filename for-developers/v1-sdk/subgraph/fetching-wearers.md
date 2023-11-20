@@ -9,7 +9,6 @@ const wearer = await hatsSubgraphClient.getWearer({
     chainId,
     wearerAddress,
     props,
-    filters,
 });
 ```
 
@@ -19,15 +18,13 @@ _**Arguments**_:
 {
     chainId: number;
     wearerAddress:`0x${string}`;
-    props: WearerConfig;
-    filters?: Filters;
+    props: WearerPropsConfig;
 }
 ```
 
 * `chainId` - ID of the chain to fetch from.
 * `wearerAddress` - Wearer's address.
-* `props` - Wearer's properties to fetch, including the ones of nested objects. Check the [WearerConfig](types.md#wearerconfig) type for the available properties.
-* `filters` - Optional filters to include in the GraphQL query. Check the [Filters](types.md#filters) type for the available filters.
+* `props` - Wearer's properties to fetch, including the ones of nested objects. Check the [WearerPropsConfig](types.md#wearerpropsconfig) type for the available properties and query filters.
 
 _**Response**_:
 
@@ -36,6 +33,30 @@ Wearer
 ```
 
 A [Wearer object](types.md#wearer), containing the chosen properties.
+
+_**Example:**_
+
+```typescript
+const res = await client.getWearer({
+  chainId: 10, // optimism
+  wearerAddress: "0x1230000000000000000000000000000000000000",
+  props: {
+    currentHats: { // get the wearer's hats
+      props: {
+        status: true, // for each hat, include its status (active/inactive)
+      },
+    },
+    mintEvent: { // get the wearer's hat minting events
+      props: {
+        blockNumber: true, // for each event, include its block number
+      },
+      filters: {
+        first: 1, // fetch only the latest event
+      },
+    },
+  },
+});
+```
 
 ### <mark style="color:purple;">getWearersOfHatPaginated</mark>
 
@@ -48,7 +69,6 @@ const wearers = await hatsSubgraphClient.getWearersOfHatPaginated({
     props,
     page,
     perPage,
-    filters,
 });
 ```
 
@@ -58,19 +78,17 @@ _**Arguments**_:
 {
     chainId: number;
     hatId: bigint;
-    props: WearerConfig;
+    props: WearerPropsConfig;
     page: number;
     perPage: number;
-    filters?: Filters;
 }
 ```
 
 * `chainId` - ID of the chain to fetch from.
 * `hatId` - ID of the hat of which wearers to fetch.
-* `props` - Wearer's properties to fetch, including the ones of nested objects. Check the [WearerConfig](types.md#wearerconfig) type for the available properties.
+* `props` - Wearer's properties to fetch, including the ones of nested objects. Check the [WearerPropsConfig](types.md#wearerpropsconfig) type for the available properties and query filters.
 * `page` - Number of page to fetch.
 * `perPage` - Number of Wearers to fetch in each page.
-* `filters` - Optional filters to include in the GraphQL query. Check the [Filters](types.md#filters) type for the available filters.
 
 _**Response**_:
 
@@ -79,3 +97,16 @@ Wearer[]
 ```
 
 An array of  [Wearer objects](types.md#wearer), containing the chosen properties.
+
+_**Example:**_
+
+```typescript
+// get the first 10 wearers of a given hat
+const res = await client.getWearersOfHatPaginated({
+  chainId: 10,
+  props: {}, // for each wearer, include only its ID (address)
+  hatId: BigInt("0x0000000100020001000100000000000000000000000000000000000000000000"),
+  page: 0,
+  perPage: 10,
+});
+```

@@ -9,7 +9,6 @@ const hat = await hatsSubgraphClient.getHat({
     chainId,
     hatId,
     props,
-    filters,
 });
 ```
 
@@ -19,15 +18,13 @@ _**Arguments**_:
 {
     chainId: number;
     hatId: bigint;
-    props: HatConfig;
-    filters?: Filters;
+    props: HatPropsConfig;
 }
 ```
 
 * `chainId` - ID of the chain to fetch from.
 * `hatId` - ID of the Hat to fetch.
-* `props` - Hat's properties to fetch, including the ones of nested objects. Check the [HatConfig](types.md#hatconfig) type for the available properties.
-* `filters` - Optional filters to include in the GraphQL query. Check the [Filters](types.md#filters) type for the available filters.
+* `props` - Hat's properties to fetch, including the ones of nested objects. Check the [HatPropsConfig](types.md#hatpropsconfig) type for the available properties and query filters.
 
 _**Response**_:
 
@@ -37,6 +34,31 @@ Hat
 
 A [Hat object](types.md#hat), containing the chosen properties.
 
+_**Example**_:
+
+```typescript
+const res = await client.getHat({
+  chainId: 10, // optimism
+  hatId: BigInt(
+    "0x0000000100020001000100000000000000000000000000000000000000000000"
+  ),
+  props: {
+    maxSupply: true, // get the maximum amount of wearers for the hat 
+    wearers: { // get the hat's wearers 
+      props: {}, // for each wearer, include only its ID (address)
+    },
+    events: { // get the hat's events
+      props: {
+        transactionID: true, // for each event, include the transaction ID
+      },
+      filters: {
+        first: 10, // fetch only the latest 10 events
+      },
+    },
+  },
+});
+```
+
 ### <mark style="color:purple;">getHatsByIds</mark>
 
 Get Hats by their IDs.
@@ -45,7 +67,6 @@ Get Hats by their IDs.
 <strong>    chainId,
 </strong>    hatIds,
     props,
-    filters,
 });
 </code></pre>
 
@@ -55,15 +76,13 @@ _**Arguments**_:
 {
     chainId: number;
     hatIds: bigint[];
-    props: HatConfig;
-    filters?: Filters;
+    props: HatPropsConfig;
 }
 ```
 
 * `chainId` - ID of the chain to fetch from.
 * `hatIds` - IDs of the Hats to fetch.
-* `props` - Hat's properties to fetch, including the ones of nested objects. Check the [HatConfig](types.md#hatconfig) type for the available properties.
-* `filters` - Optional filters to include in the GraphQL query. Check the [Filters](types.md#filters) type for the available filters.
+* `props` - Hat's properties to fetch, including the ones of nested objects. Check the [HatPropsConfig](types.md#hatpropsconfig) type for the available properties and query filters.
 
 _**Response**_:
 
@@ -72,3 +91,24 @@ Hat[]
 ```
 
 An array of [Hat objects](types.md#hat), containing the chosen properties.
+
+_**Example**_:
+
+```typescript
+const res = await client.getHatsByIds({
+  chainId: 10, // optimism
+  hatIds: [
+    BigInt("0x0000000100020001000100000000000000000000000000000000000000000000"),
+    BigInt("0x0000000100020001000000000000000000000000000000000000000000000000"),
+  ],
+  props: {
+    wearers: { // get each hat's wearers
+      props: { 
+        currentHats: { // for each wearer, get its hats
+          props: {}, // for each hat, include only its ID
+        },
+      },
+    },
+  },
+});
+```

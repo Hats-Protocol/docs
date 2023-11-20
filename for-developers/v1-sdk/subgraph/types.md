@@ -1,5 +1,7 @@
 # Types
 
+## Hat Types
+
 ### <mark style="color:purple;">Hat</mark>
 
 ```typescript
@@ -29,16 +31,19 @@ interface Hat {
 }
 ```
 
-### <mark style="color:purple;">HatConfig</mark>
+### <mark style="color:purple;">HatPropsConfig</mark>
 
 Query configuration for a [Hat](types.md#hat)'s properties.&#x20;
 
 The Hat's ID property is required and thus is not included in the config. The rest of the properties are optional. &#x20;
 
-To choose Scalar properties (non-object), include their key with a value of `true`. To choose an Object property, include its key with a value compatible with the object's config.
+* To choose Scalar properties (non-object), include their key with a value of `true`.&#x20;
+* To choose an Object property, include its key with a value compatible with the object's config type:
+  * For single-object properties (e.g. `tree`), the config type includes the object's available properties without filters.
+  * For multi-object properties (e.g. `wearers`), the config type includes both the object's available properties and optional filters (currently supports only the 'first' filter).
 
 ```typescript
-interface HatConfig {
+interface HatPropsConfig {
   prettyId?: boolean;
   status?: boolean;
   createdAt?: boolean;
@@ -50,18 +55,33 @@ interface HatConfig {
   imageUri?: boolean;
   levelAtLocalTree?: boolean;
   currentSupply?: boolean;
-  tree?: TreeConfig;
-  wearers?: WearerConfig;
-  badStandings?: WearerConfig;
-  admin?: HatConfig;
-  subHats?: HatConfig;
-  linkRequestFromTree?: TreeConfig;
-  linkedTrees?: TreeConfig;
-  claimableBy?: ClaimsHatterConfig;
-  claimableForBy?: ClaimsHatterConfig;
-  events?: HatsEventConfig;
+  tree?: TreePropsConfig;
+  wearers?: WearersConfig;
+  badStandings?: WearersConfig;
+  admin?: HatPropsConfig;
+  subHats?: HatsConfig;
+  linkRequestFromTree?: TreesConfig;
+  linkedTrees?: TreesConfig;
+  claimableBy?: ClaimsHattersConfig;
+  claimableForBy?: ClaimsHattersConfig;
+  events?: HatsEventsConfig;
 }
 ```
+
+### <mark style="color:purple;">HatsConfig</mark>
+
+Query configuration for a multi [Hat](types.md#hat)s property, i.e. a property that returns multiple Hats.
+
+```typescript
+interface HatsConfig {
+  props: HatPropsConfig; // properties to include in each hat
+  filters?: { // filters to apply on the property query
+    first?: number; // fetch only the 'first' amount of hats
+  };
+}
+```
+
+## Wearer Types
 
 ### <mark style="color:purple;">Wearer</mark>
 
@@ -74,21 +94,39 @@ interface Wearer {
 }
 ```
 
-### <mark style="color:purple;">WearerConfig</mark>
+### <mark style="color:purple;">WearerPropsConfig</mark>
 
-Query configuration for a Wearer's properties.&#x20;
+Query configuration for a [Wearer](types.md#wearer)'s properties.&#x20;
 
 The Wearer's ID property is required and thus is not included in the config. The rest of the properties are optional. &#x20;
 
-To choose Scalar properties (non-object), include their key with a value of `true`. To choose an Object property, include its key with a value compatible with the object's config.
+* To choose Scalar properties (non-object), include their key with a value of `true`.&#x20;
+* To choose an Object property, include its key with a value compatible with the object's config type:
+  * For single-object properties (e.g. the `tree` property of a Hat), the config type includes the object's available properties.
+  * For multi-object properties (e.g. `currentHats`), the config type includes both the object's available properties and optional filters (currently supports only the 'first' filter).
 
 ```typescript
-interface WearerConfig {
-  currentHats?: HatConfig;
-  mintEvent?: HatsEventConfig;
-  burnEvent?: HatsEventConfig;
+interface WearerPropsConfig {
+ currentHats?: HatsConfig;
+  mintEvent?: HatsEventsConfig;
+  burnEvent?: HatsEventsConfig;
 }
 ```
+
+### <mark style="color:purple;">WearersConfig</mark>
+
+Query configuration for a multi [Wearer](types.md#wearer)s property, i.e. a property that returns multiple Wearers.
+
+```typescript
+interface WearerPropsConfig {
+  props: WearerPropsConfig; // properties to include in each wearer
+  filters?: { // filters to apply on the property query
+    first?: number; // fetch only the 'first' amount of wearers
+  };
+}
+```
+
+## Tree Types
 
 ### <mark style="color:purple;">Tree</mark>
 
@@ -106,43 +144,63 @@ interface Tree {
 }
 ```
 
-### <mark style="color:purple;">TreeConfig</mark>
+### <mark style="color:purple;">TreePropsConfig</mark>
 
-Query configuration for a Tree's properties.&#x20;
+Query configuration for a [Tree](types.md#tree)'s properties.&#x20;
 
 The Tree's ID property is required and thus is not included in the config. The rest of the properties are optional. &#x20;
 
-To choose Scalar properties (non-object), include their key with a value of `true`. To choose an Object property, include its key with a value compatible with the object's config.
+* To choose Scalar properties (non-object), include their key with a value of `true`.&#x20;
+* To choose an Object property, include its key with a value compatible with the object's config type:
+  * For single-object properties (e.g. `childOfTree`), the config type includes the object's available properties.
+  * For multi-object properties (e.g. `hats`), the config type includes both the object's available properties and optional filters (currently supports only the 'first' filter).
 
 ```typescript
-interface TreeConfig {
-  hats?: HatConfig;
-  childOfTree?: TreeConfig;
-  parentOfTrees?: TreeConfig;
-  linkedToHat?: HatConfig;
-  linkRequestFromTree?: TreeConfig;
-  requestedLinkToTree?: TreeConfig;
-  requestedLinkToHat?: HatConfig;
-  events?: HatsEventConfig;
+interface TreePropsConfig {
+  hats?: HatsConfig;
+  childOfTree?: TreePropsConfig;
+  parentOfTrees?: TreesConfig;
+  linkedToHat?: HatPropsConfig;
+  linkRequestFromTree?: TreesConfig;
+  requestedLinkToTree?: TreePropsConfig;
+  requestedLinkToHat?: HatPropsConfig;
+  events?: HatsEventsConfig;
 }
 ```
 
-### <mark style="color:purple;">HatsEvent</mark>
+### <mark style="color:purple;">TreesConfig</mark>
+
+Query configuration for a multi [Tree](types.md#tree)s property, i.e. a property that returns multiple Trees.
 
 ```typescript
-interface HatsEvent {
+interface TreePropsConfig {
+  props: TreePropsConfig; // properties to include in each tree
+  filters?: { // filters to apply on the property query
+    first?: number; // fetch only the 'first' amount of trees
+  };
+}
+```
+
+## Event Types
+
+### <mark style="color:purple;">HatsEventBase</mark>
+
+Base type, which contains the common properties of Hats Events, and which is then extended by each specific event.
+
+```typescript
+interface HatsEventBase {
   id: string; // Event's ID
   timestamp?: bigint; // Event's timestamp
-  blockNumber?: number; // Event's blocke number
+  blockNumber?: number; // Event's block number
   transactionID?: string; // transaction ID which the Event was emitted in
   hat?: Hat; // Hat that relates to the Event
   tree?: Tree; // Tree that relates to the Event
 }
 ```
 
-### <mark style="color:purple;">HatsEventConfig</mark>
+### <mark style="color:purple;">HatsEventPropsConfig</mark>
 
-Query configuration for a HatsEvent's properties.&#x20;
+Query configuration for the basic properties of a Hats Event.
 
 The HatsEvent's ID property is required and thus is not included in the config. The rest of the properties are optional. &#x20;
 
@@ -153,10 +211,167 @@ interface HatsEventConfig {
   timestamp?: boolean;
   blockNumber?: boolean;
   transactionID?: boolean;
-  hat?: HatConfig;
-  tree?: TreeConfig;
+  hat?: HatPropsConfig;
+  tree?: HatPropsConfig;
 }
 ```
+
+
+
+Following are the various Hats Events, emitted from Hats-Protocol in response to various actions.
+
+Fetched events will include the event's [base properties](types.md#hatseventbase), as well as the additional properties that are included in each specific event, according to its type.
+
+### <mark style="color:purple;">HatCreatedEvent</mark>
+
+```typescript
+interface HatCreatedEvent extends HatsEventBase {
+  __typename: "HatCreatedEvent";
+  hatDetails: string;
+  hatMaxSupply: string;
+  hatEligibility: string;
+  hatToggle: string;
+  hatMutable: boolean;
+  hatImageUri: string;
+}
+```
+
+### <mark style="color:purple;">HatMintedEvent</mark>
+
+```typescript
+interface HatMintedEvent extends HatsEventBase {
+  __typename: "HatMintedEvent";
+  wearer: {
+    id: string;
+  };
+  operator: string;
+}
+```
+
+### <mark style="color:purple;">HatBurnedEvent</mark>
+
+```typescript
+interface HatBurnedEvent extends HatsEventBase {
+  __typename: "HatBurnedEvent";
+  wearer: {
+    id: string;
+  };
+  operator: string;
+}
+```
+
+### <mark style="color:purple;">HatMutabilityChangedEvent</mark>
+
+```typescript
+interface HatMutabilityChangedEvent extends HatsEventBase {
+  __typename: "HatMutabilityChangedEvent";
+}
+```
+
+### <mark style="color:purple;">HatStatusChangedEvent</mark>
+
+```typescript
+interface HatStatusChangedEvent extends HatsEventBase {
+  __typename: "HatStatusChangedEvent";
+  hatNewStatus: boolean;
+}
+```
+
+### <mark style="color:purple;">HatDetailsChangedEvent</mark>
+
+```typescript
+interface HatDetailsChangedEvent extends HatsEventBase {
+  __typename: "HatDetailsChangedEvent";
+  hatNewDetails: string;
+}
+```
+
+### <mark style="color:purple;">HatEligibilityChangedEvent</mark>
+
+```typescript
+interface HatEligibilityChangedEvent extends HatsEventBase {
+  __typename: "HatEligibilityChangedEvent";
+  hatNewEligibility: string;
+}
+```
+
+### <mark style="color:purple;">HatToggleChangedEvent</mark>
+
+```typescript
+interface HatToggleChangedEvent extends HatsEventBase {
+  __typename: "HatToggleChangedEvent";
+  hatNewToggle: string;
+}
+```
+
+### <mark style="color:purple;">HatMaxSupplyChangedEvent</mark>
+
+```typescript
+interface HatMaxSupplyChangedEvent extends HatsEventBase {
+  __typename: "HatMaxSupplyChangedEvent";
+  hatNewMaxSupply: string;
+}
+```
+
+### <mark style="color:purple;">HatImageURIChangedEvent</mark>
+
+```typescript
+interface HatImageURIChangedEvent extends HatsEventBase {
+  __typename: "HatImageURIChangedEvent";
+  hatNewImageURI: string;
+}
+```
+
+### <mark style="color:purple;">TopHatLinkRequestedEvent</mark>
+
+```typescript
+interface TopHatLinkRequestedEvent extends HatsEventBase {
+  __typename: "TopHatLinkRequestedEvent";
+  newAdmin: string;
+}
+```
+
+### <mark style="color:purple;">TopHatLinkedEvent</mark>
+
+```typescript
+interface TopHatLinkedEvent extends HatsEventBase {
+  __typename: "TopHatLinkedEvent";
+  newAdmin: string;
+}
+```
+
+### <mark style="color:purple;">WearerStandingChangedEvent</mark>
+
+```typescript
+interface WearerStandingChangedEvent extends HatsEventBase {
+  __typename: "WearerStandingChangedEvent";
+  wearer: {
+    id: string;
+  };
+  wearerStanding: boolean;
+}
+```
+
+### <mark style="color:purple;">HatsEvent</mark>
+
+```typescript
+type HatsEvent =
+  | HatCreatedEvent
+  | HatMintedEvent
+  | HatBurnedEvent
+  | HatMutabilityChangedEvent
+  | HatStatusChangedEvent
+  | HatDetailsChangedEvent
+  | HatEligibilityChangedEvent
+  | HatToggleChangedEvent
+  | HatMaxSupplyChangedEvent
+  | HatImageURIChangedEvent
+  | TopHatLinkRequestedEvent
+  | TopHatLinkedEvent
+  | WearerStandingChangedEvent;
+```
+
+## Claims Hatter Types
 
 ### <mark style="color:purple;">ClaimsHatter</mark>
 
@@ -168,55 +383,40 @@ interface ClaimsHatter {
 }
 ```
 
-### <mark style="color:purple;">ClaimsHatterConfig</mark>
+### <mark style="color:purple;">ClaimsHatterPropsConfig</mark>
 
 Query configuration for a ClaimsHatter's properties.&#x20;
 
 The ClaimsHatter's ID property is required and thus is not included in the config. The rest of the properties are optional. &#x20;
 
-To choose Scalar properties (non-object), include their key with a value of `true`. To choose an Object property, include its key with a value compatible with the object's config.
-
 ```typescript
-interface ClaimsHatterConfig {
-  claimableHats?: HatConfig;
-  claimableForHats?: HatConfig;
+interface ClaimsHatterPropsConfig {
+  claimableHats?: HatsConfig;
+  claimableForHats?: HatsConfig;
 }
 ```
 
-### <mark style="color:purple;">Filters</mark>
+### <mark style="color:purple;">ClaimsHattersConfig</mark>
 
-Optional filters to include in the GraphQL query:
-
-* `filter` - For each property that returns multiple objects, optionally configure the amount of objects to fetch. If not included, the amount of fetched objects will be the endpoint's default amount. The properties are grouped according to the objects they are included in (Hat, Wearer, Tree...).
+Query configuration for a multi [ClaimsHatter](types.md#claimshatter)s property, e.g. a property that returns multiple Claims Hatters.
 
 ```typescript
-interface Filters {
-  first?: { // "first" filter 
-    hat?: { // Hat properties
-      wearers?: number; 
-      badStandings?: number;
-      subHats?: number;
-      linkRequestFromTree?: number;
-      linkedTrees?: number;
-      claimableBy?: number;
-      claimableForBy?: number;
-      events?: number;
-    };
-    wearer?: { // Wearer properties
-      currentHats?: number;
-      mintEvent?: number;
-      burnEvent?: number;
-    };
-    tree?: { // Tree properties
-      hats?: number;
-      parentOfTrees?: number;
-      linkRequestFromTree?: number;
-      events?: number;
-    };
-    claimsHatter?: { //g ClaimsHatter properties
-      claimableHats?: number;
-      claimableForHats?: number;
-    };
+interface ClaimsHattersConfig {
+  props: ClaimsHatterPropsConfig; // properties to include in each claims hatter
+  filters?: { // filters to apply on the property query
+    first?: number; // fetch only the 'first' amount of hatters
   };
+}
+```
+
+## More
+
+### <mark style="color:purple;">EndpointsConfig</mark>
+
+Subgraph endpoints configuration, optionally provided at the client's creation.
+
+```typescript
+interface EndpointsConfig {
+  [chainId: number]: { endpoint: string };
 }
 ```
