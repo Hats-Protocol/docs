@@ -95,6 +95,7 @@
     * [Onchain Reads](for-developers/v1-sdk/core/onchain-reads.md)
     * [Onchain Writes](for-developers/v1-sdk/core/onchain-writes.md)
     * [Multicall](for-developers/v1-sdk/core/multicall.md)
+    * [Claiming Hats](for-developers/v1-sdk/core/claiming-hats.md)
     * [Hat & Tree ID Utilities](for-developers/v1-sdk/core/hat-and-tree-id-utilities.md)
   * [Subgraph](for-developers/v1-sdk/subgraph/README.md)
     * [Getting Started](for-developers/v1-sdk/subgraph/getting-started.md)

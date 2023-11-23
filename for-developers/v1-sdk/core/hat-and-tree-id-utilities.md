@@ -186,3 +186,29 @@ string
 ```
 
 Hat ID in IP format.
+
+### <mark style="color:purple;">hatIdIpToDecimal</mark>
+
+Convert a hat ID from an IP format, to a decimal format.
+
+```typescript
+import { hatIdIpToDecimal } from "@hatsprotocol/sdk-v1-core";
+
+const hatIdDecimal = hatIdIpToDecimal(hatId);
+```
+
+_**Arguments**_:
+
+```typescript
+hatId: string
+```
+
+`hatId` - Hat ID in IP format.&#x20;
+
+_**Response**_:
+
+```typescript
+bigint
+```
+
+Hat ID in decimal format.
