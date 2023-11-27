@@ -22,6 +22,10 @@ The SDK is an open source JavaScript client that provides core Hats-Protocol v1 
 [multicall.md](multicall.md)
 {% endcontent-ref %}
 
+{% content-ref url="claiming-hats.md" %}
+[claiming-hats.md](claiming-hats.md)
+{% endcontent-ref %}
+
 {% content-ref url="hat-and-tree-id-utilities.md" %}
 [hat-and-tree-id-utilities.md](hat-and-tree-id-utilities.md)
 {% endcontent-ref %}
