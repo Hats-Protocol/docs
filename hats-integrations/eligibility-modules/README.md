@@ -26,12 +26,12 @@ See the subpages within this section for detailed guides for specific eligibilit
 [erc1155-eligibility.md](erc1155-eligibility.md)
 {% endcontent-ref %}
 
-{% content-ref url="jokerace-eligibility.md" %}
-[jokerace-eligibility.md](jokerace-eligibility.md)
-{% endcontent-ref %}
-
 {% content-ref url="staking-eligibility.md" %}
 [staking-eligibility.md](staking-eligibility.md)
+{% endcontent-ref %}
+
+{% content-ref url="jokerace-eligibility.md" %}
+[jokerace-eligibility.md](jokerace-eligibility.md)
 {% endcontent-ref %}
 
 {% content-ref url="pass-through-hat-based-eligibility.md" %}
@@ -51,6 +51,7 @@ Eligibility modules can also be combined with claimable hats to enable addresses
 ## **Modules Coming Soon**
 
 * Onchain signature of an agreement
+* Gitcoin Passport score
 * Attestations
 * Combine multiple criteria!
 * Request a new module [here](https://hatsprotocol.deform.cc/getintouch/) or [create your own!](https://docs.hatsprotocol.xyz/for-developers/hats-modules)
