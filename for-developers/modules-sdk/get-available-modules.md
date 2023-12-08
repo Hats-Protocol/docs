@@ -180,3 +180,19 @@ _**Response**_:
 </strong></code></pre>
 
 The module that matches the provided address, or `undefined` in case no matching module was found.
+
+### <mark style="color:purple;">getFactory</mark>
+
+Get the Hats Module Factory metadata.
+
+```typescript
+const factory = hatsModulesClient.getFactory();
+```
+
+_**Response**_:
+
+```typescript
+Factory
+```
+
+Factory's metadata object, see its type [here](../hats-modules/modules-sdk/types.md#factory).
