@@ -50,10 +50,6 @@ See each of the following subpages for more details:
 [toggle-modules.md](toggle-modules.md)
 {% endcontent-ref %}
 
-{% content-ref url="toggle-modules.md" %}
-[toggle-modules.md](toggle-modules.md)
-{% endcontent-ref %}
-
 {% content-ref url="hat-mutability-and-editing.md" %}
 [hat-mutability-and-editing.md](hat-mutability-and-editing.md)
 {% endcontent-ref %}
