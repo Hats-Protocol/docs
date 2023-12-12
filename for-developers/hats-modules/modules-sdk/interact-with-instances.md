@@ -1,42 +1,8 @@
 # Interact With Instances
 
-The following functions provide utilities to support the interaction with module instances.&#x20;
+The following functions provide utilities to support the interaction with module instances: checking whether a certain instance was created, reading instance's [display parameters](types.md#module) (as specified in the 'parameter' property in the Module's object) and calling its write functions.
 
 To get the module's object from an instance address, use [this function](../../modules-sdk/get-available-modules.md#getmodulebyinstance).
-
-### <mark style="color:purple;">predictHatsModuleAddress</mark>
-
-Predict a module's address before/after it was created, using its creation arguments.
-
-```typescript
-const predictedAddress = await hatsModulesClient.predictHatsModuleAddress({
-    moduleId,
-    hatId,
-    immutableArgs,
-});
-```
-
-_**Arguments**_:
-
-```typescript
-{
-   moduleId: string;
-   hatId: bigint;
-   immutableArgs: unknown[];
-}
-```
-
-* `moduleId` - Module's ID.
-* `hatId` - The target hat ID, as provided to the [instance creation function](create-new-instance-s.md#createnewinstance).
-* `immutableArgs` - The module's immutable args, as provided to the [instance creation function](create-new-instance-s.md#createnewinstance).
-
-_**Response**_:
-
-```typescript
-`0x${string}`
-```
-
-The predicted module address.
 
 ### <mark style="color:purple;">isModuleDeployed</mark>
 
@@ -76,10 +42,10 @@ boolean
 
 Get a module's instance live parameters.&#x20;
 
-The parameters to fetch are listed in the module's registry object, and their purpose is to display relevant information for each module instance.
+The parameters to fetch are listed in the [Module's registry object](types.md#module) (in the 'parameters' property), and their purpose is to display relevant information for each module instance.
 
 ```typescript
-const module = hatsModulesClient.getInstanceParameters(instance);
+const module = await hatsModulesClient.getInstanceParameters(instance);
 ```
 
 _**Arguments**_:
@@ -108,34 +74,48 @@ An array of objects, each containing a parameter's information:
 * `solidityType` - The parameter's Solidity type.
 * `displayType`- The parameter's display type. Its purpose is for UIs to be able to render an appropriate component for the parameter. For example, rendering a date for timestamps.
 
-### <mark style="color:purple;">getFunctionsInModule</mark>
+### <mark style="color:purple;">callInstanceWriteFunction</mark>
 
-Get a module's functions from its ABI.
+Call a module's write function.
+
+The 'customRoles' and 'writeFunctions' properties of a [Module's object](types.md#module) enable to programmatically get all the write functions of a module, together with any necessary information to call them: expected input arguments and the roles (Hats) that have the permission to call each function.
 
 ```typescript
-const module = hatsModulesClient.getFunctionsInModule(moduleId);
+const res = await hatsModulesClient.callInstanceWriteFunction({
+    account,
+    moduleId,
+    instance,
+    func,
+    args,
+});
 ```
 
 _**Arguments**_:
 
 ```typescript
-moduleId: string
+{
+    account: Account | Address;
+    moduleId: string;
+    instance: Address;
+    func: WriteFunction;
+    args: unknown[];
+}
 ```
 
-`moduleId` - Module's ID.
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `moduleId` - Module's ID (implementation address).
+* `instance` - Instance's address.
+* `func` - The function to call, provided as an object of [WriteFunction](types.md#writefunction) type.
+* `args` - The input arguments to pass the function.
 
 _**Response**_:
 
 ```typescript
 {
-  name: string;
-  type: "write" | "read";
-  inputs: { name: string | undefined; type: string }[];
-}[]
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
 ```
 
-An array of objects, each containing a function's information:
-
-* `name` - The function's name.
-* `type` - "read" for "view" and "pure" functions, "write" otherwise.
-* `inputs` - Array of inputs for the function. For each input, contains its name, and its Solidity type.
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.

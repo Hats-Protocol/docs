@@ -6,51 +6,40 @@ Modules are represented as Module objects, with the following type:
 
 ```typescript
 {
-  name: string; // module's name 
-  details: string[]; // module's details, separated to paragraphs
-  links: { // relevant links, including module's source code
-    label: string; // link's title/description
-    link: string; // link's URL
+  name: string; // module's name
+  deprecated?: boolean; // if 'true', indicates that new instances of this module should not be created
+  details: string[]; // array of strings representing paragraphs that describe the module to end users.
+  links: { // relevant links about the module
+    label: string; // link's name
+    link: string; // URL
   }[];
-  parameters: { // module's parameters to display
-    label: string; // parameter's title/description
-    functionName: string; // function to query in order to get the paramaeter's value
-    displayType: string; // type of value for display purpose
+  parameters: { // module's dispaly parameters, chosen by its creator as relevant for dispaly to end users
+    label: string; // parameter's name
+    functionName: string; // name of the view or pure function that gets the parameter value
+    displayType: string; // a free-text field that tells front ends how to generate a proper UI component for the parameter
   }[];
   type: { // type of module
     eligibility: boolean;
     toggle: boolean;
     hatter: boolean;
   };
-  implementationAddress: string; // deployed implementation 
-  deployments: { // implementation deployment block per chain
-    chainId: string;
-    block: string;
+  implementationAddress: string; // module's implementation address, equal in every network
+  deployments: { // networks the implementation is deployed and supported
+    chainId: string; // chain's ID
+    block: string; // block number of the deployment transaction
   }[];
-  creationArgs: 
-    useHatId: boolean // Whether the hatId immutable arg should be set with the target's hat ID
-    immutable: { // immutable args for new module instance creation
-      name: string; // arg's name
-      description: string; // short description
-      type: string; // solidity type (e.g. "uint256")
-      example: unknown; // example arg 
-      displayType: string; // type of value for display purpose
-    }[];
-    mutable: {
-      name: string; // arg's name
-      description: string; // short description
-      type: string; // solidity type (e.g. "uint256")
-      example: unknown; // example arg 
-      displayType: string; // type of value for display purpose
-    }[];
-  };
+  creationArgs: ModuleCreationArgs; // the arguments that are passed to the module factory's creation function
+  customRoles: Role[]; // module's custom roles
+  writeFunctions: WriteFunction[]; // module's write functions
   abi: Abi; // module's ABI
 }
 ```
 
+Check out the [Types](../v1-sdk/subgraph/types.md) section for more info about  Module's object properties .
+
 ### <mark style="color:purple;">getAllModules</mark>
 
-Get all available modules.
+Get all available modules (both active and deprecated).
 
 ```typescript
 const modules = hatsModulesClient.getAllModules();
@@ -62,7 +51,23 @@ _**Response**_:
 { [id: string]: Module }
 ```
 
-An object that maps between module IDs and the corresponding module objects. A module ID is the `keccak256` hash of the module object.
+An object that maps between module IDs and the corresponding module objects. A module ID is its implementation address.
+
+### <mark style="color:purple;">getAllActiveModules</mark>
+
+Get all the active modules (without deprecated ones).
+
+```typescript
+const activeModules = hatsModulesClient.getAllActiveModules();
+```
+
+_**Response**_:
+
+```typescript
+{ [id: string]: Module }
+```
+
+An object that maps between module IDs and the corresponding module objects. A module ID is its implementation address.
 
 ### <mark style="color:purple;">getAllEligibilityModules</mark>
 
@@ -78,7 +83,7 @@ _**Response**_:
 { [id: string]: Module }
 ```
 
-An object that maps between eligibility module IDs and the corresponding module objects. A module ID is the `keccak256` hash of the module object.
+An object that maps between eligibility module IDs and the corresponding module objects. A module ID is its implementation address.
 
 ### <mark style="color:purple;">getAllToggleModules</mark>
 
@@ -94,7 +99,7 @@ _**Response**_:
 { [id: string]: Module }
 ```
 
-An object that maps between toggle module IDs and the corresponding module objects. A module ID is the `keccak256` hash of the module object.
+An object that maps between toggle module IDs and the corresponding module objects.A module ID is its implementation address.
 
 ### <mark style="color:purple;">getAllHatterModules</mark>
 
@@ -110,7 +115,7 @@ _**Response**_:
 { [id: string]: Module }
 ```
 
-An object that maps between hatter module IDs and the corresponding module objects. A module ID is the `keccak256` hash of the module object.
+An object that maps between hatter module IDs and the corresponding module objects. A module ID is its implementation address.
 
 ### <mark style="color:purple;">getModuleById</mark>
 
@@ -126,7 +131,7 @@ _**Arguments**_:
 moduleId: string
 ```
 
-`moduleId` - Module's ID (`Keccak256` of the module object).
+`moduleId` - Module's ID (implementation address).
 
 _**Response**_:
 
@@ -146,7 +151,7 @@ const module = hatsModulesClient.getModuleByImplementation(address);
 _**Arguments**_:
 
 ```typescript
-address: string
+address: `0x${string}`
 ```
 
 `address` - Module's implementation address.
@@ -183,7 +188,7 @@ The module that matches the provided address, or `undefined` in case no matching
 
 ### <mark style="color:purple;">getFactory</mark>
 
-Get the Hats Module Factory metadata.
+Get the Hats Module Factory metadata object.
 
 ```typescript
 const factory = hatsModulesClient.getFactory();

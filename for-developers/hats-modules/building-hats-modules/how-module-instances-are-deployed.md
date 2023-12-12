@@ -127,9 +127,13 @@ HatsModuleFactory [v0.6.0](https://github.com/Hats-Protocol/hats-module/releases
 
 It is known to have been deployed to the following networks:
 
-* [Goerli testnet](https://goerli.etherscan.io/address/0xfE661c01891172046feE16D3a57c3Cf456729efA)
 * [Ethereum Mainnet](https://etherscan.io/address/0xfE661c01891172046feE16D3a57c3Cf456729efA)
 * [Optimism](https://optimistic.etherscan.io/address/0xfE661c01891172046feE16D3a57c3Cf456729efA)
 * [Gnosis Chain](https://gnosisscan.io/address/0xfE661c01891172046feE16D3a57c3Cf456729efA)
 * [Polygon](https://polygonscan.com/address/0xfe661c01891172046fee16d3a57c3cf456729efa)
 * [Arbitrum](https://arbiscan.io/address/0xfe661c01891172046fee16d3a57c3cf456729efa)
+* [PGN](https://explorer.publicgoods.network/address/0xfE661c01891172046feE16D3a57c3Cf456729efA)
+* [Celo](https://explorer.celo.org/mainnet/address/0xfE661c01891172046feE16D3a57c3Cf456729efA)
+* [Base](https://basescan.org/address/0xfe661c01891172046fee16d3a57c3cf456729efa)
+* [Sepolia testnet](https://sepolia.etherscan.io/address/0xfe661c01891172046fee16d3a57c3cf456729efa)
+* [Goerli testnet](https://goerli.etherscan.io/address/0xfE661c01891172046feE16D3a57c3Cf456729efA)

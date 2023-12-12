@@ -20,7 +20,7 @@ To submit a module to the registry, open a pull requests to the [registry repo](
 * The module's Github repo and repo owner/org
 * The module type: eligibility, toggle, and/or hatter
 * Implementation contract address
-* Deployments to the implementation address, including chainid and block number
+* Deployments to the implementation address, including chain ID and block number
 * The list of immutable args, with name, description, type, and example for each
 * The list of mutable args (initData), with name, description, type, and example for each
 * The module's ABI

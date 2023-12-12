@@ -27,10 +27,10 @@ _**Arguments**_:
 ```
 
 * `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
-* `moduleId` - The module ID (`keccak256` hash of the module object).
+* `moduleId` - The module ID (implementation address).
 * `hatId` - The hat ID for which the module is created.
-* `immutableArgs` - The module's immutable args. The arguments should be in the same order as in the Module object.
-* `mutableArgs` - The module's mutable args. The arguments should be in the same order as in the Module object.
+* `immutableArgs` - The module's immutable args. The arguments should be in the same order as in the [Module](types.md#module) object.
+* `mutableArgs` - The module's mutable args. The arguments should be in the same order as in the [Module](types.md#module) object.
 
 _**Response**_:
 
@@ -75,10 +75,10 @@ _**Arguments**_:
 ```
 
 * `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
-* `moduleIds` - The module IDs (`keccak256` hash of the module object).
+* `moduleIds` - The module IDs (implementation address).
 * `hatIds` - The hat IDs for which the modules are created.
-* `immutableArgsArray` - Each module's immutable arguments. For each module, the arguments should be in the same order as in the Module object.
-* `mutableArgsArray` - Each module's mutable arguments. For each module, the arguments should be in the same order as in the Module object.
+* `immutableArgsArray` - Each module's immutable arguments. For each module, the arguments should be in the same order as in the [Module](types.md#module) object.
+* `mutableArgsArray` - Each module's mutable arguments. For each module, the arguments should be in the same order as in the [Module](types.md#module) object.
 
 _**Response**_:
 
@@ -93,3 +93,37 @@ _**Response**_:
 * `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 * `transactionHash` - transaction's hash.
 * `newInstances` - The address of the new module instances.
+
+### <mark style="color:purple;">predictHatsModuleAddress</mark>
+
+Predict a module's address before/after it was created, using its creation arguments.
+
+```typescript
+const predictedAddress = await hatsModulesClient.predictHatsModuleAddress({
+    moduleId,
+    hatId,
+    immutableArgs,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+   moduleId: string;
+   hatId: bigint;
+   immutableArgs: unknown[];
+}
+```
+
+* `moduleId` - Module's ID.
+* `hatId` - The target hat ID, as provided to the [instance creation function](create-new-instance-s.md#createnewinstance).
+* `immutableArgs` - The module's immutable args, as provided to the [instance creation function](create-new-instance-s.md#createnewinstance).
+
+_**Response**_:
+
+```typescript
+`0x${string}`
+```
+
+The predicted module address.
