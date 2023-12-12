@@ -8,7 +8,7 @@ For each hat you create, the first type of properties you'll be able to edit are
 
 Like any other NFT, hats have images. You can set a specific image for each hat. If no image is set for a hat, it will adopt the image of its nearest admin, as seen in the hats with IDs 2.3.1, 2.4.1, and 2.5.1 below.
 
-<figure><img src="../.gitbook/assets/Screenshot 2023-07-13 at 8.09.38 PM.png" alt=""><figcaption><p>A subset of the <a href="http://127.0.0.1:5000/u/Ajcq1GvbYJMa6t1IqqyyBN3Bewo2">Cabin</a> Hats tree</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/Screenshot 2023-07-13 at 8.09.38 PM.png" alt=""><figcaption><p>A subset of the <a href="https://app.gitbook.com/u/Ajcq1GvbYJMa6t1IqqyyBN3Bewo2">Cabin</a> Hats tree</p></figcaption></figure>
 
 ### Name & Description
 
@@ -27,3 +27,15 @@ Immutable hats cannot be made mutable later, so we generally recommend starting 
 **Why make a hat immutable?** In some cases, a hat's properties should be immutable to give everybody (particularly the wearer(s)) maximal confidence in what they are signing up for. Immutability also curbs the powers of a hat's admins, as immutable hats cannot be changed or transferred by admins.
 
 **Top Hat exception:** The only exception to the above mutability rules is for Top Hats, which despite being immutable are allowed to change their own `details` and `imageURI` (but not other properties). Note that this only includes non-linked Top Hats; a Top Hat that has been linked (aka grafted) onto another hat tree is no longer considered a Top Hat, and therefore is subject to the same mutability rules as other hats.
+
+### Top-Hat Special Properties
+
+The top-hat of a tree has two special properties - "Guilds" and "Snapshot Spaces".&#x20;
+
+These are used in order to associate Guilds and/or Snapshot Spaces to the tree, allowing to display   authorities that are granted to wearers of hats within the tree.
+
+<figure><img src="../.gitbook/assets/Top Hat Guilds And Snapshot.png" alt=""><figcaption></figcaption></figure>
+
+For example, once setting the associated Snapshot Space, the relevant authorities will be displayed on hats which grant their wearers voting power in the Space:
+
+<figure><img src="../.gitbook/assets/Snapshot Authority (1).png" alt=""><figcaption></figcaption></figure>

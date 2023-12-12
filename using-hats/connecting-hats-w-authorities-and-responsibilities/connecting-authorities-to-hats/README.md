@@ -4,6 +4,8 @@ Hats are the tokens that give wearers access to token-gated permissions. Pluggin
 
 To connect a hat to a token-gate, locate the token-gating permissions for the platform or application you wish to use. In many cases, the process requires that you create a specific role in the platform that has special permissions associated with that role, and then add a specific requirement necessary for a user to hold that role (e.g., holding a particular Hats token). _See the_ [_Hat-Gated Authorities_](../../../hats-integrations/hat-gated-authorities/) _section of these docs for guides for connecting hats to specific authorities and platforms._
 
+### Example - Guild.xyz
+
 At Guild.xyz, for example, which provides token-gating for Discord, Telegram, Github, and Google Workspace, you will create a role within your Guild, provide that Guild role with specific "rewards" (aka permissions), and then add a requirement that an address must have possession of a particular NFT to hold that Guild role.
 
 ![](https://hackmd.io/\_uploads/BkTwIJXBn.png) ![](https://hackmd.io/\_uploads/By7qBkXHn.png)
@@ -22,3 +24,16 @@ See below for these details.
 {% content-ref url="../../connecting-hats-with-authorities/finding-a-hats-token-id.md" %}
 [finding-a-hats-token-id.md](../../connecting-hats-with-authorities/finding-a-hats-token-id.md)
 {% endcontent-ref %}
+
+Finally, associate your Hats tree with the Guild/s:
+
+* Select "Edit Tree"
+* Locate and select the tree's top-hat
+* Select the "Hat Basics" section
+* Set the Guild name/s in the "Guilds" field
+
+<figure><img src="../../../.gitbook/assets/Top Hat Guilds And Snapshot (1).png" alt=""><figcaption></figcaption></figure>
+
+Now, Guild authorities will be automatically displayed on the relevant hats.
+
+<figure><img src="../../../.gitbook/assets/Guild Authorities.png" alt=""><figcaption></figcaption></figure>

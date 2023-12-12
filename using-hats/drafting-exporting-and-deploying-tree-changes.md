@@ -12,6 +12,10 @@ Once a Hats tree has been [created](creating-my-first-hat.md#1.-creating-a-new-t
 
 Use [Edit Mode](creating-my-first-hat.md) to create new hats, give them a [name and image](setting-a-hats-basic-properties.md), [add wearers](adding-wearers.md), [specify powers & responsibilities](connecting-hats-w-authorities-and-responsibilities/documenting-hat-powers-and-responsibilities.md), add modules to automate hat [eligibility and revocation](setting-accountabilities/eligibility-requirements-for-wearers.md), enable [hat-claiming](making-hats-claimable.md) and more.&#x20;
 
+In large tress, you can group hats together for a cleaner display by creating a parent hat with zero as its "max wearers" property.&#x20;
+
+<figure><img src="../.gitbook/assets/Group Hat (1).png" alt=""><figcaption></figcaption></figure>
+
 You can create as many new hats and changes to the Hats tree as you’d like before deploying all changes in one transaction.&#x20;
 
 <figure><img src="https://lh7-us.googleusercontent.com/1fftIQh9W2kDYhOZSp1seaeN_PzP8Vi0o7fdm7hgaOS1esyxE5JjtZn3OFqzbq4KxvwYAp-rNbRNpZKRdBONL-Ad9nXCX52USWkXT5b6bJtGQ3jno4jddCAa0B_93IGKneaoFJG7tOw1JL14N26T2Ew" alt=""><figcaption><p>Use Edit Mode to draft, share, and deploy changes to your Hats tree</p></figcaption></figure>

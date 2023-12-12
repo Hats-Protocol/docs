@@ -10,9 +10,17 @@ Additionally, you can document the responsibilities attached to these powers, pr
 * Locate and select the hat
 * Open the "Responsibilities" section
 
-<figure><img src="../../.gitbook/assets/Responsibilities.png" alt=""><figcaption></figcaption></figure>
+<div align="left" data-full-width="false">
 
-* Add any amount of responsibilities, each as a short free text paired with an optional link.
+<figure><img src="../../.gitbook/assets/Add Responsibilities.png" alt=""><figcaption></figcaption></figure>
+
+</div>
+
+* Select "Add a Responsibility"&#x20;
+
+<figure><img src="../../.gitbook/assets/New Responsibility Form.png" alt=""><figcaption></figcaption></figure>
+
+* Fill the responsibility details
 
 ### Adding Powers
 
@@ -20,6 +28,10 @@ Additionally, you can document the responsibilities attached to these powers, pr
 * Locate and select the hat
 * Open the "Powers" section
 
-<figure><img src="../../.gitbook/assets/Powers.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Add Powers.png" alt=""><figcaption></figcaption></figure>
 
-* Add any amount of powers, each as a short free text paired with an optional link.
+* Select "Add a Permission"&#x20;
+
+<figure><img src="../../.gitbook/assets/New Authority (1).png" alt=""><figcaption></figcaption></figure>
+
+* Fill the authority details

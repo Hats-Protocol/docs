@@ -83,3 +83,17 @@ Replace Hat-ID-1 and Hat-ID-2 with the specific hat token IDs that you want to g
 And where X = the voting weight you want to assign to Hat-ID-1, Y = the voting weight for Hat-ID-3, and so on.&#x20;
 
 **NOTE: Voting weight from Snapshot strategies is cumulative!** So if someone is wearing two different hats that are each allowed to vote on a proposal, one of which comes with a voting weight of 1 and the other with a voting weight of 2, they will actually be able to vote on the proposal with a voting weight of 3.
+
+### Surfacing Snapshot Authorities in the Hats App
+
+After attaching Snapshot authorities to certain hats, you can surface those authorities, to be displayed in the corresponding Hats tree:
+
+* Select "Edit Tree"
+* Locate and select the tree's top-hat
+* In the "Hat Basics" section, add the relevant Snapshot Space ID
+
+<figure><img src="../../.gitbook/assets/Add Snapshot Space.png" alt=""><figcaption></figcaption></figure>
+
+Snapshot authorities will now be displayed on the relevant hats:
+
+<figure><img src="../../.gitbook/assets/Snapshot Authority.png" alt=""><figcaption></figcaption></figure>
