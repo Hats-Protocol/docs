@@ -128,10 +128,10 @@ const module = hatsModulesClient.getModuleById(moduleId);
 _**Arguments**_:
 
 ```typescript
-moduleId: string
+string
 ```
 
-`moduleId` - Module's ID (implementation address).
+Module's ID (implementation address).
 
 _**Response**_:
 
@@ -151,10 +151,10 @@ const module = hatsModulesClient.getModuleByImplementation(address);
 _**Arguments**_:
 
 ```typescript
-address: `0x${string}`
+`0x${string}`
 ```
 
-`address` - Module's implementation address.
+Module's implementation address.
 
 _**Response**_:
 
@@ -174,10 +174,10 @@ const module = await hatsModulesClient.getModuleByInstance(address);
 _**Arguments**_:
 
 ```typescript
-address: `0x${string}`
+`0x${string}`
 ```
 
-`address` - Module's instance address.
+Module's instance address.
 
 _**Response**_:
 
@@ -185,6 +185,29 @@ _**Response**_:
 </strong></code></pre>
 
 The module that matches the provided address, or `undefined` in case no matching module was found.
+
+### <mark style="color:purple;">getModulesByInstances</mark>
+
+Get the module objects of instances.
+
+```typescript
+const modules = await hatsModulesClient.getModulesByInstances(addresses);
+```
+
+_**Arguments**_:
+
+```typescript
+`0x${string}`[]
+```
+
+Addresses of the module instances.
+
+_**Response**_:
+
+<pre class="language-typescript"><code class="lang-typescript"><strong>(Module | undefined)[]
+</strong></code></pre>
+
+The modules matching the provided addresses. For every address that is not an instance of a registry module, the corresponding return value in the array will be 'undefined'.
 
 ### <mark style="color:purple;">getFactory</mark>
 
