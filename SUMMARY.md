@@ -123,6 +123,12 @@
     * [How Module Instances Are Deployed](for-developers/hats-modules/building-hats-modules/how-module-instances-are-deployed.md)
     * [Modules Registry](for-developers/hats-modules/building-hats-modules/modules-registry.md)
     * [About Module Chains](for-developers/building-hats-modules/about-module-chains.md)
+* [👒 Hats Signer Gate SDK](for-developers/hats-signer-gate-sdk/README.md)
+  * [Getting Started](for-developers/hats-signer-gate-sdk/getting-started.md)
+  * [Creating New Instances](for-developers/hats-signer-gate-sdk/creating-new-instances.md)
+  * [Hats Signer Gate](for-developers/hats-signer-gate-sdk/hats-signer-gate.md)
+  * [Multi Hats Signer Gate](for-developers/hats-signer-gate-sdk/multi-hats-signer-gate.md)
+  * [Single Write Functions Handler](for-developers/hats-signer-gate-sdk/single-write-functions-handler.md)
 * [🌐 Hats Security Audits](for-developers/hats-security-audits.md)
 
 ## Legal
