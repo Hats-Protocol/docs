@@ -1,5 +1,7 @@
 # Allow-List Eligibility
 
+## **Overview**
+
 A Hats Protocol eligibility module that uses an allowlist to determine eligibility.
 
 This module sets up a simple allowlist to determine eligibility for a hat. For a given account (i.e. potential hat wearer), the allowlist stores values for that account's eligibility and standing for the hat. The wearer(s) of the `OWNER_HAT` can add or remove accounts from the allowlist. The wearer(s) of the `ARBITRATOR_HAT` can set the standing of accounts.

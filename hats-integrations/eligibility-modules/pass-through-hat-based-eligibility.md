@@ -1,5 +1,7 @@
 # Pass-Through (Hat-Based) Eligibility
 
+## **Overview**
+
 A Hats Protocol module that enables an authorized hat to serve as the eligibility and/or toggle module for other hat(s).
 
 In Hats Protocol v1, eligibility and toggle modules are set as addresses. This creates a lot of flexibility, since addresses can be EOAs, multisigs, DAOs, or even other smart contracts. But hats themselves cannot be set explicitly as eligibility or toggle modules because hats are identified by uint256 hat IDs, not addresses.

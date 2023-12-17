@@ -1,5 +1,7 @@
 # Hat-Wearing Eligibility
 
+## **Overview**
+
 A Hats Protocol eligibility module that conditions eligibility for one hat based on wearing another hat.
 
 One use of a hat is to serve as an encapsulation of a set of logic and conditions that serve as baseline eligibility criteria for other hats. This eligibility module builds on that idea by allowing a hat to be used as an eligibility criterion for another hat.

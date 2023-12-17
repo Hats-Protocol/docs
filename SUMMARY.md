@@ -52,6 +52,7 @@
   * [Pass-Through (Hat-Based) Eligibility](hats-integrations/eligibility-modules/pass-through-hat-based-eligibility.md)
   * [Hat-Wearing Eligibility](hats-integrations/eligibility-modules/hat-wearing-eligibility.md)
   * [Allow-List Eligibility](hats-integrations/eligibility-modules/allow-list-eligibility.md)
+  * [Hats Election Eligibility](hats-integrations/eligibility-modules/hats-election-eligibility.md)
 * [⚡ Toggle Modules](hats-integrations/toggle-modules/README.md)
   * [Seasonal/ Time-Expiry Toggle](hats-integrations/toggle-modules/seasonal-time-expiry-toggle.md)
   * [Pass-Through (Hat-Based) Toggle](hats-integrations/toggle-modules/pass-through-hat-based-toggle.md)
