@@ -1,4 +1,6 @@
-# Hat & Tree ID Utilities
+# Utilities
+
+## Hat & Tree ID Utils
 
 Following are utility functions to handle various hat & tree ID formats. More information about hat IDs can be found [here](../../hats-protocol-overview/hat-ids.md).
 
@@ -23,7 +25,7 @@ hatId: bigint
 _**Response**_:
 
 ```typescript
-string
+`0x${string}`
 ```
 
 Hat ID in a hex format.
@@ -75,7 +77,7 @@ treeId: number
 _**Response**_:
 
 ```typescript
-string
+`0x${string}`
 ```
 
 Tree ID in a hex format.
@@ -191,11 +193,10 @@ Hat ID in IP format.
 
 Convert a hat ID from an IP format, to a decimal format.
 
-```typescript
-import { hatIdIpToDecimal } from "@hatsprotocol/sdk-v1-core";
-
+<pre class="language-typescript"><code class="lang-typescript"><strong>import { hatIdIpToDecimal } from "@hatsprotocol/sdk-v1-core";
+</strong>
 const hatIdDecimal = hatIdIpToDecimal(hatId);
-```
+</code></pre>
 
 _**Arguments**_:
 
@@ -212,3 +213,18 @@ bigint
 ```
 
 Hat ID in decimal format.
+
+## Constants
+
+Following are Hats-specific exported constant values.
+
+<pre class="language-typescript"><code class="lang-typescript"><strong>import {   
+</strong>  HATS_V1, // Hats-Protocol v1 contract address
+  MAX_LEVELS, // Max levels on a Hats tree
+  MAX_LEVEL_HATS, // Max amount of hats on each level (excluding level 0)
+  ZERO_ID, // The zero Hat ID in hex format 
+  FALLBACK_ADDRESS, // The fallback address for eligibility and toggle 
+<strong>} from "@hatsprotocol/sdk-v1-core";
+</strong>
+
+</code></pre>
