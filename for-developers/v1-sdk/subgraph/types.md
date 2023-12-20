@@ -6,10 +6,10 @@
 
 ```typescript
 interface Hat {
-  id: string; // Hat ID
+  id: `0x${string}`; // Hat ID
   prettyId?: string; // pretty ID format
   status?: boolean; // 'true' if active, 'false' otherwise
-  createdAt?: string; // timestamp of hat creation
+  createdAt?: string | null; // timestamp of hat creation, null if not created yet
   details?: string; // Hat's details field
   maxSupply?: string; // max amount of wearers
   eligibility?: `0x${string}`; // eligibility address
@@ -87,7 +87,7 @@ interface HatsConfig {
 
 ```typescript
 interface Wearer {
-  id: string; // Wearer's address
+  id: `0x${string}`; // Wearer's address
   currentHats?: Hat[]; // Wearer's current Hats
   mintEvent?: HatsEvent[]; // Hat mint events for the Wearer
   burnEvent?: HatsEvent[]; // Hat burn events for the Wearer
@@ -132,7 +132,7 @@ interface WearerPropsConfig {
 
 ```typescript
 interface Tree {
-  id: number; // Tree ID (Tree's top-hat domain - first 4 bytes of the top-hat ID)
+  id: `0x${string}`; // Tree ID (Tree's top-hat domain - first 4 bytes of the top-hat ID)
   hats?: Hat[]; // Tree's Hats
   childOfTree?: Tree; // if linked, the Tree which this Tree is linked to
   parentOfTrees?: Tree[]; // Trees which are linked to this Tree
@@ -228,8 +228,8 @@ Fetched events will include the event's [base properties](types.md#hatseventbase
 interface HatCreatedEvent extends HatsEventBase {
   __typename: "HatCreatedEvent";
   hatDetails: string;
-  hatMaxSupply: string;
-  hatEligibility: string;
+  hatMaxSupply: `0x${string}`;
+  hatEligibility: `0x${string}`;
   hatToggle: string;
   hatMutable: boolean;
   hatImageUri: string;
@@ -242,9 +242,9 @@ interface HatCreatedEvent extends HatsEventBase {
 interface HatMintedEvent extends HatsEventBase {
   __typename: "HatMintedEvent";
   wearer: {
-    id: string;
+    id: `0x${string}`;
   };
-  operator: string;
+  operator: `0x${string}`;
 }
 ```
 
@@ -254,9 +254,9 @@ interface HatMintedEvent extends HatsEventBase {
 interface HatBurnedEvent extends HatsEventBase {
   __typename: "HatBurnedEvent";
   wearer: {
-    id: string;
+    id: `0x${string}`;
   };
-  operator: string;
+  operator: `0x${string}`;
 }
 ```
 
@@ -291,7 +291,7 @@ interface HatDetailsChangedEvent extends HatsEventBase {
 ```typescript
 interface HatEligibilityChangedEvent extends HatsEventBase {
   __typename: "HatEligibilityChangedEvent";
-  hatNewEligibility: string;
+  hatNewEligibility: `0x${string}`;
 }
 ```
 
@@ -300,7 +300,7 @@ interface HatEligibilityChangedEvent extends HatsEventBase {
 ```typescript
 interface HatToggleChangedEvent extends HatsEventBase {
   __typename: "HatToggleChangedEvent";
-  hatNewToggle: string;
+  hatNewToggle: `0x${string}`;
 }
 ```
 
@@ -327,7 +327,7 @@ interface HatImageURIChangedEvent extends HatsEventBase {
 ```typescript
 interface TopHatLinkRequestedEvent extends HatsEventBase {
   __typename: "TopHatLinkRequestedEvent";
-  newAdmin: string;
+  newAdmin: `0x${string}`;
 }
 ```
 
@@ -336,7 +336,7 @@ interface TopHatLinkRequestedEvent extends HatsEventBase {
 ```typescript
 interface TopHatLinkedEvent extends HatsEventBase {
   __typename: "TopHatLinkedEvent";
-  newAdmin: string;
+  newAdmin: `0x${string}`;
 }
 ```
 
@@ -346,7 +346,7 @@ interface TopHatLinkedEvent extends HatsEventBase {
 interface WearerStandingChangedEvent extends HatsEventBase {
   __typename: "WearerStandingChangedEvent";
   wearer: {
-    id: string;
+    id: `0x${string}`;
   };
   wearerStanding: boolean;
 }
