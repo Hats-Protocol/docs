@@ -129,7 +129,7 @@
   * [Creating New Instances](for-developers/hats-signer-gate-sdk/creating-new-instances.md)
   * [Hats Signer Gate](for-developers/hats-signer-gate-sdk/hats-signer-gate.md)
   * [Multi Hats Signer Gate](for-developers/hats-signer-gate-sdk/multi-hats-signer-gate.md)
-  * [Single Write Functions Handler](for-developers/hats-signer-gate-sdk/single-write-functions-handler.md)
+  * [HSG & MHSG Handlers](for-developers/hats-signer-gate-sdk/hsg-and-mhsg-handlers.md)
 * [🌐 Hats Security Audits](for-developers/hats-security-audits.md)
 
 ## Legal

@@ -1,10 +1,10 @@
-# Single Write Functions Handler
+# HSG & MHSG Handlers
 
 The following section describes a different way of interacting with HSG and MHSG instances, than documented in the previous sections. In particular, in the previous sections, for each operation on the [HSG](hats-signer-gate.md) and [MHSG](multi-hats-signer-gate.md) contracts, there's a matching function in the SDK. &#x20;
 
-In addition to these individual functions, the SDK also includes a single handler for calling the write operations of both HSG and MHSG instances. This enables HSG/MHSG interactions to be optionally handled in a similar way to [Hats Modules interactions](../hats-modules/modules-sdk/interact-with-instances.md#callinstancewritefunction), by working with the HSG and MHSG [metadata objects](single-write-functions-handler.md#metadata) and the single write functions [handler](single-write-functions-handler.md#handler).
+In addition to these individual functions, the SDK also includes a single handler for calling the write operations of both HSG and MHSG instances. This enables HSG/MHSG interactions to be optionally handled in a similar way to [Hats Modules interactions](../hats-modules/modules-sdk/interact-with-instances.md#callinstancewritefunction), by working with the HSG and MHSG [metadata objects](hsg-and-mhsg-handlers.md#metadata) and the single write functions [handler](hsg-and-mhsg-handlers.md#handler).
 
-## Handler
+## Handlers
 
 ### <mark style="color:purple;">callInstanceWriteFunction</mark>
 
@@ -35,8 +35,8 @@ _**Arguments**_:
 * `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
 * `type` - 'HSG' or 'MHSG'.
 * `instance` - The MHSG/HSG instance address.
-* `func` - The write function to call, provided as an object of type [WriteFunction](single-write-functions-handler.md#writefunction).
-* `args` - The arguments with which to call the function, as objects of type [WriteFunctionArg](single-write-functions-handler.md#writefunctionarg).
+* `func` - The write function to call, provided as an object of type [WriteFunction](hsg-and-mhsg-handlers.md#writefunction).
+* `args` - The arguments with which to call the function, as objects of type [WriteFunctionArg](hsg-and-mhsg-handlers.md#writefunctionarg).
 
 _**Response**_:
 
@@ -50,9 +50,49 @@ _**Response**_:
 * `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 * `transactionHash` - transaction's hash.
 
+### <mark style="color:purple;">getInstanceParameters</mark>
+
+Get a HSG or MHSG instance live parameters:
+
+* Safe address
+* Min threshold
+* Target threshold
+* Max signers
+* Owner Hat
+
+```typescript
+const params = await hatsSignerGateClient.getInstanceParameters(instance);
+```
+
+_**Arguments**_:
+
+```typescript
+instance: `0x${string}`
+```
+
+`instance` - Instance's address.
+
+_**Response**_:
+
+```typescript
+{
+  label: string;
+  value: unknown;
+  solidityType: string;
+  displayType: string;
+}[]
+```
+
+An array of objects, each containing a parameter's information:
+
+* `label` - The parameter's name/description.
+* `value` - The parameter's value, as was returned from the instance contract.
+* `solidityType` - The parameter's Solidity type.
+* `displayType`- The parameter's display type. Its purpose is for UIs to be able to render an appropriate component for the parameter
+
 ## Metadata
 
-Both the HSG and MHSG metadata objects include their ABIs, all their [write functions](single-write-functions-handler.md#writefunction) together with the metadata of each function and the [custom roles](single-write-functions-handler.md#role) that are associated with them.&#x20;
+Both the HSG and MHSG metadata objects include their ABIs, all their [write functions](hsg-and-mhsg-handlers.md#writefunction) together with the metadata of each function and the [custom roles](hsg-and-mhsg-handlers.md#role) that are associated with them.&#x20;
 
 ### <mark style="color:purple;">getMetadata</mark>
 
@@ -76,7 +116,7 @@ _**Response**_:
 HsgMetadata
 ```
 
-An object of type [HsgMetadata](single-write-functions-handler.md#hsgmetadata).
+An object of type [HsgMetadata](hsg-and-mhsg-handlers.md#hsgmetadata).
 
 ## Types
 

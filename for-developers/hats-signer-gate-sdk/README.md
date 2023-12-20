@@ -26,6 +26,6 @@ For an in-depth overview of Hats Signer Gate, click [here](../../hats-integratio
 [multi-hats-signer-gate.md](multi-hats-signer-gate.md)
 {% endcontent-ref %}
 
-{% content-ref url="single-write-functions-handler.md" %}
-[single-write-functions-handler.md](single-write-functions-handler.md)
+{% content-ref url="hsg-and-mhsg-handlers.md" %}
+[hsg-and-mhsg-handlers.md](hsg-and-mhsg-handlers.md)
 {% endcontent-ref %}
