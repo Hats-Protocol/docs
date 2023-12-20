@@ -225,6 +225,4 @@ Following are Hats-specific exported constant values.
   ZERO_ID, // The zero Hat ID in hex format 
   FALLBACK_ADDRESS, // The fallback address for eligibility and toggle 
 <strong>} from "@hatsprotocol/sdk-v1-core";
-</strong>
-
-</code></pre>
+</strong></code></pre>
