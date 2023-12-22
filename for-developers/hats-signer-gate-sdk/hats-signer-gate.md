@@ -75,6 +75,36 @@ boolean
 
 `true` if valid, `false` otherwise.
 
+### <mark style="color:purple;">claimedAndStillValid</mark>
+
+Check if an account has claimed signer rights and is still valid.
+
+<pre class="language-typescript"><code class="lang-typescript">const claimedAndValid = await hatsSignerGateClient.claimedAndStillValid({
+<strong>    instance,
+</strong><strong>    address    
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    instance: Address;
+    address: Address;
+}
+```
+
+* `instance` - HSG's instance address.
+* `address` -The address to check.
+
+_**Response**_:
+
+```typescript
+boolean
+```
+
+`true` if the account is one of the safe's owners and is still valid, `false` otherwise.
+
 ### <mark style="color:purple;">validSignerCount</mark>
 
 Tallies the number of existing Safe owners that wear the Signers Hat.
