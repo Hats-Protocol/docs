@@ -46,6 +46,14 @@ See the subpages within this section for detailed guides for specific eligibilit
 [allow-list-eligibility.md](allow-list-eligibility.md)
 {% endcontent-ref %}
 
+{% content-ref url="hats-election-eligibility.md" %}
+[hats-election-eligibility.md](hats-election-eligibility.md)
+{% endcontent-ref %}
+
+{% content-ref url="colinks-eligibility.md" %}
+[colinks-eligibility.md](colinks-eligibility.md)
+{% endcontent-ref %}
+
 Eligibility modules can also be combined with claimable hats to enable addresses to claim and wear a given hat _only if_ they fulfill specific eligibility criteria. For more information, check out the guide [here](../claiming-and-onboarding-integrations/making-hats-claimable.md).
 
 ## **Modules Coming Soon**
