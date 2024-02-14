@@ -131,6 +131,10 @@
   * [Hats Signer Gate](for-developers/hats-signer-gate-sdk/hats-signer-gate.md)
   * [Multi Hats Signer Gate](for-developers/hats-signer-gate-sdk/multi-hats-signer-gate.md)
   * [HSG & MHSG Handlers](for-developers/hats-signer-gate-sdk/hsg-and-mhsg-handlers.md)
+* [💼 Hats Account SDK](for-developers/hats-account-sdk/README.md)
+  * [1 of N Hats Account](for-developers/hats-account-sdk/1-of-n-hats-account/README.md)
+    * [Getting Started](for-developers/hats-account-sdk/1-of-n-hats-account/getting-started.md)
+    * [Creating New Instances](for-developers/hats-account-sdk/1-of-n-hats-account/creating-new-instances.md)
 * [🌐 Hats Security Audits](for-developers/hats-security-audits.md)
 
 ## Legal
