@@ -6,26 +6,9 @@ A Hats Protocol eligibility module that uses an allowlist to determine eligibili
 
 This module sets up a simple allowlist to determine eligibility for a hat. For a given account (i.e. potential hat wearer), the allowlist stores values for that account's eligibility and standing for the hat. The wearer(s) of the `OWNER_HAT` can add or remove accounts from the allowlist. The wearer(s) of the `ARBITRATOR_HAT` can set the standing of accounts.
 
-This module serves as both a "mechanistic" and "humanistic passthrough" eligibility module.
-
-#### Mechanistic Functionality
-
-* Wearer(s) of the `OWNER_HAT` can simply add account(s) to the allowlist by calling `addAccount()` or `addAccounts()`.
-* Wearer(s) of the `OWNER_HAT` can simply remove account(s) from the allowlist by calling `removeAccount()` or `removeAccounts()`.
-* Wearer(s) of the `ARBITRATOR_HAT` can simply set the standing of account(s) by calling `setStandingForAccount()` or `setStandingForAccounts()`.
-
-In each of these cases, Hats Protocol will _pull_ eligibility and standing data from the module via `getWearerStatus()`. Hats Protocol will not emit an event with any of these eligibility and resulting wearer changes, so front ends pointing only at Hats Protocol events (or the subgraph) will not automatically reflect these changes.
-
-#### Humanistic Functionality
-
-* Wearer(s) of the `OWNER_HAT` can manually revoke an account's hat by calling `removeAccountAndBurnHat()`.
-* Wearer(s) of the `ARBITRATOR_HAT` can manually put an account in bad standing and burn their hat by calling `setStandingForAccountAndBurnHat()`.
-
-In these cases, the module _pushes_ eligibility and standing data to Hats Protocol, causing Hats Protocol to emit event(s) reflecting the eligibility and resulting wearer changes. Front ends pointing at Hats Protocol events (or the subgraph) _will_ automatically reflect these changes.
-
 The module's code is open source and is available [here](https://github.com/Hats-Protocol/allowlist-eligibility/tree/main).
 
-## **Using the** Allow-List **Eligibility Module**
+## **Adding the module to a hat**
 
 * Go to the tree that includes the hat you wish to create the module for
 * Select "Edit Tree"
@@ -40,4 +23,45 @@ The module's code is open source and is available [here](https://github.com/Hats
 <figure><img src="../../.gitbook/assets/Allowlist Eligibility Guide.png" alt=""><figcaption></figcaption></figure>
 
 * Fill in the module-specific parameters
-* Choose "Deploy & Return" to deploy the module and return to the hat edit form
+* Choose "Deploy & Return" to deploy the module and return to the hat edit form. The module address will be automatically updated on the hat's eligibility property in the form. Once you deploy these changes, the hat's eligibility will be updated.
+
+## Viewing the hat's eligibility criteria
+
+Once the module is attached to the hat, you can view the hat's updated eligibility criteria:
+
+* Select the hat
+* In the eligibility section, you can view:
+  * The module's public actions
+  * The module's general description
+  * The module's live parameters
+    * Owner Hat ID
+    * Arbitrator Hat ID
+  * Useful links
+    * The module's source code on GitHub
+
+<figure><img src="../../.gitbook/assets/Screenshot 2024-02-15 at 12.39.36.png" alt="" width="563"><figcaption></figcaption></figure>
+
+## Module's roles
+
+The module has two special roles, which are set at the module's creation. Each role is granted to a hat, providing its wearers certain authorities in the module:
+
+* Owner - can add and remove accounts from the allowlist.
+* Arbitrator - can set the standing status of accounts.
+
+### Owner&#x20;
+
+To view or perform the Owner's authorities:
+
+* Select the owner hat
+* In the Authorities section, locate the Allowlist Owner authority card
+
+<figure><img src="../../.gitbook/assets/Screenshot 2024-02-15 at 12.44.32.png" alt="" width="563"><figcaption></figcaption></figure>
+
+### Arbitrator&#x20;
+
+To view or perform the Arbitrator's authorities:
+
+* Select the arbitrator hat
+* In the Authorities section, locate the Allowlist Arbitrator authority card
+
+<figure><img src="../../.gitbook/assets/Screenshot 2024-02-15 at 12.46.03.png" alt="" width="563"><figcaption></figcaption></figure>

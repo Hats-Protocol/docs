@@ -24,7 +24,7 @@ Any JokeRace election can be used for any hat, even elections that were held in 
 
 The top 5 most voted candidates in the election are the ones eligible for the role, for a term period of 1 year, as defined in the module.
 
-## **Using the JokeRace Eligibility Module**&#x20;
+## **Adding the module to a hat**
 
 * Go to the tree that includes the hat you wish to create the module for
 * Select "Edit Tree"
@@ -39,4 +39,37 @@ The top 5 most voted candidates in the election are the ones eligible for the ro
 <figure><img src="../../.gitbook/assets/Jokerace Eligibility Guide.png" alt=""><figcaption></figcaption></figure>
 
 * Fill in the module-specific parameters
-* Choose "Deploy & Return" to deploy the module and return to the hat edit form
+* Choose "Deploy & Return" to deploy the module and return to the hat edit form. The module address will be automatically updated on the hat's eligibility property in the form. Once you deploy these changes, the hat's eligibility will be updated.
+
+## Viewing the hat's eligibility criteria
+
+Once the module is attached to the hat, you can view the hat's updated eligibility criteria:
+
+* Select the hat
+* In the eligibility section, you can view:
+  * The module's public actions
+  * The module's general description
+  * The module's live parameters
+    * Admin Hat ID
+    * Jokerace contest address
+    * Ending time of the current term
+    * Number of wearers that are elected to this role
+  * Useful links
+    * The module's source code on GitHub
+
+<figure><img src="../../.gitbook/assets/Screenshot 2024-02-15 at 16.10.48.png" alt="" width="563"><figcaption></figcaption></figure>
+
+## Module's roles
+
+The module has one special roles, which is set at the module's creation. The role is granted to a hat/s, providing its wearers certain authorities in the module:
+
+* Admin - can set up new terms.
+
+### Admin&#x20;
+
+To view or perform the Admin's authorities:
+
+* Select the admin hat
+* In the Authorities section, locate the Jokerace Admin authority card
+
+<figure><img src="../../.gitbook/assets/Screenshot 2024-02-15 at 16.12.34.png" alt="" width="563"><figcaption></figcaption></figure>

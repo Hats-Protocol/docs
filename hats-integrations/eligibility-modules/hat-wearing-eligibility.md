@@ -8,7 +8,7 @@ One use of a hat is to serve as an encapsulation of a set of logic and condition
 
 The module's code is open source and is available [here](https://github.com/Hats-Protocol/hat-wearing-eligibility/tree/main).&#x20;
 
-## **Using the** Hat-Wearing **Eligibility Module**
+## **Adding the module to a hat**
 
 * Go to the tree that includes the hat you wish to create the module for
 * Select "Edit Tree"
@@ -23,4 +23,16 @@ The module's code is open source and is available [here](https://github.com/Hats
 <figure><img src="../../.gitbook/assets/Hat Wearing Eligibility.png" alt=""><figcaption></figcaption></figure>
 
 * Fill in the module-specific parameters
-* Choose "Deploy & Return" to deploy the module and return to the hat edit form
+* Choose "Deploy & Return" to deploy the module and return to the hat edit form. The module address will be automatically updated on the hat's eligibility property in the form. Once you deploy these changes, the hat's eligibility will be updated.
+
+## Viewing the hat's eligibility criteria
+
+Once the module is attached to the hat, you can view the hat's updated eligibility criteria:
+
+* Select the hat
+* In the eligibility section, you can view:
+  * The module's general description
+  * The hat that it is required to be a wearer of for eligibility&#x20;
+  * A link to the the module's source code on GitHub
+
+<figure><img src="../../.gitbook/assets/Screenshot 2024-02-15 at 11.54.09.png" alt=""><figcaption></figcaption></figure>

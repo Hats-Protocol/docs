@@ -28,7 +28,7 @@ You'll see all the hats your wallet address is holding in your My Hats page. Hat
 
 Hats often come with special [authorities](../hats-integrations/hat-gated-authorities/) which you can only access as long as you're wearing that hat. To see what authorities your hat grants you, click on the hat in your My Hats page. This will open up the full structure of hats (called a "Hats tree") within which your particular hat lives, along with a information panel for your hat.&#x20;
 
-<figure><img src="../.gitbook/assets/image.png" alt="" width="300"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2).png" alt="" width="300"><figcaption></figcaption></figure>
 
 In this information panel you'll find lots of information about your hat, including a description for the hat, any responsibilities associated with the role, and any authorities you receive by wearing the hat. The links found in the authorities section will usually direct you to the right place to claim those authorities. If you do not see any way to claim the authorities associated with your hat, contact the group or person who sent you your hat.&#x20;
 
@@ -38,7 +38,7 @@ In this information panel you'll find lots of information about your hat, includ
 
 Your hat is an admin for any hats in the direct lineage below it.
 
-<figure><img src="../.gitbook/assets/image (1).png" alt="" width="375"><figcaption><p>Admin relationships</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1).png" alt="" width="375"><figcaption><p>Admin relationships</p></figcaption></figure>
 
 As an admin, you can change a hat's name, image, description, max supply, authorities, and accountabilities, grant the hat to new wearers, and transfer the hat from one wearer to another -- but ONLY if the hat is [mutable](setting-a-hats-basic-properties.md#editable-mutability). When hats are immutable, your admin powers are diminished.
 
@@ -74,7 +74,7 @@ But take note! Any hats that are the admin of your hat will ALSO be the admin of
 
 If you'd rather ensure that you are the only admin over the hats you create, it's probably best [to create a new Hats tree](creating-my-first-hat.md) or create a new child hat that you then make immutable.
 
-<figure><img src="../.gitbook/assets/image (2).png" alt="" width="375"><figcaption><p>Your hat can create new child hats - but be aware who else has admin rights over that hat!</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1).png" alt="" width="375"><figcaption><p>Your hat can create new child hats - but be aware who else has admin rights over that hat!</p></figcaption></figure>
 
 ## **What else do I need to know?**
 

@@ -184,16 +184,12 @@ Nearly done! The final step is to mint the appropriate hats (corresponding to th
 
 Once these hats are minted, all wearers need to do to claim signing authority is to:&#x20;
 
-* Visit the instance of the Hats Signer Gate contract you created in Step 2
-* Select **Contract** and **Write Contract**
-* **Connect their wallet** using the address that is wearing the relevant hat
-* Select **claimSigner**
-* **For a Multi Hats Signer Gate, Enter the token ID of their hat** into the field that appears _(see_ [#finding-a-hats-token-id](../../using-hats/connecting-hats-with-authorities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs)._&#x20;
-* Select **Write**
+* Select the hat
+* In the Authorities section, locate the HSG Signer authority card
 
-Once the transaction has confirmed, their address will automatically be added as a signer of the Safe multisig (_as long as the max signers cap has not already been reached_).
+<figure><img src="../../.gitbook/assets/Screenshot 2024-02-15 at 17.26.15.png" alt="" width="563"><figcaption></figcaption></figure>
 
-<figure><img src="../../.gitbook/assets/Screenshot 2023-06-07 at 5.49.54 PM.png" alt=""><figcaption></figcaption></figure>
+* Select "Claim signer rights"
 
 ## FAQs
 
