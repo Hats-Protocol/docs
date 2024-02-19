@@ -135,6 +135,9 @@
   * [1 of N Hats Account](for-developers/hats-account-sdk/1-of-n-hats-account/README.md)
     * [Getting Started](for-developers/hats-account-sdk/1-of-n-hats-account/getting-started.md)
     * [Creating New Instances](for-developers/hats-account-sdk/1-of-n-hats-account/creating-new-instances.md)
+    * [Executing From An Instance](for-developers/hats-account-sdk/1-of-n-hats-account/executing-from-an-instance.md)
+    * [Constants](for-developers/hats-account-sdk/1-of-n-hats-account/constants.md)
+    * [Types](for-developers/hats-account-sdk/1-of-n-hats-account/types.md)
 * [🌐 Hats Security Audits](for-developers/hats-security-audits.md)
 
 ## Legal

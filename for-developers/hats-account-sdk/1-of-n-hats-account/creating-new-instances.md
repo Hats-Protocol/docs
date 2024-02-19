@@ -38,6 +38,8 @@ _**Response**_:
 }
 ```
 
+An object of type [CreateAccountResult](types.md#createaccountresult), includes:
+
 * `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 * `transactionHash` - transaction's hash.
 * `newAccount` - In case of success, the address of the new account.
