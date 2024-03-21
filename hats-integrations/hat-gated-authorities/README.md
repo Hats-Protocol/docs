@@ -55,8 +55,8 @@ See the subpages within this section for detailed guides for connecting specific
 [google-workspace.md](google-workspace.md)
 {% endcontent-ref %}
 
-{% content-ref url="hats-wallet.md" %}
-[hats-wallet.md](hats-wallet.md)
+{% content-ref url="hats-account.md" %}
+[hats-account.md](hats-account.md)
 {% endcontent-ref %}
 
 {% content-ref url="safe-multisig-signing-authority.md" %}
