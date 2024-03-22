@@ -1,5 +1,5 @@
 ---
-description: A smart contract account for every hat.
+description: How to give every hat a wallet
 ---
 
 # Hats Account
