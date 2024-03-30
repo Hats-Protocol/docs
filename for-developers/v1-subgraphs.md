@@ -4,14 +4,14 @@ Check the [GitHub repository](https://github.com/Hats-Protocol/subgraph/tree/mai
 
 **Hosted Endpoints (Free)**:
 
-* [Mainnet](https://api.thegraph.com/subgraphs/name/hats-protocol/hats-v1-ethereum)
+* [Mainnet](https://api.studio.thegraph.com/query/55784/hats-v1-ethereum/version/latest)
 * [Optimism](https://api.studio.thegraph.com/query/55784/hats-v1-optimism/version/latest)
 * [Polygon](https://api.studio.thegraph.com/query/55784/hats-v1-polygon/version/latest)
 * [Gnosis](https://api.studio.thegraph.com/query/55784/hats-v1-gnosis-chain/version/latest)
 * [Arbitrum](https://api.studio.thegraph.com/query/55784/hats-v1-arbitrum/version/latest)
-* [Base](https://api.studio.thegraph.com/query/55784/hats-v1-base/v1.1.0)
+* [Base](https://api.studio.thegraph.com/query/55784/hats-v1-base/version/latest)
 * [Celo](https://api.studio.thegraph.com/query/55784/hats-v1-celo/version/latest)
-* [Sepolia](https://api.studio.thegraph.com/query/55784/hats-v1-sepolia/v1.1.0)
+* [Sepolia](https://api.studio.thegraph.com/query/55784/hats-v1-sepolia/version/latest)
 
 **The Graph Netwrok Endpoints:**
 
