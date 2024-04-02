@@ -52,21 +52,15 @@ To require an address to be wearing a given hat in order to claim a Charmverse r
 
 <figure><img src="../../.gitbook/assets/Screenshot 2023-06-12 at 5.24.42 PM.png" alt=""><figcaption></figcaption></figure>
 
-In the box that appears, select the network your hats are on, and then select "A Group of Token or NFT Holders" as seen below.
+Selecet "Communities":
 
-![](<../../.gitbook/assets/charmverse select 2.png>)
+<figure><img src="../../.gitbook/assets/Screenshot 2024-04-02 at 13.45.06.png" alt="" width="563"><figcaption></figcaption></figure>
 
-In the following Access Control box:
+Select the blockchain network your hats are on and enter the Hats token ID associated with a hat you want to associate with this role (see [finding-a-hats-token-id.md](../../using-hats/connecting-hats-with-authorities/finding-a-hats-token-id.md "mention") _for details on how to find specific hat token IDs)_.
 
-* Select "Custom token" under "Which group should be able to access this asset?"
-* Enter the Hats Protocol contract address [found here](./)
-* Select "ERC1155" under Token Contract Type
-* Enter the Hats token ID associated with a hat you want to associate with this role (_see_ [#hats-protocol-contract-addresses-and-token-ids](./#hats-protocol-contract-addresses-and-token-ids "mention") _for details on how to find the Hats Protocol contract address and specific hat token IDs)_
-* Enter "1" under "How many tokens does the wallet need to own?"
+<figure><img src="../../.gitbook/assets/Screenshot 2024-04-02 at 13.48.35.png" alt="" width="563"><figcaption></figcaption></figure>
 
-![](<../../.gitbook/assets/Screenshot 2023-07-21 at 1.30.10 PM.png>)
-
-Then click "Next", determine if you want to make this condition permanent or not, and select "Done".
+Then click "Next", review your condition and select "Confirm".
 
 Finally, locate this new "Token Gated Link" within the Invites page, and assign the role you created to this token ID.&#x20;
 
