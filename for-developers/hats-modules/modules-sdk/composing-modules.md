@@ -12,7 +12,8 @@ const createInstanceResult = await hatsModulesClient.createEligibilitiesChain({
     hatId,
     numClauses,
     clausesLengths,
-    modules
+    modules,
+    saltNonce,
 });
 ```
 
@@ -25,6 +26,7 @@ _**Arguments**_:
     numClauses: number;
     clausesLengths: number[];
     modules: `0x${string}`[];
+    saltNonce?: bigint;
 }
 ```
 
@@ -33,6 +35,7 @@ _**Arguments**_:
 * `numClauses` - Number of conjunction clauses.
 * `clausesLengths` - Length of each clause.
 * `modules`- Array of module instances to chain, at the order corresponding to the provided clauses.
+* `saltNonce` - Optional salt nonce to use. If not provided, will be randomly generated.
 
 _**Response**_:
 
@@ -58,7 +61,8 @@ const createInstanceResult = await hatsModulesClient.createTogglesChain({
     hatId,
     numClauses,
     clausesLengths,
-    modules
+    modules,
+    saltNonce,
 });
 ```
 
@@ -71,6 +75,7 @@ _**Arguments**_:
     numClauses: number;
     clausesLengths: number[];
     modules: `0x${string}`[];
+    saltNonce?: bigint;
 }
 ```
 
@@ -79,6 +84,7 @@ _**Arguments**_:
 * `numClauses` - Number of conjunction clauses.
 * `clausesLengths` - Length of each clause.
 * `modules`- Array of module instances to chain, at the order corresponding to the provided clauses.
+* `saltNonce` - Optional salt nonce to use. If not provided, will be randomly generated.
 
 _**Response**_:
 

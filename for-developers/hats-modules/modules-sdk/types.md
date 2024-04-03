@@ -7,7 +7,6 @@ Represents a module object, compatible with the registry's module objects.
 ```typescript
 {
   name: string; // module's name
-  deprecated?: boolean; // if 'true', indicates that new instances of this module should not be created
   details: string[]; // array of strings representing paragraphs that describe the module to end users.
   links: { // relevant links about the module
     label: string; // link's name
@@ -23,6 +22,11 @@ Represents a module object, compatible with the registry's module objects.
     toggle: boolean;
     hatter: boolean;
   };
+  tags: {
+    description: string;
+    label: string;
+    value: string;
+  }[];
   implementationAddress: string; // module's implementation address, equal in every network
   deployments: { // networks the implementation is deployed and supported
     chainId: string; // chain's ID
@@ -101,38 +105,15 @@ The arguments that are passed to the module [factory's creation function](create
 
 Immutable/mutable argument, provided in the module's [creation arguments](types.md#modulecreationargs).
 
-```typescript
-{
+<pre class="language-typescript"><code class="lang-typescript">{
   name: string; // arg's name
   description: string; // arg's description
   type: string; // arg's solidity type, e.g. 'uint256'
   example: unknown; // example value 
   displayType: string; // a free-text field that tells front ends how to generate a proper UI component for the parameter
-}
-```
-
-
-
-### <mark style="color:purple;">Factory</mark>
-
-A [HatsModuleFactory](../building-hats-modules/how-module-instances-are-deployed.md) metadata object.
-
-```typescript
-{
-  name: string;
-  details: string;
-  links: {
-    label: string;
-    link: string;
-  }[];
-  implementationAddress: string;
-  deployments: {
-    chainId: string;
-    block: string;
-  }[];
-  abi: Abi;
-}
-```
+<strong>  optional?: boolean;
+</strong>}
+</code></pre>
 
 ### <mark style="color:purple;">Registry</mark>
 
@@ -140,9 +121,6 @@ A [Hats Modules Registry](../building-hats-modules/modules-registry.md) object.
 
 ```typescript
 {
-  factory: Factory;
-  eligibilitiesChain: ChainModule;
-  togglesChain: ChainModule;
   modules: Module[];
 }
 ```

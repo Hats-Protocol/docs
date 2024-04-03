@@ -11,6 +11,7 @@ const createInstanceResult = await hatsModulesClient.createNewInstance({
     hatId,
     immutableArgs,
     mutableArgs,
+    saltNonce,
 });
 ```
 
@@ -23,6 +24,7 @@ _**Arguments**_:
     hatId: bigint;
     immutableArgs: unknown[];
     mutableArgs: unknown[];
+    saltNonce?: bigint;
 }
 ```
 
@@ -31,6 +33,7 @@ _**Arguments**_:
 * `hatId` - The hat ID for which the module is created.
 * `immutableArgs` - The module's immutable args. The arguments should be in the same order as in the [Module](types.md#module) object.
 * `mutableArgs` - The module's mutable args. The arguments should be in the same order as in the [Module](types.md#module) object.
+* `saltNonce` - Optional salt nonce to use. If not provided, will be randomly generated.
 
 _**Response**_:
 
@@ -59,6 +62,7 @@ const createInstancesResult = await hatsModulesClient.batchCreateNewInstances({
     hatIds,
     immutableArgsArray,
     mutableArgsArray,
+    saltNonces
 });
 ```
 
@@ -71,6 +75,7 @@ _**Arguments**_:
     hatIds: bigint[];
     immutableArgsArray: unknown[][];
     mutableArgsArray: unknown[][];
+    saltNonces?: bigint[]; 
 }
 ```
 
@@ -79,6 +84,7 @@ _**Arguments**_:
 * `hatIds` - The hat IDs for which the modules are created.
 * `immutableArgsArray` - Each module's immutable arguments. For each module, the arguments should be in the same order as in the [Module](types.md#module) object.
 * `mutableArgsArray` - Each module's mutable arguments. For each module, the arguments should be in the same order as in the [Module](types.md#module) object.
+* `saltNonces` - Optional salt nonces to use. If not provided, will be randomly generated.
 
 _**Response**_:
 
@@ -103,6 +109,7 @@ const predictedAddress = await hatsModulesClient.predictHatsModuleAddress({
     moduleId,
     hatId,
     immutableArgs,
+    saltNonce,
 });
 ```
 
@@ -113,12 +120,14 @@ _**Arguments**_:
    moduleId: string;
    hatId: bigint;
    immutableArgs: unknown[];
+   saltNonce: bigint;
 }
 ```
 
 * `moduleId` - Module's ID.
 * `hatId` - The target hat ID, as provided to the [instance creation function](create-new-instance-s.md#createnewinstance).
 * `immutableArgs` - The module's immutable args, as provided to the [instance creation function](create-new-instance-s.md#createnewinstance).
+* `saltNonce` - Salt nonce to use.
 
 _**Response**_:
 

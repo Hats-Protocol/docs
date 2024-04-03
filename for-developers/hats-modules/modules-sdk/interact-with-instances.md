@@ -13,6 +13,7 @@ const isDeployed = await hatsModulesClient.isModuleDeployed({
     moduleId,
     hatId,
     immutableArgs,
+    saltNonce,
 });
 ```
 
@@ -23,12 +24,14 @@ _**Arguments**_:
    moduleId: string;
    hatId: bigint;
    immutableArgs: unknown[];
+   saltNonce: bigint;
 }
 ```
 
 * `moduleId` - Module's ID.
 * `hatId` - The target hat ID, as provided to the [instance creation function](create-new-instance-s.md#createnewinstance).
 * `immutableArgs` - The module's immutable args, as provided to the [instance creation function](create-new-instance-s.md#createnewinstance).
+* `saltNonce` - Salt nonce to use.
 
 _**Response**_:
 
