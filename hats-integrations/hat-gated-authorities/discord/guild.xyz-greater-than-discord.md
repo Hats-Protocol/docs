@@ -86,7 +86,7 @@ Then, within each private channel you want to give this role access to, select "
 
 That's it, you're done! All hat wearers have to do to claim the Discord authorities associated with their hat is to visit the #verify channel in your Discord server.
 
-#### &#x20;5. Update your Hats tree to automatically include Guild authorities
+## Link your Hats tree to Guild to automatically display Guild authorities
 
 This step will enable the Hats app to automatically detect and display Guild.xyz related authorities in your Hats tree:
 

@@ -64,7 +64,7 @@ _NOTE: Each Guild role can only grant access to one Telegram Channel. If you wan
 
 That's it, you're done! All hat wearers have to do to claim the authorities associated with their hat is to visit your Guild page and claim the applicable Guild role(s).
 
-#### 5. Update your Hats tree to automatically include Guild authorities
+## Link your Hats tree to Guild to automatically display Guild authorities
 
 This step will enable the Hats app to automatically detect and display Guild.xyz related authorities in your Hats tree:
 
