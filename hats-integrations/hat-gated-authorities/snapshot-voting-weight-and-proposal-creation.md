@@ -4,7 +4,7 @@ description: How to give specific hats voting access & voting weight in Snapshot
 
 # Snapshot: Voting, Weight & Proposal Creation
 
-### **The Basic Steps**
+## **The Basic Steps**
 
 [Snapshot](https://www.snapshot.org) is an off-chain voting platform that allows communities to participate in the decentralized governance. But even though Snapshot votes happen off-chain, Snapshot can still read what hats an address is wearing to determine eligibility to create proposals, vote on proposals, and/or assign a specific voting weight.
 
@@ -84,7 +84,7 @@ And where X = the voting weight you want to assign to Hat-ID-1, Y = the voting w
 
 **NOTE: Voting weight from Snapshot strategies is cumulative!** So if someone is wearing two different hats that are each allowed to vote on a proposal, one of which comes with a voting weight of 1 and the other with a voting weight of 2, they will actually be able to vote on the proposal with a voting weight of&#x20;
 
-### Update your Hats tree to automatically include Snapshot authorities
+## Link your Hats tree to Snapshot to automatically display Snapshot authorities
 
 This step will enable the Hats app to automatically detect and display Snapshot related authorities in your Hats tree:
 
