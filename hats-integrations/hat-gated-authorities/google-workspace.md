@@ -57,3 +57,17 @@ Return to Guild, and wait a few seconds for the box below to appear. Once it doe
 <figure><img src="../../.gitbook/assets/Screenshot 2023-06-29 at 5.37.28 PM.png" alt=""><figcaption></figcaption></figure>
 
 That's it, you've now given specific hats special access to a Google Workspace document!&#x20;
+
+### 4. Update your Hats tree to automatically include Guild authorities
+
+This step will enable the Hats app to automatically detect and display Guild.xyz related authorities in your Hats tree:
+
+{% hint style="info" %}
+Skip this step if your tree's top-hat already includes the relevant Guild(s).
+{% endhint %}
+
+* Select "Edit Tree"
+* Locate and select the tree's top-hat
+* In the "Hat Basics" section, add the relevant Guilds. A Guild's name can be found in its URL. For example, if the Guild page is https://guild.xyz/hats-protocol, then its name is 'hats-protocol'.
+
+<figure><img src="../../.gitbook/assets/Screenshot 2024-04-10 at 11.09.17.png" alt=""><figcaption></figcaption></figure>

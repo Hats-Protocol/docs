@@ -85,3 +85,17 @@ Then, within each private channel you want to give this role access to, select "
 ![](<../../../.gitbook/assets/Discord edit channel.png>)![](<../../../.gitbook/assets/Discord add role to channel.png>)&#x20;
 
 That's it, you're done! All hat wearers have to do to claim the Discord authorities associated with their hat is to visit the #verify channel in your Discord server.
+
+#### &#x20;5. Update your Hats tree to automatically include Guild authorities
+
+This step will enable the Hats app to automatically detect and display Guild.xyz related authorities in your Hats tree:
+
+{% hint style="info" %}
+Skip this step if your tree's top-hat already includes the relevant Guild(s).
+{% endhint %}
+
+* Select "Edit Tree"
+* Locate and select the tree's top-hat
+* In the "Hat Basics" section, add the relevant Guilds. A Guild's name can be found in its URL. For example, if the Guild page is https://guild.xyz/hats-protocol, then its name is 'hats-protocol'.
+
+<figure><img src="../../../.gitbook/assets/Screenshot 2024-04-10 at 11.09.17.png" alt=""><figcaption></figcaption></figure>

@@ -63,3 +63,17 @@ Save the Guild role. The hat now provides access to the designated Telegram chan
 _NOTE: Each Guild role can only grant access to one Telegram Channel. If you want to give a hat access to multiple Telegram channels, you will have to create multiple Guild roles associated with that hat._
 
 That's it, you're done! All hat wearers have to do to claim the authorities associated with their hat is to visit your Guild page and claim the applicable Guild role(s).
+
+#### 5. Update your Hats tree to automatically include Guild authorities
+
+This step will enable the Hats app to automatically detect and display Guild.xyz related authorities in your Hats tree:
+
+{% hint style="info" %}
+Skip this step if your tree's top-hat already includes the relevant Guild(s).
+{% endhint %}
+
+* Select "Edit Tree"
+* Locate and select the tree's top-hat
+* In the "Hat Basics" section, add the relevant Guilds. A Guild's name can be found in its URL. For example, if the Guild page is https://guild.xyz/hats-protocol, then its name is 'hats-protocol'.
+
+<figure><img src="../../../.gitbook/assets/Screenshot 2024-04-10 at 11.09.17.png" alt=""><figcaption></figcaption></figure>
