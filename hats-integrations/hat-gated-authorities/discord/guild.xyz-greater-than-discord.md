@@ -99,3 +99,7 @@ Skip this step if your tree's top-hat already includes the relevant Guild(s).
 * In the "Hat Basics" section, add the relevant Guilds. A Guild's name can be found in its URL. For example, if the Guild page is https://guild.xyz/hats-protocol, then its name is 'hats-protocol'.
 
 <figure><img src="../../../.gitbook/assets/Screenshot 2024-04-10 at 11.09.17.png" alt=""><figcaption></figcaption></figure>
+
+Guild.xyz authorities will now be displayed on the relevant hats:
+
+<figure><img src="../../../.gitbook/assets/Screenshot 2024-04-10 at 11.58.09.png" alt="" width="563"><figcaption></figcaption></figure>
