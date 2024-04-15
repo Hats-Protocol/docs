@@ -1,6 +1,6 @@
 # 🔭 v1 Subgraphs
 
-Check the [GitHub repository](https://github.com/Hats-Protocol/subgraph/tree/main) README for example queries and general documentation.
+Check the [GitHub repository](https://github.com/Hats-Protocol/subgraph/tree/main) README for example queries and general documentation and/or our [Subgraph SDK](v1-sdk/subgraph/).
 
 **Hosted Endpoints (Free)**:
 
