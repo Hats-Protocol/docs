@@ -13,7 +13,7 @@ Check the [GitHub repository](https://github.com/Hats-Protocol/subgraph/tree/mai
 * [Celo](https://api.studio.thegraph.com/query/55784/hats-v1-celo/version/latest)
 * [Sepolia](https://api.studio.thegraph.com/query/55784/hats-v1-sepolia/version/latest)
 
-**The Graph Netwrok Endpoints:**
+**The Graph Network Endpoints:**
 
 * [Ethereum (mainnet)](https://thegraph.com/explorer/subgraphs/AtrhAMCcVfPbmejxTez3G59Kdfu5tMFoiPsTUjdCzpKx?view=Overview\&chain=arbitrum-one)
 * [Gnosis](https://thegraph.com/explorer/subgraphs/2VPQUuAeS9Xy8VtinpjHRJEMnZS1sqzFQyCHAys1wb5n?view=Overview\&chain=arbitrum-one)
