@@ -15,8 +15,8 @@ Authorities can be linked to hats in a number of ways, including via:
 * [**HatsSignerGate**](https://github.com/Hats-Protocol/hats-zodiac)**, a Zodiac module that provides Safe multisig signing authority for a given set of hats**
 * **Social agreements or other accountability mechanisms**, including seasonal elections, staking requirements, and/or reputation systems. Authorities that can't be explicitly granted to a hat via token-gating can still be granted to a hat wearer by using the hat as a signal of social agreement that the wearer has that authority.
 
-See the subpages within the [Hat-Gated Authorities](../../hats-integrations/hat-gated-authorities/) section for detailed guides for connecting specific authorities to hats:&#x20;
+See the subpages within the [Hat-Gated Authorities](../../hats-integrations/permissions-and-authorities/) section for detailed guides for connecting specific authorities to hats:&#x20;
 
-{% content-ref url="../../hats-integrations/hat-gated-authorities/" %}
-[hat-gated-authorities](../../hats-integrations/hat-gated-authorities/)
+{% content-ref url="../../hats-integrations/permissions-and-authorities/" %}
+[permissions-and-authorities](../../hats-integrations/permissions-and-authorities/)
 {% endcontent-ref %}

@@ -2,9 +2,15 @@
 
 ## Overview
 
-The Agreement Eligibility is a Hats Protocol module that a community or organization can use to enable individuals to join the community by signing an agreement.
+The agreement eligibility module requires someone to sign an agreement as a condition for claiming a given hat. This can be used for legal contracts, commitments of responsibility, or codes of conduct.&#x20;
 
 When an individual signs the agreement, they also receive a hat that grants them access to the community. If a new agreement is published, community members must sign the new agreement in order to keep wearing the hat.
+
+Adding an agreement module to a hat automatically creates a unique claim page for that hat, where users can view the agreement, sign it, claim the hat, and access the hat’s powers (like admission to a Discord server or multisig signing authority) all from a dedicated UI.&#x20;
+
+<figure><img src="https://lh7-us.googleusercontent.com/4Q_N8zTAYZ5LB8zSpVdUNZQz9ZrmnP2jErMtpdQL6pmrZkyOR6u1rxXXsvghzgTL7Ao1rm5ORstOYVVnbn2hq29A4_jXX8jBI_-3M3zsfJKnqKRszDa-SX4rA3dmJYb8rY9T-iEtWPO_tBKC0SEE4ug" alt=""><figcaption><p>Claim-with-agreement page for the <a href="https://claim.hatsprotocol.xyz/10/78.1.5">All In For Sport Community Member hat</a></p></figcaption></figure>
+
+**Case Study:** Hats protoDAO has automated the onboarding of over 200 community members into its communication channels and workspaces via the Hats Community Member hat, with minimal operational oversight. To claim the Community Member hat, individuals have to first sign a transaction confirming they agree to the Hats Community Agreements and Code of Conduct. Once claimed, the Community Member hat gives wearers access to the Community Telegram group, Charmverse workspace, and provides them with voting power in Snapshot and JokeRace. [See the full case study here.](https://www.hatsprotocol.xyz/wearer/hats-protodao)
 
 ## **Adding the module to a hat**
 

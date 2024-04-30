@@ -22,7 +22,7 @@ What roles exist in your organization that will be held by individual people? Ro
 
 ### **Discrete Authorities**
 
-Consider any granular authorities that should be represented by a hat to enable capture-resistant delegation and revocation of specific credentials. See the [Hat-Gated Authorities](../hats-integrations/hat-gated-authorities/) section below for examples of the types of authorities that can be enabled by Hats.
+Consider any granular authorities that should be represented by a hat to enable capture-resistant delegation and revocation of specific credentials. See the [Hat-Gated Authorities](../hats-integrations/permissions-and-authorities/) section below for examples of the types of authorities that can be enabled by Hats.
 
 Your Hats tree is meant to evolve with your organization, so don't feel pressure to get it perfect from the start. For example, roles can continue to be added, removed, and changed over time (as long as they are [mutable](setting-a-hats-basic-properties.md#editable-mutability)). The wearers of a given hat may change over time as well, as a given hat can be worn first by a single individual and later transferred to a group (e.g., a multisig or pod), or vice versa.
 

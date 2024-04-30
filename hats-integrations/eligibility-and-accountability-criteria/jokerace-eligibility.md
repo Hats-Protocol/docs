@@ -6,11 +6,13 @@ description: Tying hat eligibility to the results of a JokeRace Contest
 
 ## **Overview**
 
-[JokeRace](https://jokerace.xyz/) enables communities to make, execute, and reward decisions onchain. By using this module, communities can elect the wearers of a hat through a JokeRace election. More specifically, the eligible wearers are creators of the top voted proposals in the election.
+[JokeRace](https://jokerace.xyz/) enables communities to make, execute, and reward decisions onchain. Hats can read the  results from a JokeRace contest and ensure that only the submitters of the top-voted proposals can wear a given hat and hold the powers associated with that hat. This removes the need for a trusted group of executors to accurately implement the results of a contest or election.&#x20;
 
-The number of winners of an election, and thus the number of possible wearers made eligible through this integration, is configurable. Additionally, a term period can be set, after which the winners will no longer be eligible to wear the hat.
+Built into a Hats-powered election is a term limit function. Once the specified term ends, the hat and its associated powers are automatically revoked and a new election can be triggered.
 
 The module's code is open source and is available [here](https://github.com/Hats-Protocol/jokerace-eligibility).
+
+See below for [instructions](jokerace-eligibility.md#adding-the-module-to-a-hat) on how to implement this eligibility module.
 
 ## Example
 

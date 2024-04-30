@@ -41,4 +41,4 @@ Once the module is attached to the hat, you can view the hat's updated eligibili
     * Useful links
       * The module's source code on GitHub
 
-    <figure><img src="../../.gitbook/assets/image.png" alt="" width="563"><figcaption></figcaption></figure>
+    <figure><img src="../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure>

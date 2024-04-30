@@ -56,7 +56,7 @@ Selecet "Communities":
 
 <figure><img src="../../.gitbook/assets/Screenshot 2024-04-02 at 13.45.06.png" alt="" width="563"><figcaption></figcaption></figure>
 
-Select the blockchain network your hats are on and enter the Hats token ID associated with a hat you want to associate with this role (see [finding-a-hats-token-id.md](../../using-hats/connecting-hats-with-authorities/finding-a-hats-token-id.md "mention") _for details on how to find specific hat token IDs)_.
+Select the blockchain network your hats are on and enter the Hats token ID associated with a hat you want to associate with this role (see [finding-a-hats-token-id.md](../../using-hats/connecting-hats-w-permissions-and-authorities/connecting-hats-to-token-gates/finding-a-hats-token-id.md "mention") _for details on how to find specific hat token IDs)_.
 
 <figure><img src="../../.gitbook/assets/Screenshot 2024-04-02 at 13.48.35.png" alt="" width="563"><figcaption></figcaption></figure>
 

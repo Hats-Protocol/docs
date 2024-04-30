@@ -6,6 +6,8 @@ description: How to hat-gate signing authority on a Safe multisig
 
 [Hats Signer Gate](https://github.com/Hats-Protocol/hats-zodiac#hats-signer-gate) is a contract that grants Safe multisig signing rights to addresses wearing a given hat, enabling on-chain organizations (such as DAOs) to delegate revocable constrained signing authority and responsibility to individuals.
 
+**Case Study:** Treasure is building the “decentralized game console” on Arbitrum to power next-gen gaming onchain. As a highly active participant in the Arbitrum ecosystem, TreasureDAO is the second largest delegate by voting power in the Arbitrum DAO. Hats, in partnership with Gnosis Guild, enables TreasureDAO to give more voice to its community through the formation of an Arbitrum Council (ARC) consisting of its community members. ARC members, called ARC Liaisons, are now able to represent TreasureDAO in Arbitrum governance and vote with the delegated $ARB in a safe and secure way. [See the full case study here.](https://www.hatsprotocol.xyz/wearer/treasure-case-study)
+
 _NOTE: We take security seriously and our contracts_ [_have been audited_](../../for-developers/hats-security-audits.md)_. When used properly, Hats Signer Gate enables secure transfer of safe signing authority from one address to another. However, with improper configurations, Hats Signer Gate can behave differently than designed and could result in lost funds. If you are interested in using Hats Signer Gate, contact us at support \[at] hatsprotocol \[dot] xyz for implementation support. Otherwise, be sure to heed the_ [_conditions for safe use_](safe-multisig-signing-authority.md#conditions) _below and use at your own risk._
 
 ## An Overview of Hats Signer Gate
@@ -45,7 +47,7 @@ For more details on Hats Signer Gate including security audit results, [see here
 
 There are five steps required to properly implement Hats Signer Gate:
 
-1. Create the hats that will have multisig signing authority and note their token IDs. _See_ [_Finding a Hat's Token ID_](../../using-hats/connecting-hats-with-authorities/finding-a-hats-token-id.md) _for details on how to find specific hat token IDs_.
+1. Create the hats that will have multisig signing authority and note their token IDs. _See_ [_Finding a Hat's Token ID_](../../using-hats/connecting-hats-w-permissions-and-authorities/connecting-hats-to-token-gates/finding-a-hats-token-id.md) _for details on how to find specific hat token IDs_.
 2. Deploy a new Hats Signer Gate contract using the [Hats Signer Gate Factory](https://github.com/Hats-Protocol/hats-zodiac/releases/tag/v1.2-beta)
 3. Set up the Hats Signer Gate Zodiac module
 4. Set up the Hats Signer Gate Zodiac guard
@@ -59,7 +61,7 @@ Before continuing onto subsequent steps, it is first necessary to create the hat
 
 You can easily create new Hats using the [Hats app](https://app.hatsprotocol.xyz) (but you do not need to mint them to any wearers yet). For a detailed guide for creating new Hats, see the [Getting Started](../../for-developers/v1-sdk/core/getting-started.md) page within these docs.
 
-Once the owner and signer Hats are created, note their hat token IDs. _See_ [#finding-a-hats-token-id](../../using-hats/connecting-hats-with-authorities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs_.
+Once the owner and signer Hats are created, note their hat token IDs. _See_ [#finding-a-hats-token-id](../../using-hats/connecting-hats-w-permissions-and-authorities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs_.
 
 ### 2a. Deploy a new Hats Signer Gate contract using the Hats Signer Gate Factory
 
@@ -90,7 +92,7 @@ Then, complete the fields found in the contract you select, as seen below _(not 
 3. Add other Zodiac modules to the multisig
 4. In Multi-Hats Signer Gate, add other hats as valid signer hats
 
-**Signer Hat IDs:** The IDs of the hats that will have signing authority on the multisig. If you are using a Multi Hats Signer Gate, you will need to enter the hat token IDs using the convention shown above and copied below _(see_ [#finding-a-hats-token-id](../../using-hats/connecting-hats-with-authorities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs)_.
+**Signer Hat IDs:** The IDs of the hats that will have signing authority on the multisig. If you are using a Multi Hats Signer Gate, you will need to enter the hat token IDs using the convention shown above and copied below _(see_ [#finding-a-hats-token-id](../../using-hats/connecting-hats-w-permissions-and-authorities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs)_.
 
 * \[Hat-ID-1,Hat-ID-2,etc.]
 

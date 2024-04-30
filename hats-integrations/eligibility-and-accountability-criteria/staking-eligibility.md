@@ -6,9 +6,13 @@ description: Tying hat eligibility to staking criteria
 
 ## **Overview**
 
-Staking Eligibility is an eligibility module for Hats Protocol. It requires wearers of a given hat to stake a minimum amount of a specified token in order to be eligible, and enables others in the Hats tree's organization to slash the stake of a wearer who is behaving badly.
+The staking eligibility module requires an account to stake a minimum amount of tokens (like ETH, reputation points, or DAO tokens) in order to hold a given role and access its associated powers. If that address un-stakes their tokens, or their stake is slashed by a designated judge, their hat is automatically revoked.
+
+Requiring staking for role eligibility enhances accountability for designated powers and provides a method for delegating responsibilities that cannot be enforced through code, such as social agreements. Staking eligibility also opens up the possibility for work to be more pseudonymous and less trustful: if you do the work well, you get compensated. If you do the work poorly, your stake can be slashed.
 
 The module's code is open source and is available [here](https://github.com/Hats-Protocol/staking-eligibility).
+
+Staking eligibility is one of the new modules we are most excited about, as the design space is enormous. If you’re keen to use it in your organization, [get in touch](https://hatsprotocol.deform.cc/getintouch/) and we can help you set it up!
 
 ## **Adding the module to a hat**
 
@@ -43,7 +47,7 @@ Once the module is attached to the hat, you can view the hat's updated eligibili
   * Useful links
     * The module's source code on GitHub
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt="" width="563"><figcaption></figcaption></figure>
 
 ## Module's roles
 

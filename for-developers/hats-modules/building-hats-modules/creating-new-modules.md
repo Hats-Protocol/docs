@@ -26,6 +26,6 @@ import { HatsToggleModule } from "hats-module/HatsModule.sol";
 
 To learn more and get inspiration, check out the awesome module that are already here:
 
-* [Eligibility Modules](../../../hats-integrations/eligibility-modules/#existing-modules)
-* [Toggle Modules](../../../hats-integrations/toggle-modules/#existing-modules)
+* [Eligibility Modules](../../../hats-integrations/eligibility-and-accountability-criteria/#existing-modules)
+* [Toggle Modules](../../../hats-integrations/activation-and-deactivation-criteria/#existing-modules)
 * [Hatter Modules](../../../hats-integrations/hatter-modules/#existing-modules)

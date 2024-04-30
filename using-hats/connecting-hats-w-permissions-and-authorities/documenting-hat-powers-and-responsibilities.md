@@ -1,6 +1,6 @@
 # Documenting Hat Powers & Responsibilities
 
-As you [connect explicit authorities to hats](connecting-authorities-to-hats/), you can document those powers onchain. This includes both hard powers like authorities provided by token gates, as well as soft powers provided through social agreements.
+As you [connect explicit authorities to hats](connecting-hats-to-token-gates/), you can document those powers onchain. This includes both hard powers like authorities provided by token gates, as well as soft powers provided through social agreements.
 
 Additionally, you can document the responsibilities attached to these powers, providing the relevant context to the hat wearers and the organization as a whole.
 

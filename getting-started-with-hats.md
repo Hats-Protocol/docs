@@ -40,8 +40,8 @@ Wherever you begin, the docs found here will walk you through it.
 [adding-wearers.md](using-hats/adding-wearers.md)
 {% endcontent-ref %}
 
-{% content-ref url="using-hats/connecting-hats-with-authorities/" %}
-[connecting-hats-with-authorities](using-hats/connecting-hats-with-authorities/)
+{% content-ref url="using-hats/connecting-hats-w-permissions-and-authorities/" %}
+[connecting-hats-w-permissions-and-authorities](using-hats/connecting-hats-w-permissions-and-authorities/)
 {% endcontent-ref %}
 
 {% content-ref url="using-hats/setting-accountabilities/eligibility-requirements-for-wearers.md" %}
@@ -60,16 +60,16 @@ Wherever you begin, the docs found here will walk you through it.
 [linking-trees-together.md](using-hats/linking-trees-together.md)
 {% endcontent-ref %}
 
-{% content-ref url="hats-integrations/hat-gated-authorities/" %}
-[hat-gated-authorities](hats-integrations/hat-gated-authorities/)
+{% content-ref url="hats-integrations/permissions-and-authorities/" %}
+[permissions-and-authorities](hats-integrations/permissions-and-authorities/)
 {% endcontent-ref %}
 
-{% content-ref url="hats-integrations/eligibility-modules/" %}
-[eligibility-modules](hats-integrations/eligibility-modules/)
+{% content-ref url="hats-integrations/eligibility-and-accountability-criteria/" %}
+[eligibility-and-accountability-criteria](hats-integrations/eligibility-and-accountability-criteria/)
 {% endcontent-ref %}
 
-{% content-ref url="hats-integrations/toggle-modules/" %}
-[toggle-modules](hats-integrations/toggle-modules/)
+{% content-ref url="hats-integrations/activation-and-deactivation-criteria/" %}
+[activation-and-deactivation-criteria](hats-integrations/activation-and-deactivation-criteria/)
 {% endcontent-ref %}
 
 {% content-ref url="hats-integrations/hatter-modules/" %}

@@ -10,7 +10,7 @@ Once a Hats tree has been [created](creating-my-first-hat.md#1.-creating-a-new-t
 
 ## Drafting
 
-Use [Edit Mode](creating-my-first-hat.md) to create new hats, give them a [name and image](setting-a-hats-basic-properties.md), [add wearers](adding-wearers.md), [specify powers & responsibilities](connecting-hats-w-authorities-and-responsibilities/documenting-hat-powers-and-responsibilities.md), add modules to automate hat [eligibility and revocation](setting-accountabilities/eligibility-requirements-for-wearers.md), enable [hat-claiming](making-hats-claimable.md) and more.&#x20;
+Use [Edit Mode](creating-my-first-hat.md) to create new hats, give them a [name and image](setting-a-hats-basic-properties.md), [add wearers](adding-wearers.md), [specify powers & responsibilities](connecting-hats-w-permissions-and-authorities/documenting-hat-powers-and-responsibilities.md), add modules to automate hat [eligibility and revocation](setting-accountabilities/eligibility-requirements-for-wearers.md), enable [hat-claiming](making-hats-claimable.md) and more.&#x20;
 
 In large tress, you can group hats together for a cleaner display by creating a parent hat with zero as its "max wearers" property.&#x20;
 
@@ -54,6 +54,6 @@ To deploy changes via a DAO or multisig-controlled hat (e.g. a DAO contract wear
 
 <figure><img src="https://lh7-us.googleusercontent.com/rqSJsl2uUqEfMtsobOUPDN7BC6VXdfJj6aEW1bq4dYK-WwoDCEWT8n2cPS7mcslg9OKB8Mfs8EAuj1Tedipq5zEaIpOVnAd7MmLLxyCuT7G4Hk5t1d9W6ar6o3yZCzCE2jxXcUykexKRDFHoy_OUJbs" alt=""><figcaption><p>Use transaction call data to deploy changes through a multisig or DAO contract</p></figcaption></figure>
 
-You can then use your organization's governance interface to create a proposal, in which the target address is the [Hats contract address](connecting-hats-with-authorities/hats-protocol-contract-addresses.md) and with the transaction Call Data as copied from the app.&#x20;
+You can then use your organization's governance interface to create a proposal, in which the target address is the [Hats contract address](connecting-hats-w-permissions-and-authorities/connecting-hats-to-token-gates/hats-protocol-contract-addresses.md) and with the transaction Call Data as copied from the app.&#x20;
 
 We recommend including the associated JSON file in your proposal as well, so that others can review your changes directly within the Hats app by importing the JSON into the same tree and confirm the validity of the transaction.

@@ -7,9 +7,8 @@ description: Key shortcuts for those who know their way around Hats
 ## **Key Links**
 
 * [Hats App](https://app.hatsprotocol.xyz)
-* [Hats tree templates](https://app.charmverse.io/hats-protocol/page-30981870825242197)
-* [Hats Protocol contract addresses](using-hats/connecting-hats-with-authorities/hats-protocol-contract-addresses.md)
-* [Finding a hat's token ID](using-hats/connecting-hats-with-authorities/finding-a-hats-token-id.md)
+* [Hats Protocol contract addresses](using-hats/connecting-hats-w-permissions-and-authorities/connecting-hats-to-token-gates/hats-protocol-contract-addresses.md)
+* [Finding a hat's token ID](using-hats/connecting-hats-w-permissions-and-authorities/connecting-hats-to-token-gates/finding-a-hats-token-id.md)
 
 ## **Key Guides**
 
@@ -21,8 +20,8 @@ description: Key shortcuts for those who know their way around Hats
 [what-hats-do-i-need.md](using-hats/what-hats-do-i-need.md)
 {% endcontent-ref %}
 
-{% content-ref url="using-hats/connecting-hats-with-authorities/" %}
-[connecting-hats-with-authorities](using-hats/connecting-hats-with-authorities/)
+{% content-ref url="using-hats/connecting-hats-w-permissions-and-authorities/" %}
+[connecting-hats-w-permissions-and-authorities](using-hats/connecting-hats-w-permissions-and-authorities/)
 {% endcontent-ref %}
 
 {% content-ref url="using-hats/setting-accountabilities/eligibility-requirements-for-wearers.md" %}

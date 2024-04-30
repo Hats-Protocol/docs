@@ -8,7 +8,7 @@ Multi Hats Signer Gate (MHSG) is a modification of HSG that supports setting mul
 
 The SDK is an open source JavaScript client for creating and interacting with HSG and/or MHSG instances and was designed to work both in the browser and in Node.js.
 
-For an in-depth overview of Hats Signer Gate, click [here](../../hats-integrations/hat-gated-authorities/safe-multisig-signing-authority.md).
+For an in-depth overview of Hats Signer Gate, click [here](../../hats-integrations/permissions-and-authorities/safe-multisig-signing-authority.md).
 
 {% content-ref url="getting-started.md" %}
 [getting-started.md](getting-started.md)

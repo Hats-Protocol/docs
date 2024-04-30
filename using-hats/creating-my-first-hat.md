@@ -9,7 +9,7 @@ While there are many ways you can deploy Hats to support your decentralized work
 1. Creating a new tree
 2. Creating your first child hat
 
-After you've created a new Hats tree and your first child hat, you will be ready to [add wearers](adding-wearers.md) to give all wearers of the hat the [authorities](connecting-hats-with-authorities/) and accountabilities they need to get things done.
+After you've created a new Hats tree and your first child hat, you will be ready to [add wearers](adding-wearers.md) to give all wearers of the hat the [authorities](connecting-hats-w-permissions-and-authorities/) and accountabilities they need to get things done.
 
 Following are instructions for creating a new Hats tree and your first child hat.
 
@@ -54,5 +54,5 @@ Once your new tree is created with the tree's Top Hat minted to an address you c
 
 **Congratulations, you've created a new Hats tree and your first child hat!** You can now continue to create additional hats throughout the tree. See [What Hats Do I Need?](what-hats-do-i-need.md) for suggestions on which hats your group may need.
 
-Each of the hats you create can then be [connected with authorities](connecting-hats-with-authorities/) and [minted to one or more wearers](adding-wearers.md) to give them the authorities associated with those hats.&#x20;
+Each of the hats you create can then be [connected with authorities](connecting-hats-w-permissions-and-authorities/) and [minted to one or more wearers](adding-wearers.md) to give them the authorities associated with those hats.&#x20;
 

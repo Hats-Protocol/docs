@@ -6,13 +6,13 @@ description: So you received your first hat. Now what?
 
 ### **Congratulations, you've received a hat!**
 
-![](<../.gitbook/assets/Screenshot 2023-08-12 at 11.52.06 AM (1).png>)![](<../.gitbook/assets/Screenshot 2023-08-12 at 11.52.12 AM.png>)
+<figure><img src="../.gitbook/assets/Screenshot 2023-08-12 at 11.52.12 AM.png" alt=""><figcaption></figcaption></figure>
 
 We hope this hat gives you the context, authorities, and accountabilities you need to get things done.
 
 ## **What are hats?**
 
-A hat is a "role in a box". More specifically, hats are programmable roles which can be imbued with responsibilities, [authorities](connecting-hats-with-authorities/), and accountabilities. [Roles](what-hats-do-i-need.md) can be big and ongoing, or small and discrete.&#x20;
+A hat is a "role in a box". More specifically, hats are programmable roles which can be imbued with responsibilities, [authorities](connecting-hats-w-permissions-and-authorities/), and accountabilities. [Roles](what-hats-do-i-need.md) can be big and ongoing, or small and discrete.&#x20;
 
 <figure><img src="../.gitbook/assets/Screenshot 2023-08-28 at 11.53.33 AM.png" alt=""><figcaption></figcaption></figure>
 
@@ -20,25 +20,23 @@ A hat is a "role in a box". More specifically, hats are programmable roles which
 
 To learn what kind of hat(s) you have, visit the [Hats App](https://app.hatsprotocol.xyz), connect your wallet, and click My Hats.
 
-<figure><img src="../.gitbook/assets/Screenshot 2023-08-14 at 4.25.08 PM.png" alt="" width="348"><figcaption><p>The My Hats page is your portal to accessing all your hats. If you don't see the My Hats link, be sure to connect to the app with the correct wallet address.</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/Screenshot 2023-08-14 at 4.25.08 PM.png" alt=""><figcaption><p>The My Hats page is your portal to accessing all your hats. If you don't see the My Hats link, be sure to connect to the app with the correct wallet address.</p></figcaption></figure>
 
 You'll see all the hats your wallet address is holding in your My Hats page. Hats are ERC1155-compatible tokens that can be held by any address including an EOA or a contract (e.g. a multisig). When an address has a balance of 1 of a given Hats token, it is considered a "wearer" of that "hat".
 
 ## **What can my hats do?**
 
-Hats often come with special [authorities](../hats-integrations/hat-gated-authorities/) which you can only access as long as you're wearing that hat. To see what authorities your hat grants you, click on the hat in your My Hats page. This will open up the full structure of hats (called a "Hats tree") within which your particular hat lives, along with a information panel for your hat.&#x20;
-
-<figure><img src="../.gitbook/assets/image (2).png" alt="" width="300"><figcaption></figcaption></figure>
+Hats often come with special [authorities](../hats-integrations/permissions-and-authorities/) which you can only access as long as you're wearing that hat. To see what authorities your hat grants you, click on the hat in your My Hats page. This will open up the full structure of hats (called a "Hats tree") within which your particular hat lives, along with a information panel for your hat.&#x20;
 
 In this information panel you'll find lots of information about your hat, including a description for the hat, any responsibilities associated with the role, and any authorities you receive by wearing the hat. The links found in the authorities section will usually direct you to the right place to claim those authorities. If you do not see any way to claim the authorities associated with your hat, contact the group or person who sent you your hat.&#x20;
 
-<figure><img src="../.gitbook/assets/Screenshot 2023-08-12 at 12.29.31 PM.png" alt=""><figcaption><p>An example authorities set provided <a href="https://app.hatsprotocol.xyz/trees/5/6?hatId=6.1.3.2.1">by the DemoDAO Community Member hat found here</a>, which you can permissionlessly claim to test out</p></figcaption></figure>
+<figure><img src="https://lh7-us.googleusercontent.com/GAOO4yrmN2-vs9XVXCMGXD_F2dhpXFhn_6WA68-2mXLfN7vnCS-9sFjh_1QlCcC23212BZyNppc0mHRIFpHye-NLllq16g7IlLENqetTKMx_8Mys7e6VylLuhzjRP6qpb0qfr-z-aQ0LdfYT--sl7ok" alt=""><figcaption><p>Authorities granted by the <a href="https://app.hatsprotocol.xyz/trees/10/1?hatId=1.2.1.1">Hats Community Member hat</a> as seen in the Hats App</p></figcaption></figure>
 
 ## **What else can my hat do?**
 
 Your hat is an admin for any hats in the direct lineage below it.
 
-<figure><img src="../.gitbook/assets/image (1) (1).png" alt="" width="375"><figcaption><p>Admin relationships</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption><p>Admin relationships</p></figcaption></figure>
 
 As an admin, you can change a hat's name, image, description, max supply, authorities, and accountabilities, grant the hat to new wearers, and transfer the hat from one wearer to another -- but ONLY if the hat is [mutable](setting-a-hats-basic-properties.md#editable-mutability). When hats are immutable, your admin powers are diminished.
 
@@ -73,8 +71,6 @@ Yes! As a hat wearer you can also create new child hats -- these are new hats di
 But take note! Any hats that are the admin of your hat will ALSO be the admin of the child hats you create. Additionally, if you are not the sole wearer of your hat (as hats can be worn by multiple addresses up to the [max supply](adding-wearers.md#max-wearers)), then any of the other wearers of your hat will also have admin powers over the child hat you created.&#x20;
 
 If you'd rather ensure that you are the only admin over the hats you create, it's probably best [to create a new Hats tree](creating-my-first-hat.md) or create a new child hat that you then make immutable.
-
-<figure><img src="../.gitbook/assets/image (2) (1).png" alt="" width="375"><figcaption><p>Your hat can create new child hats - but be aware who else has admin rights over that hat!</p></figcaption></figure>
 
 ## **What else do I need to know?**
 
