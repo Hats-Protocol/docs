@@ -1,6 +1,6 @@
 # 🧩 Hats Modules
 
-A Hats Module is any contract that serves as an [Eligibility module](../hats-protocol-overview/eligibility-modules.md), a [Toggle module](../hats-protocol-overview/toggle-modules.md), and/or a [Hatter contract](../hats-protocol-overview/hat-admins-and-hatter-contracts.md#hatter-contracts). Modules customize, automate, and extend the behavior of Hats Protocol, and can also serve as adapters or integration points with other protocols and applications.
+A Hats Module is any contract that serves as an [Eligibility module](../hats-protocol-for-developers/eligibility-modules.md), a [Toggle module](../hats-protocol-for-developers/toggle-modules.md), and/or a [Hatter contract](../hats-protocol-for-developers/hat-admins-and-hatter-contracts.md#hatter-contracts). Modules customize, automate, and extend the behavior of Hats Protocol, and can also serve as adapters or integration points with other protocols and applications.
 
 In a sense, modules are the lifeblood of Hats Protocol. The design space is wide open, ready to be filled with all the possible building blocks of human organization and coordination.&#x20;
 

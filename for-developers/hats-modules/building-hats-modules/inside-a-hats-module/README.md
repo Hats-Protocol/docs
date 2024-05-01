@@ -11,7 +11,7 @@ It serves several key functions:
 {% hint style="info" %}
 Inheriting from HatsModule.sol is necessary to be deployable via HatsModuleFactory, to be listed in the Module registry, and to appear natively in the applications using the registry.&#x20;
 
-However, it is _not_ required for compatibility with Hats Protocol more generally. See the docs for [Eligibility](../../../hats-protocol-overview/eligibility-modules.md) and [Toggle](../../../hats-protocol-overview/toggle-modules.md) modules for those requirements.
+However, it is _not_ required for compatibility with Hats Protocol more generally. See the docs for [Eligibility](../../../hats-protocol-for-developers/eligibility-modules.md) and [Toggle](../../../hats-protocol-for-developers/toggle-modules.md) modules for those requirements.
 
 The remainder of this documentation assumes inheritance of HatsModule.
 {% endhint %}
@@ -40,6 +40,6 @@ See the following pages for more detail about how HatsModule.sol operates:
 
 There are a couple stock extensions to HatsModule.sol that are useful starting points for common types of modules:
 
-* HatsEligibilityModule.sol: implements [`IHatsEligibility.sol`](../../../hats-protocol-overview/eligibility-modules.md)
-* HatsToggleModule.sol: implements [`IHatsToggle.sol`](../../../hats-protocol-overview/toggle-modules.md)
+* HatsEligibilityModule.sol: implements [`IHatsEligibility.sol`](../../../hats-protocol-for-developers/eligibility-modules.md)
+* HatsToggleModule.sol: implements [`IHatsToggle.sol`](../../../hats-protocol-for-developers/toggle-modules.md)
 

@@ -75,4 +75,4 @@ For any hats you're still not sure about, we recommend setting their eligibility
 
 ## Digging Deeper
 
-For more technical details on how Hats eligibility modules work, see the [Eligibility Modules](../../for-developers/hats-protocol-overview/eligibility-modules.md) page within the "For Developers" section of these docs.
+For more technical details on how Hats eligibility modules work, see the [Eligibility Modules](../../for-developers/hats-protocol-for-developers/eligibility-modules.md) page within the "For Developers" section of these docs.

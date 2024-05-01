@@ -35,7 +35,7 @@ When a link between these two trees is created, as seen in the diagram above, th
 
 ## Digging Deeper
 
-For more technical details on tree linking, see the [Linking Hats Trees](../for-developers/hats-protocol-overview/linking-hats-trees.md) page within the "For Developers" section of these docs.
+For more technical details on tree linking, see the [Linking Hats Trees](../for-developers/hats-protocol-for-developers/linking-hats-trees.md) page within the "For Developers" section of these docs.
 
 ## How to Link Trees Together
 

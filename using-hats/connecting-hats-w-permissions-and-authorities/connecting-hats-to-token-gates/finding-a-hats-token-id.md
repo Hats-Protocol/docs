@@ -15,4 +15,4 @@ The Hats app converts the hexadecimal version to the "pretty id" format `1.2.1.1
 * `0x0001` converts to `1`
 * `0x0001` converts to `1`
 
-_For more technical details on how the Hats addressable ID system works, see the_ [_Hat IDs_](../../../for-developers/hats-protocol-overview/hat-ids.md) _page within the "For Developers" section of these docs._
+_For more technical details on how the Hats addressable ID system works, see the_ [_Hat IDs_](../../../for-developers/hats-protocol-for-developers/hat-ids.md) _page within the "For Developers" section of these docs._

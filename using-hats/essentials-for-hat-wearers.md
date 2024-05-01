@@ -42,7 +42,7 @@ As an admin, you can change a hat's name, image, description, max supply, author
 
 To see which hats your hat is an admin of, click on your hat in the My Hats page and take a look at the tree within which your hat exists.
 
-You can find the hats you're wearing in this tree based on the little green hat icon seen in the hat cards. For example, in the image below, you would see that you are wearing the Product Workstream Facilitator hat 6.1.2.3 ([for more on hat IDs, see here](../for-developers/hats-protocol-overview/hat-ids.md)).&#x20;
+You can find the hats you're wearing in this tree based on the little green hat icon seen in the hat cards. For example, in the image below, you would see that you are wearing the Product Workstream Facilitator hat 6.1.2.3 ([for more on hat IDs, see here](../for-developers/hats-protocol-for-developers/hat-ids.md)).&#x20;
 
 <figure><img src="../.gitbook/assets/Screenshot 2023-08-12 at 12.45.09 PM.png" alt=""><figcaption></figcaption></figure>
 

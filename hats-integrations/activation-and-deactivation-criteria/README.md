@@ -40,7 +40,7 @@ See the subpages within this section for detailed guides for specific Toggle mod
 
 ## Digging Deeper
 
-For more technical details on how Hats toggle modules work, see the [Toggle Modules](../../for-developers/hats-protocol-overview/toggle-modules.md) page within the "For Developers" section of these docs.
+For more technical details on how Hats toggle modules work, see the [Toggle Modules](../../for-developers/hats-protocol-for-developers/toggle-modules.md) page within the "For Developers" section of these docs.
 
 ## Building Modules
 

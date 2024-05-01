@@ -1,63 +1,69 @@
 ---
 description: >-
-  The onchain roles protocol. Empower contributors and code with the
-  responsibility, authority, and accountability needed to get things done.
+  The Organizational Graph Protocol: Encode your organization's roles, agents,
+  and permissions into a programmable graph with Hats Protocol
 ---
 
 # 👋 Welcome to Hats Protocol
 
 ## Introduction
 
-**Hats Protocol is the backbone for decentralized work.** Hats empowers groups to get things done by delegating responsibilities to the right contributors, giving them the hard and soft authorities they need to do their work, and installing real-time accountability mechanisms to ensure people follow through.
+**The next era of organizations starts with Hats Protocol.** We believe the future of organizations is code-based and onchain. We believe that it is possible for organizations with widely distributed ownership to coordinate shared resources and attention and actually get things done.
 
-You can be decentralized AND get things done. This is the power of Hats Protocol.
+Hats turns organizations into a digital object, ready to be programmed. All of the properties of your organization and its individual roles can now be automated, just like any other software system.
+
+At Hats Protocol, we are building public infrastructure for the next era of humanity. Here's how it works.
 
 ## What Are Hats?
 
-Hats are programmable, revocable, and legible roles, which can be collectively controlled by the wearer of the "Top Hat", which could be an individual or a group, such as a DAO. Hat-based roles can be flexibly imbued with responsibilities, authorities, accountabilities, context, and more.
+A platform for building organizational graphs must have a good framework for expressing what an organization is. In Hats Protocol, graphs are made up of roles, which we see as the atomic unit of organizational structure.
 
-Hats are represented onchain by tokens that conform to the ERC-1155 standard. They are connected together in a tree structure (aka a "Hats tree") to create flexible operational and governance structures that are controlled by an organization or its designees, which can then be visualized in any Hats front-end.
+[**Roles**](using-hats/what-hats-do-i-need.md) — which we call “hats” — are rich objects that conform to the ERC-1155 standard and that bundle responsibilities, permissions, and incentives. These are the nodes in the graph. They are represented as tokens, which are held by [**agents**](using-hats/adding-wearers.md) (Ethereum accounts). Because of the flexibility of accounts in the EVM, they can easily be controlled by individuals, groups, DAOs, smart accounts, or AI agents, with any decision-making structure you can think of onchain.
 
-Hats tokens can be held by any address including an EOA, multisig, or contract. When an address has a balance of 1 of a given Hats token, it is considered a "wearer" of that "hat". Then, by way of various token-gates, that address is granted the [authorities](using-hats/connecting-hats-w-permissions-and-authorities/) that have been associated with that hat.
+<figure><img src="https://lh7-us.googleusercontent.com/XmvualHMUh27UvgJ3EVo2aHeag1aSn4tkmyZdmJ2q3iQjr-Ic_VsfGrIdWIJShTAVH6n9b41nMA9GSg5PK6uJJnIzVB53opG1tnClXK5mCxLCMtRdRCmEMDRyno2nUP9l_crFbKwCV6Ckk2oE0wWRxk" alt=""><figcaption></figcaption></figure>
+
+The connections between the nodes of the organizational graph are the admin and accountability relationships between roles. [**Admins**](using-hats/setting-accountabilities/admins-creating-issuing-and-revising-hats.md) get certain in-protocol permissions, like being able to create new roles, select which agents will get each role, and modify the permissions delegated to a role so the agent can accomplish its responsibilities.
+
+[**Accountability relationships**](using-hats/setting-accountabilities/eligibility-requirements-for-wearers.md) make it possible for any agent in the graph to hold the responsibility for evaluating and aligning another agent’s performance. They can revoke hats that are misused or no longer needed.&#x20;
+
+In Hats Protocol, all of these interfaces are extensible by developers. Organizations can easily automate the granting and revoking of roles, admin relationships, and accountability using any criteria or logic. Hats ecosystem developers have already created over 15 automations that organizations can plug into their graphs without writing any code.
+
+Of course, it is the [**permissions**](hats-integrations/permissions-and-authorities/) delegated to a hat that make it powerful. Specifically, we’ve seen that there are a few categories of permissions that are particularly important for organizational operations:
+
+* Control of funds, operational budgets, and compensations streams&#x20;
+* Ownership or voting power in domain-specific decisions
+* Access to data, communication channels, and workspaces
+* Ability to modify, publish, and execute code
+* Identity that you can use to represent the organization in other contexts
+
+<figure><img src="https://lh7-us.googleusercontent.com/4mAlQnmGQpwf4tN2s4lUvHZxP3FhYL0IY2F_9c6xsCQA3zq-aQWGWEO7UUAxtr_YZSeK4R8_XY0JAlWhQZvuJx7zVdo1ygRCtIim9HB0ThUdhLivIKPA-TT59MG8LnQWJoPuUVZE-nYQNSLMfjvCSvU" alt=""><figcaption><p>RareDAO is bringing its organizational graph onchain to create committees with accountability increase the efficiency of council transitions. <a href="https://www.hatsprotocol.xyz/case-studies">See this and other case studies here.</a></p></figcaption></figure>
+
+Organizational efficiency is a function of pushing both decision-making and execution as close to the edges of the organization as possible. Hats enables this for onchain organizations, making it possible to get things done even with a widely distributed set of owners and stakeholders.
+
+## How does it work?
+
+Hats are programmable, revocable, and legible roles, which can be collectively controlled by the wearer of the "Top Hat", which could be an individual or a group, such as an organization. Hat-based roles can be flexibly imbued with responsibilities, authorities, accountabilities, context, and more.
+
+Hats are represented onchain by tokens that conform to the ERC-1155 standard. They are connected together in a tree structure (aka a "Hats tree") to create flexible organizational graphs that are controlled by an organization or its designees, which can then be visualized in any Hats front-end.
+
+Hats tokens can be held by any address including an EOA, multisig, or contract. When an address has a balance of 1 of a given Hats token, it is considered a "wearer" of that "hat". Then, by way of various integrations and token-gates, that address is granted the [authorities](using-hats/connecting-hats-w-permissions-and-authorities/) that have been associated with that hat.
 
 Each hat can have any number of wearers up to the hat’s max supply. Hats are granted and revoked by the organization, or agents/smart contracts that are designated by the org. Wearers can renounce a hat, but they cannot transfer it.
 
-<figure><img src="https://lh7-us.googleusercontent.com/_Cimp3v1g_gdwTD0sB4aBc5sTN50GNrNmzBgEywqeclO2sACubvM2ip5DYskYBjATtKvQ7xm--djuFKuUhMtY4Y0U3_3BnHqbR8TOmvi538MiOzDNJ7LLiaa3mfUcJHBqV7tQzfrKdXEUiJ0QURopSs" alt=""><figcaption><p><a href="https://app.hatsprotocol.xyz/trees/1/22">The RareDAO Hats tree</a> includes roles across the Rare Foundation as well as the RareDAO Council, Ops Team, and Grants Committee</p></figcaption></figure>
+## Create Your Organizational Graph with Hats Protocol
 
-_**Case Study:** By bringing its roles onchain with Hats, RareDAO provides contributors with the context and powers needed to make decisions and take actions, while keeping them accountable to the organization as a whole. “Power is now associated with a role, not a specific address or individual,” says Brennan Mulligan, DAO Program Manager at SuperRare. “This derisks the system as a whole by allowing us to hotswap people in and out of roles without changing the underlying power structures.”_ [_See the full case study here._](https://www.hatsprotocol.xyz/wearer/raredao-case-study)
-
-## Why Should We Use Hats?
-
-Using Hats, groups can create and manage roles that unlock the power of decentralized work.
-
-Decentralized work could be amazing. But collective governance is hard. Today, decentralized organizations like DAOs and networks are making tradeoffs between decentralization and effectiveness. What they’re missing is a familiar piece of organizational infrastructure: roles.&#x20;
-
-Decentralized organizations need a better way of delegating and revoking roles, responsibilities, and authorities to get things done. You no longer have to choose decentralization or effectiveness: you _can_ get things done while simultaneously embodying the values of decentralization and autonomy.&#x20;
-
-#### Groups that use Hats will:
-
-* Delegate authorities to individuals or teams while retaining ultimate control by the collective
-* Experience less pain and administrative costs associated with managing contributors and transferring authorities from one person or team to another
-* Effectively hold contributors accountable to their commitments
-* Clearly understand what’s _actually_ happening across the group at any point in time, including where any gaps exist
-
-#### Contributors who wear Hats will:
-
-* Feel clear about the roles and responsibilities they are accountable for
-* Instantly have all the authorities they need to do their work (e.g., discord role, wiki admin rights, multisig signer, twitter access, etc.)
-* Know who to go to for important information or decisions
-* Understand which roles are not yet fulfilled that they could be eligible for
-
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
-
-## Developer Documentation
-
-The next few pages are devoted to documentation for Hats usage and Hats Tree setup by Hat Wearers, such as DAO governance facilitators, operations managers, and summoners.&#x20;
+The Using the Hats App section of these docs is devoted to documentation for Hats usage and setup by hat wearers, governance facilitators, and operations managers.&#x20;
 
 In these pages, we emphasize the usage of the first front-end built by Haberdasher Labs for this purpose, but recognize that there will be many apps that are able to interact with Hats Protocol in our open-source ecosystem.
 
+{% content-ref url="getting-started-with-hats.md" %}
+[getting-started-with-hats.md](getting-started-with-hats.md)
+{% endcontent-ref %}
+
+## Developer Documentation
+
 If you're a developer looking for more technical documentation, including contract functions, SDK details, subgraph information, and integration help, please jump directly to the "For Developers" section of these docs:
 
-{% content-ref url="broken-reference" %}
-[Broken link](broken-reference)
+{% content-ref url="for-developers/hats-protocol-for-developers/" %}
+[hats-protocol-for-developers](for-developers/hats-protocol-for-developers/)
 {% endcontent-ref %}

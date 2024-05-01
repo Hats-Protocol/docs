@@ -10,9 +10,9 @@ description: Hold on to your hats and let's jump in!
 
 You can get started with Hats in one of two ways.&#x20;
 
-**1. Create individual Hats for specific roles & authorities:** First, you could start small, creating a single hat that provides its wearers with all the authorities they need to contribute to the group (for example, you could create a Community Member Hat that is worn by all community members to give them the authorities they need to access and contribute to the community's workspaces).
+**1. Create individual Hats for specific roles & permissions:** First, you could start small, creating a single hat that provides its wearers with all the [permissions](hats-integrations/permissions-and-authorities/) they need to contribute to the group (for example, you could create a Community Member Hat that is worn by all community members to give them the authorities they need to access and contribute to the community's workspaces).
 
-**2. Create a Hats tree to structure your organization:** Or, you can begin with the end in mind, creating a fully-fleshed out Hats tree for your organization to provide the role clarity, access control, and accountability mechanisms it needs to thrive.
+**2. Create a Hats tree as the foundation of your organizational graph:** Or, you can begin with the end in mind, creating a fully-fleshed out Hats tree for your organization to provide the role clarity, access control, and accountability mechanisms it needs to thrive.
 
 Wherever you begin, the docs found here will walk you through it.
 

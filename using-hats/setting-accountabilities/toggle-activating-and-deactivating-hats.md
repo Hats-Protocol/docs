@@ -62,4 +62,4 @@ Go [here](../../hats-integrations/activation-and-deactivation-criteria/) to chec
 
 ## Digging Deeper
 
-For more technical details on how Hats toggle modules work, see the [Toggle Modules](../../for-developers/hats-protocol-overview/toggle-modules.md) page within the "For Developers" section of these docs.
+For more technical details on how Hats toggle modules work, see the [Toggle Modules](../../for-developers/hats-protocol-for-developers/toggle-modules.md) page within the "For Developers" section of these docs.
