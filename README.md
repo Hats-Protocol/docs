@@ -12,11 +12,19 @@ description: >-
 
 Hats turns organizations into a digital object, ready to be programmed. All of the properties of your organization and its individual roles can now be automated, just like any other software system.
 
-At Hats Protocol, we are building public infrastructure for the next era of humanity. Here's how it works.
+At Hats Protocol, we are building public infrastructure for the next era of humanity. Here's an overview of what Hats is and how it works.
 
-## What Are Hats?
+#### **Quick links:**
 
-A platform for building organizational graphs must have a good framework for expressing what an organization is. In Hats Protocol, graphs are made up of roles, which we see as the atomic unit of organizational structure.
+* [Website](https://hatsprotocol.xyz/)
+* [App](https://app.hatsprotocol.xyz/)
+* [Foundational vision post](https://blog.hatsprotocol.xyz/organizational-graphs)
+* [Blog](https://blog.hatsprotocol.xyz/)
+* [Join the Hats Community & protoDAO](https://community.hatsprotocol.xyz/)
+
+## What is Hats?
+
+Hats is a platform for building organizational graphs. In Hats Protocol, graphs are made up of roles, which we see as the atomic unit of organizational structure.
 
 [**Roles**](using-hats/what-hats-do-i-need.md) — which we call “hats” — are rich objects that conform to the ERC-1155 standard and that bundle responsibilities, permissions, and incentives. These are the nodes in the graph. They are represented as tokens, which are held by [**agents**](using-hats/adding-wearers.md) (Ethereum accounts). Because of the flexibility of accounts in the EVM, they can easily be controlled by individuals, groups, DAOs, smart accounts, or AI agents, with any decision-making structure you can think of onchain.
 
@@ -40,7 +48,7 @@ Of course, it is the [**permissions**](hats-integrations/permissions-and-authori
 
 Organizational efficiency is a function of pushing both decision-making and execution as close to the edges of the organization as possible. Hats enables this for onchain organizations, making it possible to get things done even with a widely distributed set of owners and stakeholders.
 
-## How does it work?
+## How Does Hats Work?
 
 Hats are programmable, revocable, and legible roles, which can be collectively controlled by the wearer of the "Top Hat", which could be an individual or a group, such as an organization. Hat-based roles can be flexibly imbued with responsibilities, authorities, accountabilities, context, and more.
 
