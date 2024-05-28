@@ -153,3 +153,14 @@ A Typescript type, as returned by the [solidityToTypescriptType function](utilit
 | "boolean[]"
 | "unknown";
 ```
+
+### <mark style="color:purple;">Ruleset</mark>
+
+A modules ruleset is an array of module instances which are chained together with an 'AND' logical operator.&#x20;
+
+```typescript
+{
+  module: Module; // the module's object from the registry
+  address: `0x${string}`; // the module's instance address
+}[]
+```
