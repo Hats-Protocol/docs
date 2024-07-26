@@ -6,7 +6,7 @@ description: Guides for connecting permissions to a given hat
 
 Hats makes it easy for organizations to manage permissions and access for their human and AI agents across the open internet.
 
-The permissions and authorities that can be granted and accessed by a hat in constantly growing, including:
+The number of permissions and authorities that can be granted and accessed by a given hat is constantly growing, including:
 
 * **Accounts and resources:** control of Ethereum accounts, multisig signing authority, and compensation
 * **Communication channels:** access and posting rights for shared communications channels and accounts
