@@ -1,6 +1,6 @@
-# 🖥 v1 SDK
+# 🖥️ v1 SDK
 
-Hats Protocol v1 SDKs.&#x20;
+Hats Protocol v1 Core and Subgraph SDKs.&#x20;
 
 Check out the open source code [here](https://github.com/Hats-Protocol/sdk-v1-core).
 
