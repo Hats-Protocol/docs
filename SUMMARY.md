@@ -155,3 +155,4 @@
   * [Acceptable Use](more-info/terms/acceptable-use.md)
   * [Privacy Policy](more-info/terms/privacy-policy.md)
   * [Cookie Policy](more-info/terms/cookie-policy.md)
+  * [Attribution](legal/terms/attribution.md)
