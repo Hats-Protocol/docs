@@ -1,22 +1,21 @@
 ---
 description: >-
-  The Organizational Graph Protocol: Encode your organization's roles, agents,
-  and permissions into a programmable graph with Hats Protocol
+  Save time, automate onboarding, and make better decisions with programmable
+  onchain roles
 ---
 
 # 👋 Welcome to Hats Protocol
 
-## Introduction
+## Organizations work better with Hats
 
-**The next era of organizations starts with Hats Protocol.** We believe the future of organizations is code-based and onchain. We believe that it is possible for organizations with widely distributed ownership to coordinate shared resources and attention and actually get things done.
-
-Hats turns organizations into a digital object, ready to be programmed. All of the properties of your organization and its individual roles can now be automated, just like any other software system.
+Hats turns organizations into a digital object, ready to be programmed. All of the properties of your organization and its individual roles and permissions can now be automated, just like any other software system.
 
 At Hats Protocol, we are building public infrastructure for the next era of humanity. Here's an overview of what Hats is and how it works.
 
 #### **Quick links:**
 
 * [Website](https://hatsprotocol.xyz/)
+* [Use cases & case studies](https://www.hatsprotocol.xyz/case-studies)
 * [App](https://app.hatsprotocol.xyz/)
 * [Foundational vision post](https://blog.hatsprotocol.xyz/organizational-graphs)
 * [Blog](https://blog.hatsprotocol.xyz/)
@@ -24,15 +23,15 @@ At Hats Protocol, we are building public infrastructure for the next era of huma
 
 ## What is Hats?
 
-Hats is a platform for building organizational graphs. In Hats Protocol, graphs are made up of roles, which we see as the atomic unit of organizational structure.
+Hats is a full-stack solution for organizing onchain. Create your roles onchain to streamline permission management and introduce real accountability for your contributors.
 
-[**Roles**](using-hats/what-hats-do-i-need.md) — which we call “hats” — are rich objects that conform to the ERC-1155 standard and that bundle responsibilities, permissions, and incentives. These are the nodes in the graph. They are represented as tokens, which are held by [**agents**](using-hats/adding-wearers.md) (Ethereum accounts). Because of the flexibility of accounts in the EVM, they can easily be controlled by individuals, groups, DAOs, smart accounts, or AI agents, with any decision-making structure you can think of onchain.
+[**Roles**](using-hats/what-hats-do-i-need.md) — which we call “hats” — are rich objects that conform to the ERC-1155 standard and that bundle responsibilities, permissions, and incentives. They are represented as tokens, which are held by [**agents**](using-hats/adding-wearers.md) (Ethereum accounts). Because of the flexibility of accounts in the EVM, they can easily be controlled by individuals, groups, DAOs, smart accounts, or AI agents, with any decision-making structure you can think of onchain.
 
 <figure><img src="https://lh7-us.googleusercontent.com/XmvualHMUh27UvgJ3EVo2aHeag1aSn4tkmyZdmJ2q3iQjr-Ic_VsfGrIdWIJShTAVH6n9b41nMA9GSg5PK6uJJnIzVB53opG1tnClXK5mCxLCMtRdRCmEMDRyno2nUP9l_crFbKwCV6Ckk2oE0wWRxk" alt=""><figcaption></figcaption></figure>
 
-The connections between the nodes of the organizational graph are the admin and accountability relationships between roles. [**Admins**](using-hats/setting-accountabilities/admins-creating-issuing-and-revising-hats.md) get certain in-protocol permissions, like being able to create new roles, select which agents will get each role, and modify the permissions delegated to a role so the agent can accomplish its responsibilities.
+The connections between the nodes of an organizational structure are the admin and accountability relationships between roles. [**Admins**](using-hats/setting-accountabilities/admins-creating-issuing-and-revising-hats.md) get certain in-protocol permissions, like being able to create new roles, select which agents will get each role, and modify the permissions delegated to a role so the agent can accomplish its responsibilities.
 
-[**Accountability relationships**](using-hats/setting-accountabilities/eligibility-requirements-for-wearers.md) make it possible for any agent in the graph to hold the responsibility for evaluating and aligning another agent’s performance. They can revoke hats that are misused or no longer needed.&#x20;
+[**Accountability relationships**](using-hats/setting-accountabilities/eligibility-requirements-for-wearers.md) make it possible for any agent in the organization to hold the responsibility for evaluating and aligning another agent’s performance. They can revoke hats that are misused or no longer needed.&#x20;
 
 In Hats Protocol, all of these interfaces are extensible by developers. Organizations can easily automate the granting and revoking of roles, admin relationships, and accountability using any criteria or logic. Hats ecosystem developers have already created over 15 automations that organizations can plug into their graphs without writing any code.
 
@@ -52,15 +51,15 @@ Organizational efficiency is a function of pushing both decision-making and exec
 
 Hats are programmable, revocable, and legible roles, which can be collectively controlled by the wearer of the "Top Hat", which could be an individual or a group, such as an organization. Hat-based roles can be flexibly imbued with responsibilities, authorities, accountabilities, context, and more.
 
-Hats are represented onchain by tokens that conform to the ERC-1155 standard. They are connected together in a tree structure (aka a "Hats tree") to create flexible organizational graphs that are controlled by an organization or its designees, which can then be visualized in any Hats front-end.
+Hats are represented onchain by tokens that conform to the ERC-1155 standard. They are connected together in a tree structure (aka a "Hats tree") to create flexible organizational structures that are controlled by an organization or its designees, which can then be visualized in any Hats front-end.
 
 Hats tokens can be held by any address including an EOA, multisig, or contract. When an address has a balance of 1 of a given Hats token, it is considered a "wearer" of that "hat". Then, by way of various integrations and token-gates, that address is granted the [authorities](using-hats/connecting-hats-w-permissions-and-authorities/) that have been associated with that hat.
 
 Each hat can have any number of wearers up to the hat’s max supply. Hats are granted and revoked by the organization, or agents/smart contracts that are designated by the org. Wearers can renounce a hat, but they cannot transfer it.
 
-## Create Your Organizational Graph with Hats Protocol
+## Create Your Organizational Structure with Hats Protocol
 
-The Using the Hats App section of these docs is devoted to documentation for Hats usage and setup by hat wearers, governance facilitators, and operations managers.&#x20;
+The [Using the Hats App](broken-reference) section of these docs is devoted to documentation for Hats usage and setup by hat wearers, governance facilitators, and operations managers.&#x20;
 
 In these pages, we emphasize the usage of the first front-end built by Haberdasher Labs for this purpose, but recognize that there will be many apps that are able to interact with Hats Protocol in our open-source ecosystem.
 
@@ -70,7 +69,7 @@ In these pages, we emphasize the usage of the first front-end built by Haberdash
 
 ## Developer Documentation
 
-If you're a developer looking for more technical documentation, including contract functions, SDK details, subgraph information, and integration help, please jump directly to the "For Developers" section of these docs:
+If you're a developer looking for more technical documentation, including contract functions, SDK details, subgraph information, and integration help, please jump directly to the [For Developers](broken-reference) section of these docs:
 
 {% content-ref url="for-developers/hats-protocol-for-developers/" %}
 [hats-protocol-for-developers](for-developers/hats-protocol-for-developers/)
