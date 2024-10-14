@@ -10,7 +10,7 @@ description: How to hat-gate signing authority on a Safe multisig
 
 _NOTE: We take security seriously and our contracts_ [_have been audited_](../../for-developers/hats-security-audits.md)_. When used properly, Hats Signer Gate enables secure transfer of safe signing authority from one address to another. However, with improper configurations, Hats Signer Gate can behave differently than designed and could result in lost funds. If you are interested in using Hats Signer Gate, contact us at support \[at] hatsprotocol \[dot] xyz for implementation support. Otherwise, be sure to heed the_ [_conditions for safe use_](safe-multisig-signing-authority.md#conditions) _below and use at your own risk._
 
-## An Overview of Hats Signer Gate
+## Technical Overview of Hats Signer Gate
 
 There are two components to the Hats Signer Gate contract:
 
@@ -48,7 +48,7 @@ For more details on Hats Signer Gate including security audit results, [see here
 There are five steps required to properly implement Hats Signer Gate:
 
 1. Create the hats that will have multisig signing authority and note their token IDs. _See_ [_Finding a Hat's Token ID_](../../using-hats/connecting-hats-w-permissions-and-authorities/connecting-hats-to-token-gates/finding-a-hats-token-id.md) _for details on how to find specific hat token IDs_.
-2. Deploy a new Hats Signer Gate contract using the [Hats Signer Gate Factory](https://github.com/Hats-Protocol/hats-zodiac/releases/tag/v1.2-beta)
+2. Deploy a new Hats Signer Gate contract (deployed via the [Hats Signer Gate Factory](https://github.com/Hats-Protocol/hats-zodiac/releases/tag/v1.2-beta))
 3. Set up the Hats Signer Gate Zodiac module
 4. Set up the Hats Signer Gate Zodiac guard
 5. Mint Hats to wearers and have them claim signing authority
@@ -65,9 +65,15 @@ Once the owner and signer Hats are created, note their hat token IDs. _See_ [#fi
 
 ### 2a. Deploy a new Hats Signer Gate contract using the Hats Signer Gate Factory
 
-First, open the proper [Hats Signer Gate Factory](https://github.com/Hats-Protocol/hats-zodiac/releases/tag/v1.2-beta) contract according to the network your hats are on [by following the links found here](https://github.com/Hats-Protocol/hats-zodiac/releases/tag/v1.2-beta) _(contact support \[at] hatsprotocol \[dot] xyz if you need the Hats Signer Gate Factory deployed to a new chain)_.
+In the Hats App, enter edit mode and select the Authorities section:
 
-Next, under "Contract" and "Write Contract", deploy the proper contract according to your needs.&#x20;
+<figure><img src="../../.gitbook/assets/Screenshot 2024-10-13 at 22.48.53.png" alt="" width="563"><figcaption></figcaption></figure>
+
+Select "Add a Safe":
+
+<figure><img src="../../.gitbook/assets/Screenshot 2024-10-13 at 22.52.35.png" alt=""><figcaption></figcaption></figure>
+
+**Note:** make sure that you're connected to the chain in which your Hats are on.
 
 If you already have a multisig set up that you'd like to use, select either:
 
@@ -81,26 +87,20 @@ If you would like to set up a new multisig to use with Hats Signer Gate, select 
 
 **Note worth repeating:** If you create a new Safe in the process of deploying Hats Signer Gate in Step 2a, you can skip Steps 3 and 4! Your Zodiac module and Zodiac guard will have been automatically added to a new Safe and ready to go.
 
-Then, complete the fields found in the contract you select, as seen below _(not every field shown below may appear depending on the contract type you selected_):
+Complete the deployment process:
 
-<figure><img src="../../.gitbook/assets/Screenshot 2023-06-07 at 4.56.14 PM.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Screenshot 2024-10-13 at 23.15.05.png" alt=""><figcaption></figcaption></figure>
 
-**Owner Hat ID:** Enter the token ID for the Owner Hat. The wearer of the Owner Hat can make the following changes to Hats Signer Gate:
+Following are additional explanations regarding the HSGs parameters:
 
-1. "Transfer" ownership to a new hat by changing the token ID for`ownerHatID`
-2. Set the acceptable multisig threshold range by changing `minThreshold` and `targetThreshold`
-3. Add other Zodiac modules to the multisig
-4. In Multi-Hats Signer Gate, add other hats as valid signer hats
-
-**Signer Hat IDs:** The IDs of the hats that will have signing authority on the multisig. If you are using a Multi Hats Signer Gate, you will need to enter the hat token IDs using the convention shown above and copied below _(see_ [#finding-a-hats-token-id](../../using-hats/connecting-hats-w-permissions-and-authorities/#finding-a-hats-token-id "mention") _for details on how to find specific hat token IDs)_.
-
-* \[Hat-ID-1,Hat-ID-2,etc.]
-
-**Safe Address:** The address of the Safe multisig you will be hat-gating.
-
-**Min Threshold:** The fewest number of signers that can execute a transaction, even as signers are getting added to the safe. A minimum threshold is necessary to set, as signers may claim their signing authority at different times.&#x20;
-
-**Target Threshold:** Once enough signers get added to the multisig by claiming signing authority, they will reach the target threshold, at which point this becomes the fewest number of signers that can execute a transaction.
+1. **Owner Hat ID:** The wearer of the Owner Hat can make the following changes to Hats Signer Gate:
+   1. "Transfer" ownership to a new hat&#x20;
+   2. Set the acceptable multisig threshold range by changing Min Threshold and Target Threshold
+   3. Add other Zodiac modules to the multisig
+   4. In Multi-Hats Signer Gate, add other hats as valid signer hats
+2. **Signer Hat IDs:** The ID or multiple IDs of the hats that will have signing authority on the multisig.&#x20;
+3. **Min Threshold:** The fewest number of signers that can execute a transaction, even as signers are getting added to the safe. A minimum threshold is necessary to set, as signers may claim their signing authority at different times.&#x20;
+4. **Target Threshold:** Once enough signers get added to the multisig by claiming signing authority, they will reach the target threshold, at which point this becomes the fewest number of signers that can execute a transaction.
 
 For example, with a min threshold of 2 and a target threshold of 3...
 
@@ -110,16 +110,11 @@ For example, with a min threshold of 2 and a target threshold of 3...
 * With a fourth signer, the safe will have reached its target threshold and become a 3/4
 * The safe will then be a 3/N safe up to N = max signers
 
-**Max Signers:** The maximum number of addresses that can claim signing authority on the Safe.
+5. **Max Signers:** The maximum number of addresses that can claim signing authority on the Safe.
 
-**Then, once you've filled in the fields...**
+Once deployed, you'll get links to the Safe and the new HSG or MHSG contract:
 
-* **Select Write** to deploy your instance of the Hats Signer Gate contract.
-* Select **View Transaction** once the transaction is confirmed
-* View the **Logs**
-* **See the field corresponding to (Multi)HatsSignerGateSetup.** Here you will find your new Hats Signer Gate contract address (example highlighted below) as well as the address of your new Safe multisig if applicable. Save these addresses!
-
-<figure><img src="../../.gitbook/assets/Screenshot 2023-06-07 at 5.18.46 PM.png" alt=""><figcaption><p>Example address for a new Hats Signer Gate contract address as found in the logs</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Screenshot 2024-10-13 at 23.30.21.png" alt="" width="375"><figcaption></figcaption></figure>
 
 ### 2b. Connect your new multisig to the Safe app
 
@@ -189,7 +184,7 @@ Once these hats are minted, all wearers need to do to claim signing authority is
 * Select the hat
 * In the Authorities section, locate the HSG Signer authority card
 
-<figure><img src="../../.gitbook/assets/Screenshot 2024-02-15 at 17.26.15.png" alt="" width="563"><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Screenshot 2024-10-13 at 23.36.23.png" alt="" width="563"><figcaption></figcaption></figure>
 
 * Select "Claim signer rights"
 
