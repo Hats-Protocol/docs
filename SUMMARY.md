@@ -58,6 +58,7 @@
   * [JokeRace Eligibility](hats-integrations/eligibility-and-accountability-criteria/jokerace-eligibility.md)
   * [Pass-Through (Hat-Based) Eligibility](hats-integrations/eligibility-and-accountability-criteria/pass-through-hat-based-eligibility.md)
   * [Staking Eligibility](hats-integrations/eligibility-and-accountability-criteria/staking-eligibility.md)
+  * [Subscription or Membership Fee (Unlock Protocol)](hats-integrations/eligibility-and-accountability-criteria/subscription-or-membership-fee-unlock-protocol.md)
   * [Gitcoin Passport Eligibility](hats-integrations/eligibility-and-accountability-criteria/gitcoin-passport-eligibility.md)
 * [⚡ Activation & Deactivation Criteria](hats-integrations/activation-and-deactivation-criteria/README.md)
   * [Seasonal/ Time-Expiry Toggle](hats-integrations/activation-and-deactivation-criteria/seasonal-time-expiry-toggle.md)
