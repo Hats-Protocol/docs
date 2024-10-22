@@ -12,6 +12,8 @@ Hats has integrated with Unlock Protocol to allow organizations to set up recurr
 
 Once a subscription or membership is active, the new member immediately gains all associated role powers, such as access to workspaces, communication channels, and voting rights. If the subscription is canceled or expires, access is automatically revoked.
 
+The module's code is open source and is available [here](https://github.com/Hats-Protocol/unlock-eligibility).
+
 ### **Adding the module to a hat** <a href="#adding-the-module-to-a-hat" id="adding-the-module-to-a-hat"></a>
 
 * Go to the tree that includes the hat you wish to create the module for
@@ -31,6 +33,18 @@ Once a subscription or membership is active, the new member immediately gains al
 * Choose "Deploy & Return" to deploy the module and return to the hat edit form. The module address will be automatically updated on the hat's eligibility property in the form. Once you deploy these changes, the hat's eligibility will be updated.
 
 <figure><img src="../../.gitbook/assets/Screenshot 2024-10-22 at 4.06.34 PM.png" alt=""><figcaption></figcaption></figure>
+
+### Sharing the Subscription/Fee Payment Page <a href="#viewing-the-hats-eligibility-criteria" id="viewing-the-hats-eligibility-criteria"></a>
+
+Once deployed, exit from edit mode and return to the hat that you have added this subscription eligibility module to. In the hat's details, you will now see a "Pay the subscription" link.
+
+<figure><img src="../../.gitbook/assets/Screenshot 2024-10-22 at 4.10.13 PM.png" alt=""><figcaption></figcaption></figure>
+
+Follow this link to see a unique claim page that is automatically generated for fee collection and onboarding.
+
+Once a subscription or membership is active, the new member automatically claims the hat and immediately gains all associated role powers, such as access to workspaces, communication channels, and voting rights. If the subscription is canceled or expires, access is automatically revoked.
+
+<figure><img src="../../.gitbook/assets/image (6).png" alt=""><figcaption></figcaption></figure>
 
 ### Viewing the hat's eligibility criteria <a href="#viewing-the-hats-eligibility-criteria" id="viewing-the-hats-eligibility-criteria"></a>
 
