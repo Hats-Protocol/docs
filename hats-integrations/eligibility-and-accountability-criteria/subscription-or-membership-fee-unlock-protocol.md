@@ -14,6 +14,10 @@ Once a subscription or membership is active, the new member immediately gains al
 
 The module's code is open source and is available [here](https://github.com/Hats-Protocol/unlock-eligibility).
 
+### **Video guide** <a href="#adding-the-module-to-a-hat" id="adding-the-module-to-a-hat"></a>
+
+{% embed url="https://www.loom.com/share/dfed71a40bc04c8686b36e4ce5467ab7?sid=5b981e2d-0733-4dc9-80ff-6faa75e8045c" %}
+
 ### **Adding the module to a hat** <a href="#adding-the-module-to-a-hat" id="adding-the-module-to-a-hat"></a>
 
 * Go to the tree that includes the hat you wish to create the module for
