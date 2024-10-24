@@ -64,8 +64,7 @@ Once a subscription or membership is active, the new member automatically claims
 
 ### Withdrawing Collected Fees <a href="#viewing-the-hats-eligibility-criteria" id="viewing-the-hats-eligibility-criteria"></a>
 
-Subscription or membership fees collected by the claim page above can be collected by visiting the Unlock Protocol app at [https://app.unlock-protocol.com/locks\
-](https://app.unlock-protocol.com/locks), connecting your wallet, and withdrawing funds, as shown below.&#x20;
+Subscription or membership fees collected by the claim page above can be collected by visiting the Unlock Protocol app at [https://app.unlock-protocol.com/locks](https://app.unlock-protocol.com/locks), connecting your wallet, and withdrawing funds, as shown below.&#x20;
 
 Unlock Protocol and Hats Protocol take a combined 1% protocol and 5% referral fee, respectively, to support the cost of development.
 
