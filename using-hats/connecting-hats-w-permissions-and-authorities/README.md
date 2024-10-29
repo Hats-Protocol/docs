@@ -7,7 +7,7 @@ Hats makes it easy for organizations to manage permissions and access for their 
 * **Governance and voting:** onchain permissions for any smart contract, proposal creation, and voting power
 * **Workspaces:** read, review & write permissions in workspaces, files & docs
 
-<figure><img src="../../.gitbook/assets/powers summary.png" alt=""><figcaption><p>Powers and resources that can be accessed by a hat</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/powers summary (1).png" alt=""><figcaption><p>Powers and resources that can be accessed by a hat</p></figcaption></figure>
 
 These powers can be granted and revoked by designated individual or group admins, as well as based on a wide range of automated [eligibility and accountability criteria](../../hats-integrations/eligibility-and-accountability-criteria/).
 
