@@ -1,7 +1,7 @@
 ---
 description: >-
-  Save time, automate onboarding, and make better decisions with programmable
-  onchain roles
+  Save time, automate onboarding, and manage permissions across the internet
+  with programmable onchain roles
 ---
 
 # 👋 Welcome to Hats Protocol
