@@ -4,6 +4,10 @@
 
 While there are many ways you can deploy Hats to support your decentralized work, getting started is simple.
 
+{% embed url="https://www.loom.com/share/c857633cb5f84f33b5226428095239c3?sid=f6edfb04-7e4b-4a13-8666-b058eaeff7d4" %}
+First create a new Hats tree [using this link](https://app.hatsprotocol.xyz/trees/new), then follow the instructions in this video to build out your structure with additional Hats
+{% endembed %}
+
 **You can get started with Hats in two steps:**
 
 1. Creating a new tree
@@ -11,7 +15,7 @@ While there are many ways you can deploy Hats to support your decentralized work
 
 After you've created a new Hats tree and your first child hat, you will be ready to [add wearers](adding-wearers.md) to give all wearers of the hat the [authorities](connecting-hats-w-permissions-and-authorities/) and accountabilities they need to get things done.
 
-Following are instructions for creating a new Hats tree and your first child hat.
+Following are instructions for creating a new Hats tree and your first child hat:
 
 ## 1. Creating a new tree
 

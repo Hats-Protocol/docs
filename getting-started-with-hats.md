@@ -14,7 +14,13 @@ You can get started with Hats in one of two ways.&#x20;
 
 **2. Create a Hats tree as the foundation of your organizational graph:** Or, you can begin with the end in mind, creating a fully-fleshed out Hats tree for your organization to provide the role clarity, access control, and accountability mechanisms it needs to thrive.
 
-Wherever you begin, the docs found here will walk you through it.
+Wherever you begin, the docs found here will walk you through it, or watch this short video for a quick tutorial of the [Hats App](https://app.hatsprotocol.xyz):&#x20;
+
+{% embed url="https://www.loom.com/share/c857633cb5f84f33b5226428095239c3?sid=f6edfb04-7e4b-4a13-8666-b058eaeff7d4" %}
+Getting started with the Hats app
+{% endembed %}
+
+
 
 {% content-ref url="using-hats/creating-my-first-hat.md" %}
 [creating-my-first-hat.md](using-hats/creating-my-first-hat.md)
