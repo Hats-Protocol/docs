@@ -1,6 +1,6 @@
 # Cookie Policy
 
-We use cookies to help improve your experience of the website and subdomains at https://www.hatsprotocol.xyz. This cookie policy is part of Haberdasher Labs's privacy policy. It covers the use of cookies between your device and our site.
+We use cookies to help improve your experience of the website and all subdomains at https://www.hatsprotocol.xyz. This cookie policy is part of Haberdasher Labs's privacy policy. It covers the use of cookies between your device and our site.
 
 We may also provide basic information on third-party services we may use, who may also use cookies as part of their service. This policy does not cover their cookies.
 

@@ -1,239 +1,158 @@
 # Privacy Policy
 
-Your privacy is very important to us. It is Haberdasher Labs’ policy to respect your privacy and comply with all applicable law and regulation regarding any personal information we may collect about you, including across our website, https://www.hatsprotocol.xyz, and other sites we own and operate.
+Effective Date: December 20, 2024
 
-Personal information is any information about you which can be used to identify you. This includes information about you as a person (such as name, address, and date of birth), your devices, payment details, and even information about how you use a website or online service.
+Your privacy is very important to us. It is Haberdasher Labs, Inc.'s ("Haberdasher Labs," "we," "us," or "our") policy to respect your privacy and comply with applicable laws regarding any personal information we may collect about you, including across our website ([https://www.hatsprotocol.xyz](https://www.hatsprotocol.xyz)), its subdomains, and any related products and services, including our HatsSignerGate Deployer App (collectively, the "Services").
 
-In the event our site contains links to third-party sites and services, please be aware that those sites and services have their own privacy policies. After following a link to any third-party content, you should read their posted privacy policy information about how they collect and use personal information. This Privacy Policy does not apply to any of your activities after you leave our site.
+By accessing or using the Services, you agree to this Privacy Policy. If you do not agree, please do not use the Services.
 
-This policy is effective as of 11 August 2023.
+***
 
-Last updated: 11 August 2023
+#### 1. Information We Collect
 
-### Information We Collect
+We collect information in two main categories: voluntarily provided and automatically collected data.
 
-Information we collect falls into one of two categories: “voluntarily provided” information and “automatically collected” information.
+**1.1 Voluntarily Provided Information**
 
-“Voluntarily provided” information refers to any information you knowingly and actively provide us when using or participating in any of our services and promotions.
-
-“Automatically collected” information refers to any information automatically sent by your devices in the course of accessing our products and services.
-
-### Log Data
-
-When you visit our website, our servers may automatically log the standard data provided by your web browser. It may include your device’s Internet Protocol (IP) address, your browser type and version, the pages you visit, the time and date of your visit, the time spent on each page, and other details about your visit.
-
-Additionally, if you encounter certain errors while using the site, we may automatically collect data about the error and the circumstances surrounding its occurrence. This data may include technical details about your device, what you were trying to do when the error happened, and other technical information relating to the problem.
-
-### Device Data
-
-When you visit our website or interact with our services, we may automatically collect data about your device, such as:
-
-* Device Type
-* Operating System
-* Geo-location data
-
-Data we collect can depend on the individual settings of your device and software. We recommend checking the policies of your device manufacturer or software provider to learn what information they make available to us.
-
-### Personal Information
-
-We may ask for personal information — for example, when you contact us — which may include one or more of the following:
+This includes personal information you knowingly provide to us, such as:
 
 * Name
-* Email or contact information
-* Wallet Address
-* User-Generated Content
+* Email address
+* Wallet address
+* Payment information (for subscriptions)
+* User-generated content (e.g., text, images, or videos submitted to the platform)
 
-We consider “user-generated content” to be materials (text, image and/or video content) voluntarily supplied to us by our users for the purpose of publication, processing, or usage on our platform. All user-generated content is associated with the account used to submit the materials.
+**1.2 Automatically Collected Information**
 
-Please be aware that any content you submit for the purpose of publication will be public after posting (and subsequent review or vetting process). Once published, it may be accessible to third parties not covered under this privacy policy.
+We may automatically collect data through cookies, analytics tools, and server logs when you use the Services, such as:
 
-### Transaction Data
+* Log Data: Your IP address, browser type, pages visited, and access times
+* Device Data: Device type, operating system, and geolocation data
+* Transaction Data: Records and analytics of blockchain interactions made through the Hats Protocol
 
-Transaction data refers to data that accumulates over the normal course of operation on our platform. This may include transaction records, analytics data and other metrics, as well as other types of information, created or generated, as users interact with our services.
+For more details on cookies, please refer to our[ Cookie Policy](https://docs.hatsprotocol.xyz/legal/terms/cookie-policy).
 
-### Legitimate Reasons for Processing Your Personal Information
+***
 
-We only collect and use your personal information when we have a legitimate reason for doing so. In which instance, we only collect personal information that is reasonably necessary to provide our services to you.
+#### 2. How We Use Your Information
 
-### Collection and Use of Information
+We collect, use, and process your information for the following purposes:
 
-* We may collect personal information from you when you do any of the following on our website:
-* Sign up to receive updates from us via email or social media channels
-* Use a mobile device or web browser to access our content
-* Contact us via email, social media, or on any similar technologies
-* When you mention us on social media
+* To provide, maintain, and improve our Services (including the platform and Hats Protocol tools)
+* To manage subscriptions, process payments, and deliver customer support
+* To respond to inquiries, feedback, or technical issues
+* To send updates, notifications, or promotional materials (with your consent)
+* For analytics, market research, and business development purposes
+* To ensure compliance with applicable laws and detect fraudulent activities
 
-We may collect, hold, use, and disclose information for the following purposes, and personal information will not be further processed in a manner that is incompatible with these purposes:
+***
 
-* to provide you with our platform's core features and services
-* to contact and communicate with you
-* for analytics, market research, and business development, including to operate and improve our website, associated applications, and associated social media platforms
-* for advertising and marketing, including to send you promotional information about our products and services and information about third parties that we consider may be of interest to you
-* to enable you to access and use our website, associated applications, and associated social media platforms
-* for internal record keeping and administrative purposes
-* to run competitions, sweepstakes, and/or offer additional benefits to you
+#### 3. Disclosure of Personal Information
 
-We may combine voluntarily provided and automatically collected personal information with general information or research data we receive from other trusted sources. For example, If you provide us with your location, we may combine this with general information about currency and language to provide you with an enhanced experience of our site and service.
+We may disclose your personal information under the following circumstances:
 
-### Security of Your Personal Information
+* To third-party service providers who assist us in operating the Services (e.g., payment processors, analytics providers, hosting providers)
+* To comply with legal obligations, court orders, or enforce our legal rights
+* To business partners or entities in connection with a business transfer, such as a merger or acquisition
 
-When we collect and process personal information, and while we retain this information, we will protect it within commercially acceptable means to prevent loss and theft, as well as unauthorized access, disclosure, copying, use, or modification.
+For blockchain-related activities, your wallet address and transaction data may be publicly visible on supported blockchains.
 
-Although we will do our best to protect the personal information you provide to us, we advise that no method of electronic transmission or storage is 100% secure, and no one can guarantee absolute data security.
+***
 
-### How Long We Keep Your Personal Information
+#### 4. Data Retention
 
-We keep your personal information only for as long as we need to. This time period may depend on what we are using your information for, in accordance with this privacy policy. For example, if you have provided us with personal information as part of creating an account with us, we may retain this information for the duration your account exists on our system. If your personal information is no longer required for this purpose, we will delete it or make it anonymous by removing all details that identify you.
+We will retain your personal information only as long as necessary to fulfill the purposes outlined in this policy or as required by law. Upon request, we will delete or anonymize your personal data unless retention is required for legal compliance.
 
-However, if necessary, we may retain your personal information for our compliance with a legal, accounting, or reporting obligation or for archiving purposes in the public interest, scientific, or historical research purposes or statistical purposes.
+***
 
-### Disclosure of Personal Information to Third Parties
+#### 5. Security of Your Information
 
-We may disclose personal information to:
+We take reasonable precautions to protect your personal data from unauthorized access, loss, misuse, or disclosure. However, no method of data transmission or storage is 100% secure. You use the Services at your own risk.
 
-* third-party service providers for the purpose of enabling them to provide their services, including (without limitation) IT service providers, data storage, hosting and server providers, analytics, error loggers, debt collectors, maintenance or problem-solving providers, marketing providers, professional advisors, and payment systems operators
-* our employees, contractors, and/or related entities
-* our existing or potential agents or business partners
-* sponsors or promoters of any competition, sweepstakes, or promotion we run
-* credit reporting agencies, courts, tribunals, and regulatory authorities, in the event you fail to pay for goods or services we have provided to you
-* courts, tribunals, regulatory authorities, and law enforcement officers, as required by law, in connection with any actual or prospective legal proceedings, or in order to establish, exercise, or defend our legal rights
-* third parties, including agents or sub-contractors, who assist us in providing information, products, services, or direct marketing to you
-* third parties to collect and process data
-* an entity that buys, or to which we transfer all or substantially all of our assets and business
+***
 
-### Your Rights and Controlling Your Personal Information
+#### 6. Use of Cookies and Tracking Technologies
 
-Your choice: By providing personal information to us, you understand we will collect, hold, use, and disclose your personal information in accordance with this privacy policy. You do not have to provide personal information to us, however, if you do not, it may affect your use of our website or the products and/or services offered on or through it.
+We use cookies and similar technologies to enhance your experience and analyze website usage. You can manage cookie settings through your browser. For details, refer to our[ Cookie Policy](https://docs.hatsprotocol.xyz/legal/terms/cookie-policy).
 
-Information from third parties: If we receive personal information about you from a third party, we will protect it as set out in this privacy policy. If you are a third party providing personal information about somebody else, you represent and warrant that you have such person’s consent to provide the personal information to us.
+***
 
-Marketing permission: If you have previously agreed to us using your personal information for direct marketing purposes, you may change your mind at any time by contacting us using the details below.
+#### 7. Your Rights
 
-Access: You may request details of the personal information that we hold about you.
+Depending on your location, you may have the following rights:
 
-Correction: If you believe that any information we hold about you is inaccurate, out of date, incomplete, irrelevant, or misleading, please contact us using the details provided in this privacy policy. We will take reasonable steps to correct any information found to be inaccurate, incomplete, misleading, or out of date.
+* Access: Request details about the personal information we hold about you
+* Correction: Update or correct inaccurate data
+* Deletion: Request the deletion of your data, subject to legal obligations
+* Portability: Request your data in a machine-readable format
+* Objection: Object to data processing based on legitimate interests
 
-Non-discrimination: We will not discriminate against you for exercising any of your rights over your personal information. Unless your personal information is required to provide you with a particular service or offer (for example processing transaction data), we will not deny you goods or services and/or charge you different prices or rates for goods or services, including through granting discounts or other benefits, or imposing penalties, or provide you with a different level or quality of goods or services.
+To exercise these rights, please contact us at hq@hatsprotocol.xyz.
 
-Notification of data breaches: We will comply with laws applicable to us in respect of any data breach.
+***
 
-Complaints: If you believe that we have breached a relevant data protection law and wish to make a complaint, please contact us using the details below and provide us with full details of the alleged breach. We will promptly investigate your complaint and respond to you, in writing, setting out the outcome of our investigation and the steps we will take to deal with your complaint. You also have the right to contact a regulatory body or data protection authority in relation to your complaint.
+#### 8. Third-Party Links and Open-Source Components
 
-Unsubscribe: To unsubscribe from our email database or opt-out of communications (including marketing communications), please contact us using the details provided in this privacy policy, or opt-out using the opt-out facilities provided in the communication. We may need to request specific information from you to help us confirm your identity.
+Our Services may contain links to third-party websites, services, or open-source tools (e.g., Hats Protocol, modules, SDKs, or registries). We are not responsible for the privacy practices of third parties. When interacting with open-source tools or blockchain components, you should review their respective policies.
 
-### Use of Cookies
+***
 
-We use “cookies” to collect information about you and your activity across our site. A cookie is a small piece of data that our website stores on your computer, and accesses each time you visit, so we can understand how you use our site. This helps us serve you content based on preferences you have specified.
+#### 9. International Data Transfers
 
-Please refer to our [Cookie Policy](cookie-policy.md) for more information.
+If you access the Services outside of the United States, your data may be transferred to and processed in countries with different privacy laws. By using the Services, you consent to such transfers.
 
-### Business Transfers
+***
 
-If we or our assets are acquired, or in the unlikely event that we go out of business or enter bankruptcy, we would include data, including your personal information, among the assets transferred to any parties who acquire us. You acknowledge that such transfers may occur, and that any parties who acquire us may, to the extent permitted by applicable law, continue to use your personal information according to this policy, which they will be required to assume as it is the basis for any ownership or use rights we have over such information.
+#### 10. Children’s Privacy
 
-### Limits of Our Policy
+Our Services are not directed at individuals under the age of 18, and we do not knowingly collect data from minors. If we discover that we have collected personal information from a minor, we will promptly delete it.
 
-Our website may link to external sites that are not operated by us. Please be aware that we have no control over the content and policies of those sites, and cannot accept responsibility or liability for their respective privacy practices.
+***
 
-### Changes to This Policy
+#### 11. Changes to This Policy
 
-At our discretion, we may change our privacy policy to reflect updates to our business processes, current acceptable practices, or legislative or regulatory changes. If we decide to change this privacy policy, we will post the changes here at the same link by which you are accessing this privacy policy.
+We may update this Privacy Policy from time to time to reflect changes to our practices or for legal compliance. Updates will be posted on this page with a revised Effective Date. Continued use of the Services constitutes acceptance of the updated policy.
 
-If the changes are significant, or if required by applicable law, we will contact you (based on your selected preferences for communications from us) and all our registered users with the new details and links to the updated or changed policy.
+***
 
-If required by law, we will get your permission or give you the opportunity to opt in to or opt out of, as applicable, any new uses of your personal information.
+#### 12. Contact Us
 
-### Additional Disclosures for Australian Privacy Act Compliance (AU)
+For any questions, concerns, or requests regarding this Privacy Policy, please contact us at:
 
-**International Transfers of Personal Information**
+Haberdasher Labs, Inc.\
+Email: hq@hatsprotocol.xyz\
+Website:[ https://www.hatsprotocol.xyz](https://www.hatsprotocol.xyz)
 
-Where the disclosure of your personal information is solely subject to Australian privacy laws, you acknowledge that some third parties may not be regulated by the Privacy Act and the Australian Privacy Principles in the Privacy Act. You acknowledge that if any such third party engages in any act or practice that contravenes the Australian Privacy Principles, it would not be accountable under the Privacy Act, and you will not be able to seek redress under the Privacy Act.
+***
 
-### Additional Disclosures for General Data Protection Regulation (GDPR) Compliance (EU)
+#### 13. GDPR and CCPA Supplement
 
-**Data Controller / Data Processor**
+This section provides additional disclosures and rights for individuals located in the European Union (GDPR) and California residents (CCPA).
 
-The GDPR distinguishes between organizations that process personal information for their own purposes (known as “data controllers”) and organizations that process personal information on behalf of other organizations (known as “data processors”). We, Haberdasher Labs, are a Data Controller with respect to the personal information you provide to us.
+**13.1 GDPR Rights (for EU Users)**
 
-**Legal Bases for Processing Your Personal Information**
+If you are located in the European Economic Area (EEA), you have the following rights under the General Data Protection Regulation (GDPR):
 
-We will only collect and use your personal information when we have a legal right to do so. In which case, we will collect and use your personal information lawfully, fairly, and in a transparent manner. If we seek your consent to process your personal information, and you are under 16 years of age, we will seek your parent or legal guardian’s consent to process your personal information for that specific purpose.
+* Right to Access: Obtain confirmation about whether your personal data is processed and access it.
+* Right to Rectification: Correct inaccurate or incomplete personal data.
+* Right to Erasure: Request deletion of personal data where it is no longer necessary or processed unlawfully.
+* Right to Restrict Processing: Restrict the processing of your data under certain circumstances.
+* Right to Data Portability: Receive your personal data in a structured, machine-readable format.
+* Right to Object: Object to the processing of your data based on legitimate interests or direct marketing.
 
-Our lawful bases depend on the services you use and how you use them. This means we only collect and use your information on the following grounds:
+You may exercise your rights by contacting us at hq@hatsprotocol.xyz.
 
-### Consent From You
+**13.2 CCPA Rights (for California Residents)**
 
-Where you give us consent to collect and use your personal information for a specific purpose. You may withdraw your consent at any time using the facilities we provide; however this will not affect any use of your information that has already taken place. You may consent to providing your name and contact details for the purpose of entering a giveaway or promotion. While you may withdraw your entry at any time, this will not affect any selection or judging that has already taken place. If you have any further enquiries about how to withdraw your consent, please feel free to enquire using the details provided in the Contact Us section of this privacy policy.
+If you are a California resident, you have the following rights under the California Consumer Privacy Act (CCPA):
 
-### Performance of a Contract or Transaction
+* Right to Know: Request details about the categories and specific pieces of personal data we collect, use, and disclose.
+* Right to Delete: Request the deletion of personal information we have collected, subject to legal exceptions.
+* Right to Opt-Out: Opt-out of the sale of personal data, if applicable (note: Haberdasher Labs does not sell personal data).
+* Non-Discrimination: We will not discriminate against you for exercising your CCPA rights.
 
-Where you have entered into a contract or transaction with us, or in order to take preparatory steps prior to our entering into a contract or transaction with you. For example, if you purchase a product, service, or subscription from us, we may need to use your personal and payment information in order to process and deliver your order.
+To exercise your CCPA rights, contact us at hq@hatsprotocol.xyz with the subject line "CCPA Request."
 
-### Our Legitimate Interests
+***
 
-Where we assess it is necessary for our legitimate interests, such as for us to provide, operate, improve and communicate our services. We consider our legitimate interests to include research and development, understanding our audience, marketing and promoting our services, measures taken to operate our services efficiently, marketing analysis, and measures taken to protect our legal rights and interests.
-
-### Compliance with Law
-
-In some cases, we may have a legal obligation to use or keep your personal information. Such cases may include (but are not limited to) court orders, criminal investigations, government requests, and regulatory obligations. If you have any further enquiries about how we retain personal information in order to comply with the law, please feel free to enquire using the details provided in the Contact Us section of this privacy policy.
-
-### International Transfers Outside of the European Economic Area (EEA)
-
-We will ensure that any transfer of personal information from countries in the European Economic Area (EEA) to countries outside the EEA will be protected by appropriate safeguards, for example by using standard data protection clauses approved by the European Commission, or the use of binding corporate rules or other legally accepted means.
-
-### Your Rights and Controlling Your Personal Information
-
-Restrict: You have the right to request that we restrict the processing of your personal information if (i) you are concerned about the accuracy of your personal information; (ii) you believe your personal information has been unlawfully processed; (iii) you need us to maintain the personal information solely for the purpose of a legal claim; or (iv) we are in the process of considering your objection in relation to processing on the basis of legitimate interests.
-
-Objecting to processing: You have the right to object to processing of your personal information that is based on our legitimate interests or public interest. If this is done, we must provide compelling legitimate grounds for the processing which overrides your interests, rights, and freedoms, in order to proceed with the processing of your personal information.
-
-Data portability: You may have the right to request a copy of the personal information we hold about you. Where possible, we will provide this information in CSV format or other easily readable machine format. You may also have the right to request that we transfer this personal information to a third party.
-
-Deletion: You may have a right to request that we delete the personal information we hold about you at any time, and we will take reasonable steps to delete your personal information from our current records. If you ask us to delete your personal information, we will let you know how the deletion affects your use of our website or products and services. There may be exceptions to this right for specific legal reasons which, if applicable, we will set out for you in response to your request.&#x20;
-
-### Additional Disclosures for California Compliance (US)
-
-Under California Civil Code Section 1798.83, if you live in California and your business relationship with us is mainly for personal, family, or household purposes, you may ask us about the information we release to other organizations for their marketing purposes.
-
-To make such a request, please contact us using the details provided in this privacy policy with “Request for California privacy information” in the subject line. You may make this type of request once every calendar year. We will email you a list of categories of personal information we revealed to other organizations for their marketing purposes in the last calendar year, along with their names and addresses. Not all personal information shared in this way is covered by Section 1798.83 of the California Civil Code.
-
-### CCPA-permitted financial incentives
-
-In accordance with your right to non-discrimination, we may offer you certain financial incentives permitted by the CCPA that can result in different prices, rates, or quality levels for the goods or services we provide.
-
-Any CCPA-permitted financial incentive we offer will reasonably relate to the value of your personal information, and we will provide written terms that describe clearly the nature of such an offer. Participation in a financial incentive program requires your prior opt-in consent, which you may revoke at any time.
-
-### California Notice of Collection
-
-In the past 12 months, we have not collected categories of personal information enumerated in the California Consumer Privacy Act. In the future we may collect:&#x20;
-
-* Internet activity, such as your interactions with our service.
-* Geolocation data.
-
-For more information on information we collect, including the sources we receive information from, review the “Information We Collect” section. We collect and use these categories of personal information for the business purposes described in the “Collection and Use of Information” section, including to provide and manage our Service.
-
-### Right to Know and Delete
-
-If you are a California resident, you have rights to delete your personal information we collected and know certain information about our data practices in the preceding 12 months. In particular, you have the right to request the following from us:
-
-* The categories of personal information we have collected about you;
-* The categories of sources from which the personal information was collected;
-* The categories of personal information about you we disclosed for a business purpose or sold;
-* The categories of third parties to whom the personal information was disclosed for a business purpose or sold;
-* The business or commercial purpose for collecting or selling the personal information; and
-* The specific pieces of personal information we have collected about you.
-* To exercise any of these rights, please contact us using the details provided in this privacy policy.
-
-### Shine the Light
-
-If you are a California resident, in addition to the rights discussed above, you have the right to request information from us regarding the manner in which we share certain personal information as defined by California’s “Shine the Light” with third parties and affiliates for their own direct marketing purposes.
-
-To receive this information, send us a request using the contact details provided in this privacy policy. Requests must include “California Privacy Rights Request” in the first line of the description and include your name, street address, city, state, and ZIP code.
-
-### Contact Us
-
-For any questions or concerns regarding your privacy, you may contact us using the following details:
-
-Support Team
-
-connect@hatsprotocol.xyz
+Additional Disclosures: For any GDPR or CCPA-related questions, or to learn more about your rights, please contact us at hq@hatsprotocol.xyz.
