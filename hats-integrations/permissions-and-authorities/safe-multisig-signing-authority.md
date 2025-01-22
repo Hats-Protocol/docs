@@ -4,6 +4,10 @@ description: How to hat-gate signing authority on a Safe multisig
 
 # Safe Multisig Signing Authority
 
+{% hint style="info" %}
+This guide refers to v1 of Hats Signer Gate, which is being deprecated in favor of Hats Signer Gate v2. Existing instances of HSG v1 will continue to be supported. This note will be removed once these docs have been updated to reflect v2.
+{% endhint %}
+
 [Hats Signer Gate](https://github.com/Hats-Protocol/hats-zodiac#hats-signer-gate) is a contract that grants Safe multisig signing rights to addresses wearing a given hat, enabling on-chain organizations (such as DAOs) to delegate revocable constrained signing authority and responsibility to individuals.
 
 **Case Study:** Treasure is building the “decentralized game console” on Arbitrum to power next-gen gaming onchain. As a highly active participant in the Arbitrum ecosystem, TreasureDAO is the second largest delegate by voting power in the Arbitrum DAO. Hats, in partnership with Gnosis Guild, enables TreasureDAO to give more voice to its community through the formation of an Arbitrum Council (ARC) consisting of its community members. ARC members, called ARC Liaisons, are now able to represent TreasureDAO in Arbitrum governance and vote with the delegated $ARB in a safe and secure way. [See the full case study here.](https://www.hatsprotocol.xyz/wearer/treasure-case-study)

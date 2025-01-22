@@ -1,5 +1,9 @@
 # 👒 Hats Signer Gate SDK
 
+{% hint style="warning" %}
+This SDK currently uses Hats Signer Gate v1. There is a new version, [Hats Signer Gate v2](../hats-signer-gate-v2.md), which should be used instead. The docs for this SDK will be updated and this note will be removed once this SDK has been updated to work with v2.
+{% endhint %}
+
 ## Overview
 
 Hats Signer Gate (HSG) is a contract that grants multisig signing rights to addresses wearing a given Hat, enabling on-chain organizations (such as DAOs) to revocably delegate constrained signing authority and responsibility to individuals.
