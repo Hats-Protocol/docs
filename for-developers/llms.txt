@@ -1,0 +1,376 @@
+# Hats Protocol Developer Documentation
+
+TABLE OF CONTENTS
+
+1. Introduction
+   1.1 Overview
+   1.2 Key Concepts
+   1.3 Architecture
+
+2. Protocol Specification
+   2.1 Core Protocol
+   2.2 Smart Contracts
+   2.3 Events and Hooks
+   2.4 Security Model
+
+3. SDKs and Integration
+   3.1 V1 SDK
+   3.2 Modules SDK
+   3.3 Account SDK
+   3.4 Integration Guides
+
+4. Subgraphs and Data Access
+   4.1 Available Endpoints
+   4.2 Query Examples
+   4.3 Schema Reference
+
+5. Module Development
+   5.1 Module Architecture
+   5.2 Implementation Guide
+   5.3 Best Practices
+   5.4 Testing and Deployment
+
+6. Security and Audits
+   6.1 Security Model
+   6.2 Audit Reports
+   6.3 Best Practices
+
+7. Advanced Topics
+   7.1 Hats Signer Gate
+   7.2 Custom Eligibility
+   7.3 Advanced Patterns
+
+8. Reference
+   8.1 API Reference
+   8.2 Error Codes
+   8.3 Glossary
+
+-------------------
+
+1. INTRODUCTION
+
+1.1 Overview
+
+Hats Protocol is a decentralized protocol for creating and managing on-chain organizational roles and responsibilities. It enables organizations to create, assign, and revoke authority in a flexible and composable way.
+
+Key Features:
+- Dynamic role-based access control
+- Programmable authority delegation
+- Composable organizational structures
+- Multi-chain deployment
+- Extensible module system
+
+1.2 Key Concepts
+
+Hats:
+A Hat represents a role or position within an organization. Each Hat can have specific powers, responsibilities, and eligibility criteria. Hats are non-transferable and can be revoked based on predefined conditions.
+
+Properties:
+- Unique identifier (Hat ID)
+- Eligibility criteria
+- Toggle conditions
+- Administrative relationships
+- Associated powers and responsibilities
+
+Wearing a Hat:
+When an address "wears" a Hat, it means they have been granted the authority and responsibilities associated with that role. Hat-wearing is dynamic and can be automatically revoked based on eligibility conditions.
+
+Tree Structure:
+Hats are organized in a tree structure where:
+- Each Hat can have multiple child Hats
+- Child Hats can only be administered by addresses wearing their parent Hat
+- The tree structure enables natural organizational hierarchies
+
+1.3 Architecture
+
+The Hats Protocol architecture consists of several key components:
+
+Core Protocol:
+- Smart contracts managing Hat creation and wearing
+- Eligibility and revocation logic
+- Administrative functions
+- Events and hooks system
+
+Modules:
+- Extensible system for custom functionality
+- Pre-built modules for common use cases
+- Module registry and verification
+
+Integration Points:
+- SDK libraries for different languages
+- Subgraph data access
+- Web3 interfaces
+- Cross-chain compatibility
+
+-------------------
+
+2. PROTOCOL SPECIFICATION
+
+2.1 Core Protocol
+
+The core protocol is implemented as a set of smart contracts that manage the creation, assignment, and revocation of Hats. The protocol is designed to be:
+
+- Minimal: Core functionality is kept simple and focused
+- Extensible: Additional features can be added through modules
+- Secure: Critical operations are protected by robust access controls
+- Gas-efficient: Operations are optimized for minimal gas usage
+
+Core Functions:
+- createHat: Create new Hats in the tree
+- mintHat: Assign a Hat to an address
+- transferHat: Transfer Hat wearing status (if allowed)
+- checkEligibility: Verify if an address can wear a Hat
+- toggleHat: Enable/disable Hat wearing
+- burnHat: Remove a Hat from an address
+
+2.2 Smart Contracts
+
+The core smart contracts of Hats Protocol include:
+
+HatsProtocol.sol:
+- Main contract implementing core Hat functionality
+- Manages Hat creation, minting, and burning
+- Handles eligibility and toggle logic
+- Emits events for state changes
+
+HatsModules:
+- Base contracts for extending functionality
+- Standardized interfaces for module integration
+- Security patterns and best practices
+
+2.3 Events and Hooks
+
+The protocol emits events for all significant state changes:
+- HatCreated
+- HatMinted
+- HatBurned
+- HatToggled
+- EligibilityChanged
+- ModuleAdded
+- ModuleRemoved
+
+Hook System:
+- Pre and post operation hooks
+- Custom logic injection points
+- Module integration interfaces
+
+-------------------
+
+4. SUBGRAPHS AND DATA ACCESS
+
+4.1 Available Endpoints
+
+Hosted Endpoints (Free):
+- Ethereum (mainnet): https://api.studio.thegraph.com/query/55784/hats-v1-ethereum/version/latest
+- Arbitrum: https://api.studio.thegraph.com/query/55784/hats-v1-arbitrum/version/latest
+- Base: https://api.studio.thegraph.com/query/55784/hats-v1-base/version/latest
+- Celo: https://api.studio.thegraph.com/query/55784/hats-v1-celo/version/latest
+- Gnosis: https://api.studio.thegraph.com/query/55784/hats-v1-gnosis-chain/version/latest
+- Optimism: https://api.studio.thegraph.com/query/55784/hats-v1-optimism/version/latest
+- Polygon: https://api.studio.thegraph.com/query/55784/hats-v1-polygon/version/latest
+- Sepolia: https://api.studio.thegraph.com/query/55784/hats-v1-sepolia/version/latest
+
+The Graph Network Endpoints:
+- Ethereum (mainnet): https://thegraph.com/explorer/subgraphs/AtrhAMCcVfPbmejxTez3G59Kdfu5tMFoiPsTUjdCzpKx
+- Arbitrum: https://thegraph.com/explorer/subgraphs/4CiXQPjzKshBbyK2dgJiknTNWcj8cGUJsopTsXfm5HEk
+- Other networks available (see documentation)
+
+-------------------
+
+6. SECURITY AND AUDITS
+
+6.1 Security Model
+
+The Hats Protocol security model is built on several key principles:
+
+1. Least Privilege
+- Roles have minimal necessary permissions
+- Permissions are explicitly granted
+- Dynamic revocation of authority
+
+2. Hierarchical Control
+- Parent Hats control child Hats
+- Clear authority chains
+- Immutable administrative relationships
+
+3. Composable Security
+- Modular security components
+- Flexible integration patterns
+- Extensible through modules
+
+6.2 Audit Reports
+
+The protocol has undergone multiple security audits:
+
+Trust Security Audit:
+- Date: February 23, 2023
+- Commit: 60f07df
+- Scope: Core protocol and modules
+- Status: All findings addressed
+
+Sherlock Audit:
+- Date: May 3, 2023
+- Commit: fafcfd
+- Scope: Core protocol
+- Status: All findings addressed
+
+-------------------
+
+7. ADVANCED TOPICS
+
+7.1 Hats Signer Gate
+
+Hats Signer Gate (HSG) v2 is a Zodiac module that enables:
+- Dynamic multisig management based on Hat wearing
+- Automatic signer addition/removal
+- Threshold management within specified ranges
+- Transaction guard functionality
+
+Features:
+1. Signer Management
+- Grants signing rights based on Hat wearing
+- Removes invalid signers automatically
+- Manages multisig threshold dynamically
+
+2. Security Guards
+- Prevents invalid signer execution
+- Protects critical Safe configuration
+- Restricts delegatecall targets
+
+3. Owner Controls
+- Threshold range configuration
+- Target contract approval
+- Module management
+
+[continued in subsequent sections...] 
+
+3. SDKs AND INTEGRATION
+
+3.1 V1 SDK
+
+The V1 SDK provides comprehensive tooling for interacting with Hats Protocol:
+
+Core SDK:
+- Contract interaction utilities
+- Hat management functions
+- Event handling
+- Type definitions
+
+Features:
+- TypeScript/JavaScript support
+- Full type safety
+- Chain-agnostic design
+- Comprehensive documentation
+
+Installation:
+```bash
+npm install @hatsprotocol/sdk-v1-core
+```
+
+3.2 Modules SDK
+
+The Modules SDK enables development and integration of Hats Protocol modules:
+
+Features:
+- Module creation utilities
+- Standard interfaces
+- Testing utilities
+- Example implementations
+
+Components:
+- Base module contracts
+- Integration patterns
+- Security templates
+- Event handlers
+
+3.3 Account SDK
+
+The Account SDK provides tools for managing Hats-based accounts:
+
+Features:
+- Account creation and management
+- Signer management
+- Transaction handling
+- Multi-chain support
+
+Integration Points:
+- Safe compatibility
+- Module integration
+- Custom implementations
+- Cross-chain operations
+
+3.4 Integration Guides
+
+Best Practices:
+1. Environment Setup
+- Network configuration
+- Provider setup
+- Type generation
+
+2. Contract Interaction
+- Reading Hat state
+- Creating and managing Hats
+- Handling events
+- Error handling
+
+3. Module Integration
+- Module deployment
+- Configuration
+- Testing and validation
+- Security considerations
+
+4. Account Management
+- Account creation
+- Signer management
+- Transaction handling
+- Security best practices
+
+-------------------
+
+8. REFERENCE
+
+8.1 API Reference
+
+Core Protocol:
+```solidity
+function createHat(
+    uint256 admin,
+    string calldata details,
+    uint32 maxSupply,
+    address eligibility,
+    address toggle,
+    bool mutable_,
+    string calldata imageURI
+) external returns (uint256 hatId)
+```
+
+```solidity
+function mintHat(
+    uint256 hatId,
+    address wearer
+) external
+```
+
+[Additional function references...]
+
+8.2 Error Codes
+
+Common Errors:
+- INVALID_HAT
+- NOT_ADMIN
+- NOT_WEARER
+- EXCEEDS_MAX_SUPPLY
+- IMMUTABLE_HAT
+- INVALID_ELIGIBILITY
+- INVALID_TOGGLE
+
+8.3 Glossary
+
+Terms:
+- Hat: A role or position within an organization
+- Wearer: An address that has been granted a Hat
+- Admin: A Hat that can manage child Hats
+- Eligibility: Conditions for wearing a Hat
+- Toggle: Conditions for enabling/disabling a Hat
+- Module: Extension of core functionality
+- Tree: Hierarchical organization of Hats 

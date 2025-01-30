@@ -1,0 +1,338 @@
+# Hats Protocol Documentation
+
+-------------------
+
+# 👷 Hats Protocol Overview
+
+Put on your hardhats and lets get into the nitty gritty of Hats Protocol!
+
+## What are Hats?
+
+**Hats are roles**. In Hats Protocol, roles are rich, substantive, objectives with multiple dimensions:
+
+* Responsibility
+* Authorities/Rights/Powers
+* Accountability
+* Clarity & context
+* Compensation & incentives
+
+These roles, modeled as hats, are embodied onchain in Hats.sol storage, and represented as non-transferable [ERC1155-similar] tokens.
+
+Every hat is connected to at least one other hat in a structure that we call a Hats tree.
+
+The bulk of the protocol logic is devoted to defining how hats are created, issued, revoked, and managed. It also creates several integration points and hooks for developers to extend and customize the behavior of particular hats.
+
+# Hat Properties
+
+Every hat has several properties:
+
+* `id` - the integer identifier for the hat, which also serves as the [ERC1155-similar] token id
+* `details` - arbitrary metadata about the hat; such as a name, description, and other properties like roles and responsibilities associated with the hat. Should not exceed 7,000 characters.
+* `maxSupply` - the maximum number of addresses that can wear the Hat at once
+* `admin` - the hat that can issue the hat to wearers and can its hat's other properties
+* `eligibility` - the address that controls eligibility criteria and whether a given wearer of the hat is in good standing
+* `toggle` - the address that controls whether the hat is active
+* `mutable` - whether the hat's properties can be changed by its admin
+* `imageURI` - the URI for the image used in the Hat's ERC1155-similar token. Should not exceed 7,000 characters.
+
+# Wearing a Hat
+
+An account's status relating to a given hat is determined by three factors. If all three are true, then the account is wearing the hat.
+
+1. Whether their address has a balance of the Hat's token — we refer to this as the "static" balance
+2. Whether the Hat is active (see the Toggle section for more detail)
+3. Whether they are eligible (see the Eligibility section for more detail)
+
+Wearing a hat is a binary state. If all three of the above factors are true for a given account, then that account has a balance of 1 of that hat's id. If not, its balance is 0. It is not possible for any account to have a balance greater than 1 for any hat.
+
+Hats Protocol has an `isWearerOfHat()` convenience function that wraps `balanceOf()` and returns a bool for `balance == 1`.
+
+### Dynamic hat balances
+
+In Hats Protocol, the `balanceOf()` function does not simply reflect static contract storage — i.e., (1) from the above section. In addition, it reads (via a `staticcall`) dynamically from the hat's Eligibility and Toggle modules — (2) and (3) from above — and combines the three factors to arrive at the answer of whether a given address has a balance.
+
+This design ensures that there is never a lame duck period between when a wearer's hat is revoked and when they actually lose the onchain authorities associated with the hat.
+
+However, since hat balances may change without an event — e.g., if the hat status flips from active to inactive based on an expiration-driven Toggle module — apps relying on indexed events may not be reading the source of truth.
+
+In such cases, there are two solutions:
+
+1. Read directly from the contract — i.e., `isWearerOfHat()`
+2. Trigger a contract state change by calling `checkHatWearerStatus()` and/or `checkHatStatus()`
+
+### Who can wear a hat?
+
+Any account can wear a hat, including:
+
+* Externally Owned Accounts (EOAs)
+* Logic contracts (i.e., contracts with explicit logic codified within functions), or
+* Governance contracts (e.g., DAOs, multisigs, etc.)
+
+Some of the most power applications of Hats Protocol are made possible by smart contracts wearing hats to automate or minimize trust required for certain logic.
+
+# Hat Admins & Hatter Contracts
+
+The admin of every hat is another hat. This means that the authority to perform admin functions for a given hat is assigned to the wearer of its admin hat.
+
+The scope of authority for a hat's admin is to determine who can wear it. This is reflected in the ability to create the hat and to mint or (for mutable hats) transfer the hat's token.
+
+### Transitive Admin Powers
+
+In Hats Protocol v1, admin powers are transitive. All of a hat's ancestors — its direct admin, its admin's admin, etc — can serve as its admin.
+
+### Separation of Powers over Hats
+
+In most contexts, an "admin" role has broad, generalized control over the entity it administers. Hats Protocol is different. The generalized control over a given hat is separated into three distinct roles:
+
+| Role | Powers |
+| ---- | ------ |
+| Admin | - Create new hat<br>- Issue hat to wearer(s), aka "mint"<br>- Edit hat properties (while mutable)<br>- Transfer hat (while mutable) |
+| Eligibility Module | - Prevent ineligible addresses from wearing hat<br>- Revoke hat from specific wearer(s) |
+| Toggle Module | - Activate / de-active hat ⇒ all wearers lose the hat |
+
+### **Hatter Contracts**
+
+Logic contracts that serve as admins are informally known as "hatter" contracts. These are contracts that implement specific logic or rules. The admin of a hatter contract is the true admin, but has delegated said admin authority to the logic embedded in the hatter.
+
+Hatter contract logic is a wide design space for DAOs. Here are some examples of hatter logic:
+
+| Type | Description |
+| ---- | ----------- |
+| **Hat creation** | Allow certain addresses -- such as members of a DAO -- to create hats that are then admin'd by the DAO. |
+| **Hat minting** | Allow certain addresses -- such as members of a DAO -- to mint hat tokens. Together with the above, a DAO could in this way enable its members to create and wear a certain type of hat permissionlessly. This would be especially if using hats to facilitate role clarity and legibility. |
+| **Wearer eligibility** | Enforce certain requirements that prospective wearers must meet in order to wear a given hat, such as membership in a DAO or holding some token(s). *Note that this is often more effectively implemented as an eligibility module.* |
+| **Wearer staking** | One particularly important type of eligibility requirement is staking tokens, DAO shares, or some other asset as a bond that could be slashed if the wearer is not a good steward of the accountabilities associated with the hat, or does not follow through on its associated responsibilities. *Note that this is often more effectively implemented as an eligibility module.* |
+
+# Hats Trees
+
+The fact that all hat's have hats as admins means that every hat exist within a "tree" of hats. This tree structure forms the basis for an organization's hats
+
+Within a given branch of a hat tree, hats closer to the root of the tree have admin authorities for hats further down the branch. This is consistent with the direction of delegation of authority for DAOs, and combats the tendency for accountability to dilute as delegated authorities reach the edges of a network.
+
+### **Top Hats**
+
+Top Hats are the one exception to the rule that a hat's admin must be another hat. A Top Hat is a hat that serves as its own admin.
+
+The root of a Hat tree is always a Top Hat. Typically, a DAO will wear the Top Hat that serves as admin for the tree of Hats related to the DAO's operations.
+
+### Hat Trees and Hat Ids
+
+Each hat tree has a max depth of 15 and a branching factor of 2^16. This means that each hat can have up to 2^16 = 65,536 children, and this pattern can repeat 14 times.
+
+Every hat's id includes the id of its tree and its location within the tree. See the following page for more detail on hat ids.
+
+# Hat IDs
+
+Hat ids are semantic. They have meaning.
+
+Hat ids uint256 bitmaps that create an "address" — more like an web or IP address than an Ethereum address — that includes information about where in the tree a hat is located, including its entire branch of admins.
+
+The 32 bytes of a hat's id are structured as follows:
+
+* The first 4 bytes are reserved for the top hat id. Since top hat ids are unique across a given deployment of Hats Protocol, we can also think of them as the top level "domain" for a hat tree.
+* Each of the next chunks of 16 bits refers to a single "Hat Level".
+
+There are 15 total hat levels, beginning with the top hat at level 0 and going up to level 14.
+
+#### Example
+
+Consider the following hat id (in hex): 0x0000000f00020005000a00010000000000000000000000000000000000000000
+
+For convenience, we can reformat it into shorthand, just like an IP address: 15.2.5.10.1
+
+From the id alone, we know a lot about this hat:
+
+* It is in hat tree 15
+* It is a level 4 hat
+* Its immediate admin (aka parent) is 15.2.5.10
+* Its grandparent is 15.2.5
+
+#### Other hat id formats
+
+| Format | Example |
+| ------ | ------- |
+| Integer ("raw") | 6470400364654781217010529864562902351218663490360806944392503307010048 |
+| Hexadecimal | 0x0000000f000200050000a00010000000000000000000000000000000000000000 |
+| Hexadecimal with level delimiters | 0x0000000f.0002.0005.000a.0001.0000.0000.0000.0000.0000.0000.0000.0000.0000.0000<br><br>0x0000000f_0002_0005_000a_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 |
+| "IP address" | 15.2.5.10.1 |
+
+### **Hat Tree Space**
+
+A hat tree can have up to 14 levels, plus the top hat (tree root). Within those 14 levels are 224 bits of address space (remember, one level contains 16 bits of space), so the maximum number of hats in a single hat tree is approximately:
+
+2^224 + 1 ≈ ~2.696 * 10^67
+
+which is well beyond the number of stars in the universe.
+
+# Eligibility Modules
+
+Eligibility modules have authority to rule on the a) eligibility b) good standing of wearer(s) of a given hat.
+
+### Wearer Eligibility
+
+Wearer Eligibility (A) determines whether a given address is eligible to wear the hat. This applies both before and while the address wears the hat. Consider the following scenarios for a given address:
+
+|                             | Eligible                         | Not Eligible                        |
+| --------------------------- | -------------------------------- | ----------------------------------- |
+| **Doesn't wear the Hat**    | Hat can be minted to the address | Hat cannot be minted to the address |
+| **Currently wears the Hat** | Keeps wearing the hat            | The hat is revoked                  |
+
+When a hat is revoked, its token is burned.
+
+### Wearer Standing
+
+Wearer Standing (B) determines whether a given address is in good or bad standing. Standing is stored on-chain in `Hats.sol` to facilitate accountability.
+
+For example, a hatter contract implementing staking logic could slash a wearer's stake if they are placed in bad standing by the eligibility module.
+
+An address placed in bad standing by a hat's eligibility module automatically loses eligibility for that hat. Note, though, that ineligibility does necessarily imply bad standing; it is possible for an address may be ineligible but in good standing.
+
+Any address can serve as an eligibility module for a given hat. Hats Protocol supports two categories of eligibility modules:
+
+1. **Mechanistic eligibility** are logic contracts that implement the `IHatsEligibility` interface, which enables the Hats.sol contract to _pull_ wearer standing by calling `checkWearerStanding` from within the `Hats.balanceOf` function. Mechanistic eligibility enables instantaneous revocation based on pre-defined triggers.
+2. **Humanistic eligibility** are either EOAs or governance contracts. To revoke a Hat, humanistic eligibility must _push_ updates to the Hats contract by calling `Hats.ruleOHatWearerStanding`.
+
+Unlike admins, eligibility modules are explicitly set as addresses, not hats. This is to avoid long, potentially illegible, chains of revocation authority that can affect wearer penalties (such as slashed stake).
+
+Eligibility modules offer a large design space for developers to extend and customize organizational infrastructure. See Building Hats Modules for more information.
+
+# Toggle Modules
+
+Toggle contracts have authority to switch the `hat.active` status of a hat, such as from `active` to `inactive`. When a hat is inactive, it does not have any wearers (i.e., the balance of its previous wearers' is changed to 0).
+
+Any address can serve as a hat's toggle. As with eligibility modules, Hats Protocol supports two categories of toggle modules:
+
+1. **Mechanistic toggles** are logic contracts that implement the `IHatsToggle` interface, which enables the hats contract to _pull_ a hat's active status by calling `checkToggle` from within the `Hats.balanceOf` function. Mechanistic toggle enable instantaneous deactivation (or reactivation) based on pre-defined logic, such as timestamps ("this hat expires at the end of the year").
+2. **Humanistic toggles** are either EOAs or governance contracts. To deactivate (or reactivate) a hat, humanistic toggles must _push_ updates to the Hats contract by calling `Hats.toggleHatStatus`.
+
+Unlike admins — and like eligibility modules, toggle modules are explicitly set as addresses, not Hats.
+
+Toggle modules offer a large design space for developers to extend and customize organizational infrastructure. See Building Hats Modules for more information.
+
+# Hat Mutability and Editing
+
+In some cases, a hat's properties should be immutable to give everybody (particularly the wearer(s)) maximal confidence in what they are signing up for. But this certainty comes at the expense of flexibility, which is often valuable for DAOs as they evolve and learn more about what their various roles are all about. With this trade-off in mind, Hats can be created as either mutable or immutable.
+
+An **immutable** hat cannot be changed at all once it has been created. A **mutable** hat can be changed after it has been created. Only its admin(s) can make the change.
+
+Changes are allowed to the following Hat properties:
+
+* `details`
+* `maxSupply` - as long as the new maxSupply is not less than the current supply
+* `eligibility`
+* `toggle`
+* `mutable` - this is a one-way change
+* `imageURI`
+
+Additionally, mutable hats can be transferred by their admins to a different wearer. Immutable hats cannot be transferred.
+
+### **Top Hat Exception**
+
+The only exception to the above mutability rules is for Top Hats, which despite being immutable are allowed to change their own `details` and `imageURI` (but not other properties).
+
+Note that this only includes non-linked Top Hats; a Top Hat that has been linked (aka grafted) onto another hat tree is no longer considered a Top Hat, and therefore is subject to the same mutability rules as other hats.
+
+# Creating Hats
+
+The creator of a hat must be its admin. In other words, the admin of a hat must be the `msg.sender` of the `Hats.createHat` function call. Though remember, by delegating its authority to a hatter contract, an admin can enable eligible others to create Hats based on whatever logic it desires.
+
+Creating a Top Hat (a hat that serves as its own admin) requires a special function `mintTophat`, which creates a new hat, sets that hat as its own admin, and then mints its token to a `_target`. Any address wanting to create a hat that is not already wearing an admin hat of some kind must first create a Top Hat with itself as the wearer.
+
+#### **Batch Creation**
+
+In some scenarios, a DAO may want to create many hats at once -- including an entire hat tree -- at once. This is particularly useful when setting up an initial structure for a DAO or working group (e.g., from a hats template) or when forking an existing Hats structure from a template.
+
+Enabling this latter forking/exit scenario is an important protection for hat wearers against potential abuse of power by their DAO.
+
+To create a batch of hats, a DAO can call the `Hats.batchCreateHats()` function. This function takes arrays as its arguments, from which it constructs multiple hats. As long as each of these hats is part of the same tree of hats — i.e., they either have the same existing Hat or any of the newly created hats as admin(s) — they can all be created together.
+
+# Minting Hats
+
+Only a hat's admin(s) can mint its token to a wearer.
+
+To mint a hat:
+
+1. The hat must be active
+2. Its max supply must not have already been reached
+3. The target wearer must not already wear the hat, and
+4. If the hat's eligibility module is mechanistic, the target wearer must be eligible for the hat
+
+A hat's admin can mint its token individually by calling `Hats.mintHat`.
+
+#### **Batch Minting**
+
+An admin can also mint multiple hats by calling `Hats.batchMintHats`. This enables an admin to mint instances of the same hat to multiple wearers, to mint several hats at once, or even to mint an entire hats tree it just created.
+
+# Transferring Hats
+
+Only a hat's admin can transfer its token(s) to new wearer(s).
+
+Unlike typical tokens, the wearer of a hat cannot transfer the hat to another wallet. This is because the authorities and responsibilities associated with a hat are delegated to, not owned by, the wearer.
+
+As a result, there is no need for safe transfers (transfers which check whether the recipient supports ERC1155) or to pass data to recipient `on1155Received` or `onERC1155BatchReceived` hooks.
+
+For these reasons, in Hats Protocol, the standard ERC1155 transfer functions — `safeTransferFrom` and `safeBatchTransferFrom` are disabled and will always revert. Similarly, token approvals are not required and `setApprovalForAll` will always revert. See more about Hats Protocol and ERC1155 Compatibility here.
+
+As a replacement, hats can be transferred by admins via `Hats.transferHat`, which emits the ERC1155 standard event `TransferSingle`. Transfer recipients must not already be wearing the hat, and must be eligible to wear the hat.
+
+With the exception of Top Hats — which can always transfer themselves — only mutable and active hats can be transferred.
+
+# Renouncing Hats
+
+The wearer of a hat can "take off" their hat via `Hats.renounceHat`. This burns the token and revokes any associated authorities and responsibilities from the now-former wearer, but does not put the wearer in bad standing.
+
+# Linking Hats Trees
+
+Not all Hats trees will unfurl from top down or inside out. Sometimes, new branches will form independently from the main tree, or multiple trees will form before a main tree even exists.
+
+In these cases, Hats trees can be grafted onto other trees. This is done via a request-approve process where the wearer of one tree's Top Hat requests to link their Top Hat to a hat in another tree, whose admin can approve if desired. This has three main effects:
+
+1. The linked Top Hat loses its Top Hat status (i.e., `Hats.isTopHat` will return `false`) and turns into what we call a "tree root" or "linked Top Hat", and
+2. The hat to which it is linked becomes its new admin; it is no longer its own admin
+3. On linking, the linked Top Hat can be assigned eligibility and/or toggle modules like any other hat
+
+Linked hat trees can also be unlinked by the tree root from its linked admin, via `Hats.unlinkTopHatFromTree`. This causes the tree root to regain its status as a top hat and to once again become its own admin. Any eligibility or toggle modules added on linking are cleared. Note that unlinking is only allowed if the tree root is active and has an eligible wearer.
+
+**CAUTION**: Be careful when nesting multiple Hat trees. If the nested linkages become too long, the higher level admins may lose control of the lowest level hats because admin actions at that distance may cost-prohibitive or even exceed the gas limit. Best practice is to not attach external authorities (e.g. via token gating) to hats in trees that are more than ~10 nested trees deep (varies by network).
+
+### **Relinking**
+
+A linked Top Hat can be relinked to a different hat within the same tree. This is useful for groups that want to reorganize their subtrees without having to go through the request and approve steps. Valid relinks must meet the following criteria in order to ensure security:
+
+1. The hat wearer executing the relink is an admin of both the linked topHat and the new admin (destination)
+2. The new admin (destination) is within the same local tree as the existing admin (origin), or within the Tippy Top Hat's local tree. Tippy Top Hats executing a relink are not subject to these restrictions.
+3. The new link does not create a circular linkage.
+
+# Batch Actions
+
+In addition to batch create and batch mint, any set of Hats.sol functions can be batched together into a single transaction.
+
+This is made possible by Multicallable — from which Hats.sol inherits — which adds a non-payable `multicall` function to the contract. This enables EOAs to make multiple calls to the contract atomically, unlocking a number of useful batch operations that were previously only available to smart contracts.
+
+For example, a DAO can batch together multiple hat creations, mintings, and transfers into a single transaction.
+
+# Hat Image URIs
+
+Like any other NFT, hats have images. The image for a given hat is determined by the following logic:
+
+1. If the hat's `imageURI` property is set, use that
+2. If the hat's `imageURI` property is _not_ set, then use the `imageURI` of the hat's admin Hat
+3. If the admin hat's `imageURI` property is _not_ set, then use the `imageURI` of _that_ hat's admin
+4. Repeat (3) until you find an `imageURI` that is set
+5. If no set `imageURI` is found within the original hat's hat tree (including the Top Hat), then use the `globalImageURI` set in the Hats Protocol contract
+
+This logic creates flexibility for DAOs to efficiently customize images for their hats, while keeping images as optional and hat creation relatively cheap.
+
+# ERC1155 Compatibility
+
+Hats Protocol conforms fully to the ERC1155 interface. All external functions required by the [ERC1155 standard] are exposed by Hats Protocol. This is how hats can work out of the box with existing token-gating applications.
+
+However, Hats Protocol is not fully compliant with the ERC1155 standard. Since hats are not transferable by their owners (aka "wearers"), there is little need for safe transfers and the `ERC1155TokenReceiver` logic.
+
+Developers building on top of Hats Protocol should note that mints and transfers of hats will not, for example, include calls to `onERC1155Received`.
+
+To avoid confusion, Hats Protocol does not claim to be ERC1155-_compliant_. Instead, we say that Hats Protocol has "ERC1155-_similar_" tokens. When referring specifically to the ERC1155 _interface_, however, we do say that Hats Protocol conforms fully.
+
+-------------------
+
+[Next we'll read and add each referenced file in sequence] 
