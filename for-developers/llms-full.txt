@@ -333,6 +333,273 @@ Developers building on top of Hats Protocol should note that mints and transfers
 
 To avoid confusion, Hats Protocol does not claim to be ERC1155-_compliant_. Instead, we say that Hats Protocol has "ERC1155-_similar_" tokens. When referring specifically to the ERC1155 _interface_, however, we do say that Hats Protocol conforms fully.
 
+# 🤖 v1 Protocol Spec
+
+In this section, you'll find Ethereum Natspec documentation for each of the contracts, events, errors, and interfaces that comprise Hats Protocol.
+
+-------------------
+
+## Hats.sol
+
+### Overview
+
+Hats are DAO-native, revocable, and programmable roles that are represented as non-transferable ERC-1155-similar tokens for composability.
+
+This is a multi-tenant contract that can manage all hats for a given chain. While it fully implements the ERC1155 interface, it does not fully comply with the ERC1155 standard.
+
+### State Variables
+
+#### name
+The name of the contract, typically including the version
+```solidity
+string public name;
+```
+
+#### lastTopHatId
+The first 4 bytes of the id of the last tophat created.
+```solidity
+uint32 public lastTopHatId;
+```
+
+#### baseImageURI
+The fallback image URI for hat tokens with no `imageURI` specified in their branch
+```solidity
+string public baseImageURI;
+```
+
+#### _hats
+Internal mapping of hats to hat ids. See HatsIdUtilities.sol for more info on how hat ids work
+```solidity
+mapping(uint256 => Hat) internal _hats;
+```
+
+#### badStandings
+Mapping of wearers in bad standing for certain hats. Used by external contracts to trigger penalties for wearers in bad standing hatId => wearer => !standing
+```solidity
+mapping(uint256 => mapping(address => bool)) public badStandings;
+```
+
+### Functions
+
+#### constructor
+All arguments are immutable; they can only be set once during construction
+```solidity
+constructor(string memory _name, string memory _baseImageURI);
+```
+
+**Parameters**
+| Name            | Type     | Description                                                |
+| --------------- | -------- | ---------------------------------------------------------- |
+| `_name`         | `string` | The name of this contract, typically including the version |
+| `_baseImageURI` | `string` | The fallback image URI                                     |
+
+#### mintTopHat
+Creates and mints a Hat that is its own admin, i.e. a "topHat". A topHat has no eligibility and no toggle.
+```solidity
+function mintTopHat(address _target, string calldata _details, string calldata _imageURI)
+    public
+    returns (uint256 topHatId);
+```
+
+**Parameters**
+| Name        | Type      | Description                                                                                                                                              |
+| ----------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `_target`   | `address` | The address to which the newly created topHat is minted                                                                                                  |
+| `_details`  | `string`  | A description of the Hat [optional]. Should not be larger than 7000 bytes (enforced in changeHatDetails)                                                |
+| `_imageURI` | `string`  | The image uri for this top hat and the fallback for its downstream hats [optional]. Should not be large than 7000 bytes (enforced in changeHatImageURI) |
+
+**Returns**
+| Name       | Type      | Description                        |
+| ---------- | --------- | ---------------------------------- |
+| `topHatId` | `uint256` | The id of the newly created topHat |
+
+#### createHat
+
+Creates a new hat. The msg.sender must wear the `_admin` hat.
+
+_Initializes a new Hat struct, but does not mint any tokens._
+
+```solidity
+function createHat(
+    uint256 _admin,
+    string calldata _details,
+    uint32 _maxSupply,
+    address _eligibility,
+    address _toggle,
+    bool _mutable,
+    string calldata _imageURI
+) public returns (uint256 newHatId);
+```
+
+**Parameters**
+| Name           | Type      | Description                                                                                                                                           |
+| -------------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `_admin`       | `uint256` | The id of the Hat that will control who wears the newly created hat                                                                                   |
+| `_details`     | `string`  | A description of the Hat. Should not be larger than 7000 bytes (enforced in changeHatDetails)                                                         |
+| `_maxSupply`   | `uint32`  | The total instances of the Hat that can be worn at once                                                                                               |
+| `_eligibility` | `address` | The address that can report on the Hat wearer's status                                                                                                |
+| `_toggle`      | `address` | The address that can deactivate the Hat                                                                                                               |
+| `_mutable`     | `bool`    | Whether the hat's properties are changeable after creation                                                                                            |
+| `_imageURI`    | `string`  | The image uri for this hat and the fallback for its downstream hats [optional]. Should not be larger than 7000 bytes (enforced in changeHatImageURI) |
+
+**Returns**
+| Name       | Type      | Description                     |
+| ---------- | --------- | ------------------------------- |
+| `newHatId` | `uint256` | The id of the newly created Hat |
+
+#### batchCreateHats
+
+Creates new hats in batch. The msg.sender must be an admin of each hat.
+
+_This is a convenience function that loops through the arrays and calls `createHat`._
+
+```solidity
+function batchCreateHats(
+    uint256[] calldata _admins,
+    string[] calldata _details,
+    uint32[] calldata _maxSupplies,
+    address[] memory _eligibilityModules,
+    address[] memory _toggleModules,
+    bool[] calldata _mutables,
+    string[] calldata _imageURIs
+) public returns (bool success);
+```
+
+**Parameters**
+| Name                  | Type        | Description                                                  |
+| --------------------- | ----------- | ------------------------------------------------------------ |
+| `_admins`             | `uint256[]` | Array of ids of admins for each hat to create                |
+| `_details`            | `string[]`  | Array of details for each hat to create                      |
+| `_maxSupplies`        | `uint32[]`  | Array of supply caps for each hat to create                  |
+| `_eligibilityModules` | `address[]` | Array of eligibility module addresses for each hat to create |
+| `_toggleModules`      | `address[]` | Array of toggle module addresses for each hat to create      |
+| `_mutables`           | `bool[]`    | Array of mutable flags for each hat to create                |
+| `_imageURIs`          | `string[]`  | Array of imageURIs for each hat to create                    |
+
+**Returns**
+| Name      | Type   | Description                           |
+| --------- | ------ | ------------------------------------- |
+| `success` | `bool` | True if all createHat calls succeeded |
+
+#### getNextId
+
+Gets the id of the next child hat of the hat `_admin`
+
+_Does not incrememnt lastHatId_
+
+```solidity
+function getNextId(uint256 _admin) public view returns (uint256 nextId);
+```
+
+**Parameters**
+| Name     | Type      | Description                                                    |
+| -------- | --------- | -------------------------------------------------------------- |
+| `_admin` | `uint256` | The id of the hat to serve as the admin for the next child hat |
+
+**Returns**
+| Name     | Type      | Description    |
+| -------- | --------- | -------------- |
+| `nextId` | `uint256` | The new hat id |
+
+#### mintHat
+
+Mints an ERC1155-similar token of the Hat to an eligible recipient, who then "wears" the hat
+
+_The msg.sender must wear an admin Hat of `_hatId`, and the recipient must be eligible to wear `_hatId`_
+
+```solidity
+function mintHat(uint256 _hatId, address _wearer) public returns (bool success);
+```
+
+**Parameters**
+| Name      | Type      | Description                            |
+| --------- | --------- | -------------------------------------- |
+| `_hatId`  | `uint256` | The id of the Hat to mint              |
+| `_wearer` | `address` | The address to which the Hat is minted |
+
+**Returns**
+| Name      | Type   | Description                |
+| --------- | ------ | -------------------------- |
+| `success` | `bool` | Whether the mint succeeded |
+
+#### batchMintHats
+
+Mints new hats in batch. The msg.sender must be an admin of each hat.
+
+_This is a convenience function that loops through the arrays and calls `mintHat`._
+
+```solidity
+function batchMintHats(uint256[] calldata _hatIds, address[] calldata _wearers) public returns (bool success);
+```
+
+**Parameters**
+| Name       | Type        | Description                                         |
+| ---------- | ----------- | --------------------------------------------------- |
+| `_hatIds`  | `uint256[]` | Array of ids of hats to mint                        |
+| `_wearers` | `address[]` | Array of addresses to which the hats will be minted |
+
+**Returns**
+| Name      | Type   | Description                         |
+| --------- | ------ | ----------------------------------- |
+| `success` | `bool` | True if all mintHat calls succeeded |
+
+#### setHatStatus
+
+Toggles a Hat's status from active to deactive, or vice versa
+
+_The msg.sender must be set as the hat's toggle_
+
+```solidity
+function setHatStatus(uint256 _hatId, bool _newStatus) external returns (bool toggled);
+```
+
+**Parameters**
+| Name         | Type      | Description                                  |
+| ------------ | --------- | -------------------------------------------- |
+| `_hatId`     | `uint256` | The id of the Hat for which to adjust status |
+| `_newStatus` | `bool`    | The new status to set                        |
+
+**Returns**
+| Name      | Type   | Description                    |
+| --------- | ------ | ------------------------------ |
+| `toggled` | `bool` | Whether the status was toggled |
+
+#### checkHatStatus
+
+Checks a hat's toggle module and processes the returned status
+
+_May change the hat's status in storage_
+
+```solidity
+function checkHatStatus(uint256 _hatId) public returns (bool toggled);
+```
+
+**Parameters**
+| Name     | Type      | Description                                    |
+| -------- | --------- | ---------------------------------------------- |
+| `_hatId` | `uint256` | The id of the Hat whose toggle we are checking |
+
+**Returns**
+| Name      | Type   | Description                    |
+| --------- | ------ | ------------------------------ |
+| `toggled` | `bool` | Whether there was a new status |
+
+#### _pullHatStatus
+
+```solidity
+function _pullHatStatus(Hat storage _hat, uint256 _hatId) internal view returns (bool success, bool newStatus);
+```
+
+#### setHatWearerStatus
+
+Report from a hat's eligibility on the status of one of its wearers and, if `false`, revoke their hat
+
+_Burns the wearer's hat, if revoked_
+
+```solidity
+function setHatWearerStatus(uint256 _hatId, address _wearer, bool _eligible, bool _standing)
+```
+
 -------------------
 
 [Next we'll read and add each referenced file in sequence] 
