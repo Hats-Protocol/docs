@@ -153,7 +153,7 @@ From the id alone, we know a lot about this hat:
 | ------ | ------- |
 | Integer ("raw") | 6470400364654781217010529864562902351218663490360806944392503307010048 |
 | Hexadecimal | 0x0000000f000200050000a00010000000000000000000000000000000000000000 |
-| Hexadecimal with level delimiters | 0x0000000f.0002.0005.000a.0001.0000.0000.0000.0000.0000.0000.0000.0000.0000.0000<br><br>0x0000000f_0002_0005_000a_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 |
+| Hexadecimal with level delimiters | 0x0000000f.0002.0005.000a.0001.0000.0000.0000.0000.0000.0000.0000.0000.0000.0000<br><br>0x0000000f_0002_0005_000a_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 |
 | "IP address" | 15.2.5.10.1 |
 
 ### **Hat Tree Space**
@@ -2842,3 +2842,908 @@ import {
   FALLBACK_ADDRESS, // The fallback address for eligibility and toggle 
 } from "@hatsprotocol/sdk-v1-core";
 ```
+
+# Subgraph
+
+## Overview
+
+The SDK is an open source JavaScript client, providing utility functions for fetching data from the Hats Protocol Subgraphs and is designed to work both in the browser and in Node.js.
+
+## Getting Started
+
+### Install
+
+yarn:
+```bash
+yarn add @hatsprotocol/sdk-v1-subgraph
+```
+
+npm:
+```bash
+npm install @hatsprotocol/sdk-v1-subgraph
+```
+
+### HatsSubgraphClient Initialization
+
+Import and initialize HatsSubgraphClient.
+
+Optionally configure the Subgraph endpoints to use, or use the default ones.
+
+```typescript
+import { HatsSubgraphClient } from "@hatsprotocol/sdk-v1-subgraph";
+
+const hatsSubgraphClient = new HatsSubgraphClient({
+    config
+});
+```
+
+**Arguments**:
+```typescript
+{ config?: EndpointsConfig }
+```
+
+* `config` - Optional subgraph endpoints configuration. If not provided, then the default, un-gated development endpoints will be used. See the `EndpointsConfig` type for more details.
+```
+
+## Fetching Hats
+
+### getHat
+
+Get a Hat by its ID.
+
+```typescript
+const hat = await hatsSubgraphClient.getHat({
+    chainId,
+    hatId,
+    props,
+});
+```
+
+**Arguments**:
+```typescript
+{
+    chainId: number;
+    hatId: bigint;
+    props: HatPropsConfig;
+}
+```
+
+* `chainId` - ID of the chain to fetch from.
+* `hatId` - ID of the Hat to fetch.
+* `props` - Hat's properties to fetch, including the ones of nested objects. Check the HatPropsConfig type for the available properties and query filters.
+
+**Response**:
+```typescript
+Hat
+```
+
+A Hat object, containing the chosen properties.
+
+**Example**:
+```typescript
+const res = await client.getHat({
+  chainId: 10, // optimism
+  hatId: BigInt(
+    "0x0000000100020001000100000000000000000000000000000000000000000000"
+  ),
+  props: {
+    maxSupply: true, // get the maximum amount of wearers for the hat 
+    wearers: { // get the hat's wearers 
+      props: {}, // for each wearer, include only its ID (address)
+    },
+    events: { // get the hat's events
+      props: {
+        transactionID: true, // for each event, include the transaction ID
+      },
+      filters: {
+        first: 10, // fetch only the latest 10 events
+      },
+    },
+  },
+});
+```
+
+### getHatsByIds
+
+Get Hats by their IDs.
+
+```typescript
+const hats = await hatsSubgraphClient.getHatsByIds({
+    chainId,
+    hatIds,
+    props,
+});
+```
+
+**Arguments**:
+```typescript
+{
+    chainId: number;
+    hatIds: bigint[];
+    props: HatPropsConfig;
+}
+```
+
+* `chainId` - ID of the chain to fetch from.
+* `hatIds` - IDs of the Hats to fetch.
+* `props` - Hat's properties to fetch, including the ones of nested objects. Check the HatPropsConfig type for the available properties and query filters.
+
+**Response**:
+```typescript
+Hat[]
+```
+
+An array of [Hat objects](types.md#hat), containing the chosen properties.
+
+_**Example**_:
+
+```typescript
+const res = await client.getHatsByIds({
+  chainId: 10, // optimism
+  hatIds: [
+    BigInt("0x0000000100020001000100000000000000000000000000000000000000000000"),
+    BigInt("0x0000000100020001000000000000000000000000000000000000000000000000"),
+  ],
+  props: {
+    wearers: { // get each hat's wearers
+      props: { 
+        currentHats: { // for each wearer, get its hats
+          props: {}, // for each hat, include only its ID
+        },
+      },
+    },
+  },
+});
+```
+
+# Fetching Wearers
+
+## getWearer
+
+Get a Wearer by its address.
+
+```typescript
+const wearer = await hatsSubgraphClient.getWearer({
+  chainId,
+  wearerAddress,
+  props,
+});
+```
+
+**Arguments**:
+
+```typescript
+{
+  chainId: number;
+  wearerAddress: `0x${string}`;
+  props: WearerPropsConfig;
+}
+```
+
+- `chainId` - ID of the chain to fetch from.
+- `wearerAddress` - Address of the Wearer to fetch.
+- `props` - Wearer's properties to fetch, including the ones of nested objects. Check the WearerPropsConfig type for the available properties and query filters.
+
+**Response**:
+
+```typescript
+Wearer;
+```
+
+A Wearer object, containing the chosen properties.
+
+**Example**:
+
+```typescript
+const res = await client.getWearer({
+  chainId: 10,
+  wearerAddress: '0x...',
+  props: {
+    hats: {
+      // get the wearer's hats
+      props: {}, // for each hat, include only its ID
+      filters: {
+        first: 10, // fetch only the latest 10 hats
+      },
+    },
+    events: {
+      // get the wearer's events
+      props: {
+        transactionID: true, // for each event, include the transaction ID
+      },
+      filters: {
+        first: 10, // fetch only the latest 10 events
+      },
+    },
+  },
+});
+```
+
+## getWearersOfHatPaginated
+
+Get Wearers of a Hat in a paginated manner.
+
+```typescript
+const wearers = await hatsSubgraphClient.getWearersOfHatPaginated({
+  chainId,
+  hatId,
+  props,
+  page,
+  perPage,
+});
+```
+
+**Arguments**:
+
+```typescript
+{
+  chainId: number;
+  hatId: bigint;
+  props: WearerPropsConfig;
+  page: number;
+  perPage: number;
+}
+```
+
+- `chainId` - ID of the chain to fetch from.
+- `hatId` - ID of the Hat to fetch wearers for.
+- `props` - Wearer's properties to fetch, including the ones of nested objects. Check the WearerPropsConfig type for the available properties and query filters.
+- `page` - Page number to fetch.
+- `perPage` - Amount of items per page.
+
+**Response**:
+
+```typescript
+{
+    items: Wearer[];
+    totalItems: number;
+    totalPages: number;
+}
+```
+
+- `items` - Array of Wearer objects, containing the chosen properties.
+- `totalItems` - Total amount of wearers.
+- `totalPages` - Total amount of pages.
+
+**Example**:
+
+```typescript
+// get the first 10 wearers of a given hat.
+// include only the wearer's ID (address) in the result
+const res = await client.getWearersOfHatPaginated({
+  chainId: 10,
+  hatId: BigInt(
+    '0x0000000100020001000100000000000000000000000000000000000000000000'
+  ),
+  props: {},
+  page: 1,
+  perPage: 10,
+});
+```
+
+# Fetching Trees
+
+## getTree
+
+Get a Tree by its ID.
+
+```typescript
+const tree = await hatsSubgraphClient.getTree({
+    chainId,
+    treeId,
+    props,
+});
+```
+
+**Arguments**:
+```typescript
+{
+    chainId: number;
+    treeId: number;
+    props: TreePropsConfig;
+}
+```
+
+* `chainId` - ID of the chain to fetch from.
+* `treeId` - ID of the Tree to fetch (Tree's top-hat domain - first 4 bytes of the top-hat ID).
+* `props` - Tree's properties to fetch, including the ones of nested objects. Check the TreePropsConfig type for the available properties and query filters.
+
+**Response**:
+```typescript
+Tree
+```
+
+A Tree object, containing the chosen properties.
+
+**Example**:
+```typescript
+// get a tree's top-hat
+const res = await client.getTree({
+  chainId: 10, // optimism
+  treeId: 1, 
+  props: {
+    hats: { // get the tree's hats
+      props: {}, // for each hat, include only its ID
+      filters: { first: 1 }, // fetch only the first hat (the top-hat)
+    },
+  },
+});
+```
+
+## getTreesByIds
+
+Get Trees by their IDs.
+
+```typescript
+const trees = await hatsSubgraphClient.getTreesByIds({
+    chainId,
+    treeIds,
+    props,
+});
+```
+
+**Arguments**:
+```typescript
+{
+    chainId: number;
+    treeIds: number[];
+    props: TreePropsConfig;
+}
+```
+
+* `chainId` - ID of the chain to fetch from.
+* `treeIds` - IDs of the Trees to fetch (Tree's top-hat domain - first 4 bytes of the top-hat ID).
+* `props` - Tree's properties to fetch, including the ones of nested objects. Check the TreePropsConfig type for the available properties and query filters.
+
+**Response**:
+```typescript
+Tree[]
+```
+
+An array of Tree objects, containing the chosen properties.
+
+**Example**:
+```typescript
+const res = await client.getTreesByIds({
+  chainId: 10, // optimism
+  treeIds: [1, 2],
+  props: {
+    hats: { // for each tree, fetch its hats
+      props: {
+        status: true, // for each hat, include its status (active/inactive)
+      },
+      filters: { first: 200 }, // fetch only the first 200 hats
+    },
+  },
+});
+```
+
+## getTreesPaginated
+
+Get Trees in a paginated manner.
+
+```typescript
+const trees = await hatsSubgraphClient.getTreesPaginated({
+    chainId,
+    props,
+    page,
+    perPage,
+});
+```
+
+**Arguments**:
+```typescript
+{
+    chainId: number;
+    props: TreePropsConfig;
+    page: number;
+    perPage: number;
+}
+```
+
+* `chainId` - ID of the chain to fetch from.
+* `props` - Tree's properties to fetch, including the ones of nested objects. Check the TreePropsConfig type for the available properties and query filters.
+* `page` - Page number to fetch.
+* `perPage` - Amount of Trees to fetch in each page.
+
+**Response**:
+```typescript
+Tree[]
+```
+
+An array of Tree objects, containing the chosen properties.
+
+**Example**:
+```typescript
+const res = await client.getTreesPaginated({
+  chainId: 10, // optimism
+  props: {
+    hats: { // for each tree, get its hats
+      props: {}, // for each hat, include only its ID 
+      filters: { first: 1 }, // fetch only the first hat of every tree (the top-hat)
+    },
+  },
+  page: 3, // get the third page
+  perPage: 10, // each page contains 10 trees
+});
+
+
+```
+
+# Misc
+
+### searchTreesHatsWearers
+
+Search for a Hat, Tree or Wearer by ID.
+
+```typescript
+const res = await hatsSubgraphClient.searchTreesHatsWearers({
+    chainId,
+    search,
+    treeProps,
+    hatProps,
+    wearerProps,
+});
+```
+
+**Arguments**:
+
+```typescript
+{
+    chainId: number;
+    search: string;
+    treeProps: TreePropsConfig;
+    hatProps: HatPropsConfig;
+    wearerProps: WearerPropsConfig;
+}
+```
+
+* `chainId` - ID of the chain to fetch from.
+* `search` - ID to search for (Hat ID or pretty ID, Tree ID or Wearer address).
+* `treeProps` - Tree's properties to fetch, including the ones of nested objects. Check the TreePropsConfig type for the available properties and query filters.
+* `hatProps` - Hat's properties to fetch, including the ones of nested objects. Check the HatPropsConfig type for the available properties and query filters.
+* `wearerProps` - Wearer's properties to fetch, including the ones of nested objects. Check the WearerPropsConfig type for the available properties and query filters.
+
+**Response**:
+
+```typescript
+{ trees: Tree[]; hats: Hat[]; wearers: Wearer[] }
+```
+
+An object containing the search result.
+
+**Example:**
+
+```typescript
+// search for a given hat, tree or wearer.
+// include only the object's ID in the reuslt 
+const res = await client.searchTreesHatsWearers({
+  chainId: 10,
+  search: "0x0000000100020001000100000000000000000000000000000000000000000000",
+  treeProps: {},
+  hatProps: {},
+  wearerProps: {},
+});
+```
+
+# Types
+
+## Hat Types
+
+### Hat
+
+```typescript
+interface Hat {
+  id: `0x${string}`; // Hat ID
+  prettyId?: string; // pretty ID format
+  status?: boolean; // 'true' if active, 'false' otherwise
+  createdAt?: string | null; // timestamp of hat creation, null if not created yet
+  details?: string; // Hat's details field
+  maxSupply?: string; // max amount of wearers
+  eligibility?: `0x${string}`; // eligibility address
+  toggle?: `0x${string}`; // toggle address
+  mutable?: boolean; // 'true' if mutable, 'false' otherwise
+  imageUri?: string; // Hat's image URI
+  levelAtLocalTree?: number; // Hat's level at its local tree (not including linked trees)
+  currentSupply?: string; // current amount of hat wearers
+  tree?: Tree; // Tree which contains the Hat
+  wearers?: Wearer[]; // Hat's Wearers
+  badStandings?: Wearer[]; // Hat's Wearers in bad standing
+  admin?: Hat; // Hat's admin Hat
+  subHats?: Hat[]; // Hat's children Hats
+  linkRequestFromTree?: Tree[]; // Link requests from Trees
+  linkedTrees?: Tree[]; // Trees linked to the Hat
+  claimableBy?: ClaimsHatter[]; // Claims Hatters that the Hat is made claimable by
+  claimableForBy?: ClaimsHatter[]; // Claims Hatters that the Hat is made claimable for by
+  events?: HatsEvent[]; // Hat's events
+}
+```
+
+### HatPropsConfig
+
+Query configuration for a Hat's properties.
+
+The Hat's ID property is required and thus is not included in the config. The rest of the properties are optional.
+
+* To choose Scalar properties (non-object), include their key with a value of `true`.
+* To choose an Object property, include its key with a value compatible with the object's config type:
+  * For single-object properties (e.g. `tree`), the config type includes the object's available properties without filters.
+  * For multi-object properties (e.g. `wearers`), the config type includes both the object's available properties and optional filters (currently supports only the 'first' filter).
+
+```typescript
+interface HatPropsConfig {
+  prettyId?: boolean;
+  status?: boolean;
+  createdAt?: boolean;
+  details?: boolean;
+  maxSupply?: boolean;
+  eligibility?: boolean;
+  toggle?: boolean;
+  mutable?: boolean;
+  imageUri?: boolean;
+  levelAtLocalTree?: boolean;
+  currentSupply?: boolean;
+  tree?: TreePropsConfig;
+  wearers?: WearersConfig;
+  badStandings?: WearersConfig;
+  admin?: HatPropsConfig;
+  subHats?: HatsConfig;
+  linkRequestFromTree?: TreesConfig;
+  linkedTrees?: TreesConfig;
+  claimableBy?: ClaimsHattersConfig;
+  claimableForBy?: ClaimsHattersConfig;
+  events?: HatsEventsConfig;
+}
+```
+
+### HatsConfig
+
+Query configuration for a multi Hats property, i.e. a property that returns multiple Hats.
+
+```typescript
+interface HatsConfig {
+  props: HatPropsConfig; // properties to include in each hat
+  filters?: { // filters to apply on the property query
+    first?: number; // fetch only the 'first' amount of hats
+  };
+}
+```
+
+## Wearer Types
+
+### Wearer
+
+```typescript
+interface Wearer {
+  id: `0x${string}`; // Wearer's address
+  currentHats?: Hat[]; // Wearer's current Hats
+  mintEvent?: HatsEvent[]; // Hat mint events for the Wearer
+  burnEvent?: HatsEvent[]; // Hat burn events for the Wearer
+}
+```
+
+### WearerPropsConfig
+
+Query configuration for a Wearer's properties.
+
+The Wearer's ID property is required and thus is not included in the config. The rest of the properties are optional.
+
+* To choose Scalar properties (non-object), include their key with a value of `true`.
+* To choose an Object property, include its key with a value compatible with the object's config type:
+  * For single-object properties (e.g. the `tree` property of a Hat), the config type includes the object's available properties.
+  * For multi-object properties (e.g. `currentHats`), the config type includes both the object's available properties and optional filters (currently supports only the 'first' filter).
+
+```typescript
+interface WearerPropsConfig {
+  currentHats?: HatsConfig;
+  mintEvent?: HatsEventsConfig;
+  burnEvent?: HatsEventsConfig;
+}
+```
+
+### WearersConfig
+
+Query configuration for a multi Wearers property, i.e. a property that returns multiple Wearers.
+
+```typescript
+interface WearerPropsConfig {
+  props: WearerPropsConfig; // properties to include in each wearer
+  filters?: { // filters to apply on the property query
+    first?: number; // fetch only the 'first' amount of wearers
+  };
+}
+```
+
+## Tree Types
+
+### Tree
+
+```typescript
+interface Tree {
+  id: `0x${string}`; // Tree ID (Tree's top-hat domain - first 4 bytes of the top-hat ID)
+  hats?: Hat[]; // Tree's Hats
+  childOfTree?: Tree; // if linked, the Tree which this Tree is linked to
+  parentOfTrees?: Tree[]; // Trees which are linked to this Tree
+  linkedToHat?: Hat; // if linked, the Hat which this Tree is linked to
+  linkRequestFromTree?: Tree[]; // Trees with a linkage request to this Tree
+  requestedLinkToTree?: Tree; // Tree which this Tree has a linkage request to
+  requestedLinkToHat?: Hat; // Hat which this Tree has a linkage request to
+  events?: HatsEvent[]; // Tree's events
+}
+```
+
+### TreePropsConfig
+
+Query configuration for a Tree's properties.
+
+The Tree's ID property is required and thus is not included in the config. The rest of the properties are optional.
+
+* To choose Scalar properties (non-object), include their key with a value of `true`.
+* To choose an Object property, include its key with a value compatible with the object's config type:
+  * For single-object properties (e.g. `childOfTree`), the config type includes the object's available properties.
+  * For multi-object properties (e.g. `hats`), the config type includes both the object's available properties and optional filters (currently supports only the 'first' filter).
+
+```typescript
+interface TreePropsConfig {
+  hats?: HatsConfig;
+  childOfTree?: TreePropsConfig;
+  parentOfTrees?: TreesConfig;
+  linkedToHat?: HatPropsConfig;
+  linkRequestFromTree?: TreesConfig;
+  requestedLinkToTree?: TreePropsConfig;
+  requestedLinkToHat?: HatPropsConfig;
+  events?: HatsEventsConfig;
+}
+```
+
+### TreesConfig
+
+Query configuration for a multi Trees property, i.e. a property that returns multiple Trees.
+
+```typescript
+interface TreePropsConfig {
+  props: TreePropsConfig; // properties to include in each tree
+  filters?: { // filters to apply on the property query
+    first?: number; // fetch only the 'first' amount of trees
+  };
+}
+```
+
+## Event Types
+
+### HatsEventBase
+
+Base type, which contains the common properties of Hats Events, and which is then extended by each specific event.
+
+```typescript
+interface HatsEventBase {
+  id: string; // Event's ID
+  timestamp?: bigint; // Event's timestamp
+  blockNumber?: number; // Event's block number
+  transactionID?: string; // transaction ID which the Event was emitted in
+  hat?: Hat; // Hat that relates to the Event
+  tree?: Tree; // Tree that relates to the Event
+}
+```
+
+### HatsEventPropsConfig
+
+Query configuration for the basic properties of a Hats Event.
+
+The HatsEvent's ID property is required and thus is not included in the config. The rest of the properties are optional.
+
+To choose Scalar properties (non-object), include their key with a value of `true`. To choose an Object property, include its key with a value compatible with the object's config.
+
+```typescript
+interface HatsEventConfig {
+  timestamp?: boolean;
+  blockNumber?: boolean;
+  transactionID?: boolean;
+  hat?: HatPropsConfig;
+  tree?: HatPropsConfig;
+}
+```
+
+Following are the various Hats Events, emitted from Hats-Protocol in response to various actions.
+
+Fetched events will include the event's base properties, as well as the additional properties that are included in each specific event, according to its type.
+
+### HatCreatedEvent
+
+```typescript
+interface HatCreatedEvent extends HatsEventBase {
+  __typename: "HatCreatedEvent";
+  hatDetails: string;
+  hatMaxSupply: `0x${string}`;
+  hatEligibility: `0x${string}`;
+  hatToggle: string;
+  hatMutable: boolean;
+  hatImageUri: string;
+}
+```
+
+### HatMintedEvent
+
+```typescript
+interface HatMintedEvent extends HatsEventBase {
+  __typename: "HatMintedEvent";
+  wearer: {
+    id: `0x${string}`;
+  };
+  operator: `0x${string}`;
+}
+```
+
+### HatBurnedEvent
+
+```typescript
+interface HatBurnedEvent extends HatsEventBase {
+  __typename: "HatBurnedEvent";
+  wearer: {
+    id: `0x${string}`;
+  };
+  operator: `0x${string}`;
+}
+```
+
+### HatMutabilityChangedEvent
+
+```typescript
+interface HatMutabilityChangedEvent extends HatsEventBase {
+  __typename: "HatMutabilityChangedEvent";
+}
+```
+
+### HatStatusChangedEvent
+
+```typescript
+interface HatStatusChangedEvent extends HatsEventBase {
+  __typename: "HatStatusChangedEvent";
+  hatNewStatus: boolean;
+}
+```
+
+### HatDetailsChangedEvent
+
+```typescript
+interface HatDetailsChangedEvent extends HatsEventBase {
+  __typename: "HatDetailsChangedEvent";
+  hatNewDetails: string;
+}
+```
+
+### HatEligibilityChangedEvent
+
+```typescript
+interface HatEligibilityChangedEvent extends HatsEventBase {
+  __typename: "HatEligibilityChangedEvent";
+  hatNewEligibility: `0x${string}`;
+}
+```
+
+### HatToggleChangedEvent
+
+```typescript
+interface HatToggleChangedEvent extends HatsEventBase {
+  __typename: "HatToggleChangedEvent";
+  hatNewToggle: `0x${string}`;
+}
+```
+
+### HatMaxSupplyChangedEvent
+
+```typescript
+interface HatMaxSupplyChangedEvent extends HatsEventBase {
+  __typename: "HatMaxSupplyChangedEvent";
+  hatNewMaxSupply: string;
+}
+```
+
+### HatImageURIChangedEvent
+
+```typescript
+interface HatImageURIChangedEvent extends HatsEventBase {
+  __typename: "HatImageURIChangedEvent";
+  hatNewImageURI: string;
+}
+```
+
+### TopHatLinkRequestedEvent
+
+```typescript
+interface TopHatLinkRequestedEvent extends HatsEventBase {
+  __typename: "TopHatLinkRequestedEvent";
+  newAdmin: `0x${string}`;
+}
+```
+
+### TopHatLinkedEvent
+
+```typescript
+interface TopHatLinkedEvent extends HatsEventBase {
+  __typename: "TopHatLinkedEvent";
+  newAdmin: `0x${string}`;
+}
+```
+
+### WearerStandingChangedEvent
+
+```typescript
+interface WearerStandingChangedEvent extends HatsEventBase {
+  __typename: "WearerStandingChangedEvent";
+  wearer: {
+    id: `0x${string}`;
+  };
+  wearerStanding: boolean;
+}
+```
+
+### HatsEvent
+
+```typescript
+type HatsEvent =
+  | HatCreatedEvent
+  | HatMintedEvent
+  | HatBurnedEvent
+  | HatMutabilityChangedEvent
+  | HatStatusChangedEvent
+  | HatDetailsChangedEvent
+  | HatEligibilityChangedEvent
+  | HatToggleChangedEvent
+  | HatMaxSupplyChangedEvent
+  | HatImageURIChangedEvent
+  | TopHatLinkRequestedEvent
+  | TopHatLinkedEvent
+  | WearerStandingChangedEvent;
+```
+
+## Claims Hatter Types
+
+### ClaimsHatter
+
+```typescript
+interface ClaimsHatter {
+  id: string; // ClaimsHatter's ID
+  claimableHats?: Hat[]; // Hats made claimable by this Hatter
+  claimableForHats?: Hat[]; // Hats made 'claimable for' by this Hatter 
+}
+```
+
+### ClaimsHatterPropsConfig
+
+Query configuration for a ClaimsHatter's properties.
+
+The ClaimsHatter's ID property is required and thus is not included in the config. The rest of the properties are optional.
+
+```typescript
+interface ClaimsHatterPropsConfig {
+  claimableHats?: HatsConfig;
+  claimableForHats?: HatsConfig;
+}
+```
+
+### ClaimsHattersConfig
+
+Query configuration for a multi ClaimsHatters property, e.g. a property that returns multiple Claims Hatters.
+
+```typescript
+interface ClaimsHattersConfig {
+  props: ClaimsHatterPropsConfig; // properties to include in each claims hatter
+  filters?: { // filters to apply on the property query
+    first?: number; // fetch only the 'first' amount of hatters
+  };
+}
+```
+
+## More
+
+### EndpointsConfig
+
+Subgraph endpoints configuration, optionally provided at the client's creation.
+
+```typescript
+interface EndpointsConfig {
+  [chainId: number]: { endpoint: string };
+}
+```
+
