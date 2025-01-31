@@ -153,7 +153,7 @@ From the id alone, we know a lot about this hat:
 | ------ | ------- |
 | Integer ("raw") | 6470400364654781217010529864562902351218663490360806944392503307010048 |
 | Hexadecimal | 0x0000000f000200050000a00010000000000000000000000000000000000000000 |
-| Hexadecimal with level delimiters | 0x0000000f.0002.0005.000a.0001.0000.0000.0000.0000.0000.0000.0000.0000.0000.0000<br><br>0x0000000f_0002_0005_000a_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 |
+| Hexadecimal with level delimiters | 0x0000000f.0002.0005.000a.0001.0000.0000.0000.0000.0000.0000.0000.0000.0000.0000<br><br>0x0000000f_0002_0005_000a_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 |
 | "IP address" | 15.2.5.10.1 |
 
 ### **Hat Tree Space**
@@ -1312,4 +1312,1533 @@ function getHatStatus(uint256 _hatId) external view returns (bool);
 
 -------------------
 
-[Next we'll read and add each referenced file in sequence] 
+[Next we'll read and add each referenced file in sequence]
+
+# 🖥️ v1 SDK Core
+
+## Getting Started
+
+### Install
+
+yarn:
+```bash
+yarn add @hatsprotocol/sdk-v1-core
+```
+
+npm:
+```bash
+npm install @hatsprotocol/sdk-v1-core
+```
+
+### HatsClient Initialization
+
+Import and initialize HatsClient with a Viem client.
+
+```typescript
+import { HatsClient } from '@hatsprotocol/sdk-v1-core';
+import { createPublicClient, http } from 'viem';
+import { optimism } from 'viem/chains';
+
+const transport = http('YOUR_RPC_URL');
+const publicClient = createPublicClient({
+  chain: optimism,
+  transport,
+});
+
+const hatsClient = new HatsClient({
+  chainId: 10, // optimism
+  publicClient,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  chainId: number;
+  publicClient: PublicClient;
+}
+```
+
+## Onchain Reads
+
+### viewHat
+
+Get a Hat's properties.
+
+```typescript
+const hat = await hatsClient.viewHat({
+  hatId,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  hatId: bigint;
+}
+```
+- `hatId` - ID of the Hat to view.
+
+**Response**:
+```typescript
+{
+  details: string;
+  maxSupply: bigint;
+  eligibility: `0x${string}`;
+  toggle: `0x${string}`;
+  mutable: boolean;
+  imageUri: string;
+  status: boolean;
+  admin: bigint;
+}
+```
+- `details` - Hat's details field.
+- `maxSupply` - Maximum amount of wearers.
+- `eligibility` - Eligibility module address.
+- `toggle` - Toggle module address.
+- `mutable` - Whether the Hat is mutable.
+- `imageUri` - Hat's image URI.
+- `status` - Whether the Hat is active.
+- `admin` - Hat's admin Hat ID.
+
+### isWearerOfHat
+
+Check if an address wears a specific hat.
+
+```typescript
+const isWearer = await hatsClient.isWearerOfHat({
+  wearer,
+  hatId,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  wearer: Address;
+  hatId: bigint;
+}
+```
+- `wearer` - address to check whether wearing the hat.
+- `hatId` - hat's ID.
+
+**Response**:
+```typescript
+boolean;
+```
+`true` if the given address wears the hat, `false` otherwise.
+
+### isActive
+
+Check if a hat is active.
+
+```typescript
+const isActive = await hatsClient.isActive(hatId);
+```
+
+**Arguments**:
+```typescript
+hatId: bigint;
+```
+`hatId` - hat's ID.
+
+**Response**:
+```typescript
+boolean;
+```
+`true` if the given hat is active, `false` otherwise.
+
+### isInGoodStanding
+
+Check if a wearer is in good standing for a given hat.
+
+```typescript
+const isGoodStanding = await hatsClient.isInGoodStanding({
+  wearer,
+  hatId,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  wearer: Address;
+  hatId: bigint;
+}
+```
+- `wearer` - address to check whether in good standing.
+- `hatId` - hat's ID.
+
+**Response**:
+```typescript
+boolean;
+```
+`true` if the given wearer is in good standing, `false` otherwise.
+
+### isEligible
+
+Check if an address is eligible for a specific hat.
+
+```typescript
+const isEligible = await hatsClient.isEligible({
+  wearer,
+  hatId,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  wearer: Address;
+  hatId: bigint;
+}
+```
+- `wearer` - address to check whether is eligible.
+- `hatId` - hat's ID.
+
+**Response**:
+```typescript
+boolean;
+```
+`true` if the given address is eligible for the hat, `false` otherwise.
+
+### predictHatId
+
+Predict the ID of a yet to be created hat.
+
+```typescript
+const hatId = await hatsClient.predictHatId(admin);
+```
+
+**Arguments**:
+```typescript
+admin: bigint;
+```
+`admin` - parent hat of the would be created one.
+
+**Response**:
+```typescript
+bigint;
+```
+Hat ID of the would be created hat.
+
+### getTreesCount
+
+Get the number of existing trees.
+
+```typescript
+const numTrees = await hatsClient.getTreesCount();
+```
+
+**Response**:
+```typescript
+number;
+```
+Current number of trees.
+
+### getLinkageRequest
+
+Get the linkage request of a tree.
+
+```typescript
+const requestedAdminHat = await hatsClient.getLinkageRequest(topHatDomain);
+```
+
+**Arguments**:
+```typescript
+topHatDomain: number;
+```
+`topHatDomain` - the tree domain. The tree domain is the first four bytes of the tophat ID.
+
+**Response**:
+```typescript
+bigint;
+```
+If request exists, returns the requested new admin hat ID. If not, returns zero.
+
+### getLinkedTreeAdmin
+
+Get the admin of a linked tree.
+
+```typescript
+const linkedTreeAdmin = await hatsClient.getLinkedTreeAdmin({
+  hatId,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  hatId: bigint;
+}
+```
+- `hatId` - ID of a Hat in the tree to check.
+
+**Response**:
+```typescript
+bigint;
+```
+The ID of the admin Hat of the linked tree.
+
+### getHatLevel
+
+Get a Hat's level in the global tree.
+
+```typescript
+const level = await hatsClient.getHatLevel({
+  hatId,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  hatId: bigint;
+}
+```
+- `hatId` - ID of the Hat to check.
+
+**Response**:
+```typescript
+number;
+```
+The level of the Hat in the global tree.
+
+### getLocalHatLevel
+
+Get a Hat's level in its local tree.
+
+```typescript
+const localLevel = await hatsClient.getLocalHatLevel({
+  hatId,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  hatId: bigint;
+}
+```
+- `hatId` - ID of the Hat to check.
+
+**Response**:
+```typescript
+number;
+```
+The level of the Hat in its local tree.
+
+### getTopHatDomain
+
+Get a Hat's tree domain.
+
+```typescript
+const domain = await hatsClient.getTopHatDomain({
+  hatId,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  hatId: bigint;
+}
+```
+- `hatId` - ID of the Hat to check.
+
+**Response**:
+```typescript
+number;
+```
+The domain of the tree that contains the Hat.
+
+### getTippyTopHatDomain
+
+Get the tree domain of the global tree's tophat.
+
+```typescript
+const domain = await hatsClient.getTippyTopHatDomain({
+  hatId,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  hatId: bigint;
+}
+```
+- `hatId` - ID of a Hat in the tree to check.
+
+**Response**:
+```typescript
+number;
+```
+The domain of the global tree's tophat.
+
+## Onchain Writes
+
+### mintTopHat
+
+Mint a new top hat.
+
+```typescript
+const result = await hatsClient.mintTopHat({
+  account,
+  target,
+  details,
+  imageURI,
+});
+```
+
+**Arguments**:
+```typescript
+{
+    account: Account;
+    target: `0x${string}`;
+    details: string;
+    imageURI?: string;
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `target` - Address to mint the top hat to.
+- `details` - Top hat's details field.
+- `imageURI` (Optional) - Top hat's image URI.
+
+**Response**:
+```typescript
+{
+  status: 'success' | 'reverted';
+  transactionHash: `0x${string}`;
+  hatId: bigint;
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash.
+- `hatId` - ID of the newly created top hat.
+
+### createHat
+
+Create a new hat.
+
+```typescript
+const result = await hatsClient.createHat({
+  account,
+  admin,
+  details,
+  maxSupply,
+  eligibility,
+  toggle,
+  mutable,
+  imageURI,
+});
+```
+
+**Arguments**:
+```typescript
+{
+    account: Account;
+    admin: bigint;
+    details: string;
+    maxSupply: bigint;
+    eligibility: `0x${string}`;
+    toggle: `0x${string}`;
+    mutable: boolean;
+    imageURI?: string;
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `admin` - ID of the admin hat.
+- `details` - Hat's details field.
+- `maxSupply` - Maximum amount of wearers.
+- `eligibility` - Eligibility module address.
+- `toggle` - Toggle module address.
+- `mutable` - Whether the hat is mutable.
+- `imageURI` (Optional) - Hat's image URI.
+
+**Response**:
+```typescript
+{
+  status: 'success' | 'reverted';
+  transactionHash: `0x${string}`;
+  hatId: bigint;
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash.
+- `hatId` - ID of the newly created hat.
+
+### batchCreateHats
+
+Create multiple hats in one transaction.
+
+```typescript
+const result = await hatsClient.batchCreateHats({
+  account,
+  admins,
+  details,
+  maxSupplies,
+  eligibilityModules,
+  toggleModules,
+  mutables,
+  imageURIs,
+});
+```
+
+**Arguments**:
+```typescript
+{
+    account: Account;
+    admins: bigint[];
+    details: string[];
+    maxSupplies: bigint[];
+    eligibilityModules: `0x${string}`[];
+    toggleModules: `0x${string}`[];
+    mutables: boolean[];
+    imageURIs?: string[];
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `admins` - IDs of the admin hats.
+- `details` - Hats' details fields.
+- `maxSupplies` - Maximum amounts of wearers.
+- `eligibilityModules` - Eligibility module addresses.
+- `toggleModules` - Toggle module addresses.
+- `mutables` - Whether the hats are mutable.
+- `imageURIs` (Optional) - Hats' image URIs.
+
+**Response**:
+```typescript
+{
+    status: "success" | "reverted";
+    transactionHash: `0x${string}`;
+    hatIds: bigint[];
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash.
+- `hatIds` - IDs of the newly created hats.
+
+### mintHat
+
+Mint a hat to a wearer.
+
+```typescript
+const result = await hatsClient.mintHat({
+  account,
+  hatId,
+  wearer,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  account: Account;
+  hatId: bigint;
+  wearer: `0x${string}`;
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `hatId` - ID of the hat to mint.
+- `wearer` - Address to mint the hat to.
+
+**Response**:
+```typescript
+{
+  status: 'success' | 'reverted';
+  transactionHash: `0x${string}`;
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash.
+
+### batchMintHats
+
+Mint multiple hats to multiple wearers in one transaction.
+
+```typescript
+const result = await hatsClient.batchMintHats({
+  account,
+  hatIds,
+  wearers,
+});
+```
+
+**Arguments**:
+```typescript
+{
+    account: Account;
+    hatIds: bigint[];
+    wearers: `0x${string}`[];
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `hatIds` - IDs of the hats to mint.
+- `wearers` - Addresses to mint the hats to.
+
+**Response**:
+```typescript
+{
+  status: 'success' | 'reverted';
+  transactionHash: `0x${string}`;
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash.
+
+### setHatStatus
+
+Set a hat's status.
+
+```typescript
+const result = await hatsClient.setHatStatus({
+  account,
+  hatId,
+  newStatus,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  account: Account;
+  hatId: bigint;
+  newStatus: boolean;
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `hatId` - ID of the hat to set status for.
+- `newStatus` - New status to set.
+
+**Response**:
+```typescript
+{
+  status: 'success' | 'reverted';
+  transactionHash: `0x${string}`;
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash.
+
+### checkHatStatus
+
+Check a hat's status and return whether it was toggled.
+
+```typescript
+const result = await hatsClient.checkHatStatus({
+  account,
+  hatId,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  account: Account;
+  hatId: bigint;
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `hatId` - ID of the hat to check status for.
+
+**Response**:
+```typescript
+{
+  status: 'success' | 'reverted';
+  transactionHash: `0x${string}`;
+  toggled: boolean;
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash.
+- `toggled` - Whether the hat's status was toggled.
+
+### setHatWearerStatus
+
+Set a hat's wearer status.
+
+```typescript
+const result = await hatsClient.setHatWearerStatus({
+  account,
+  hatId,
+  wearer,
+  eligible,
+  standing,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  account: Account;
+  hatId: bigint;
+  wearer: `0x${string}`;
+  eligible: boolean;
+  standing: boolean;
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `hatId` - ID of the hat to set wearer status for.
+- `wearer` - Address of the wearer to set status for.
+- `eligible` - Whether the wearer is eligible.
+- `standing` - Whether the wearer is in good standing.
+
+**Response**:
+```typescript
+{
+  status: 'success' | 'reverted';
+  transactionHash: `0x${string}`;
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash.
+
+### checkHatWearerStatus
+
+Check a wearer's status and burn the hat if ineligible or in bad standing.
+
+```typescript
+const result = await hatsClient.checkHatWearerStatus({
+  account,
+  hatId,
+  wearer,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  account: Account;
+  hatId: bigint;
+  wearer: `0x${string}`;
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `hatId` - ID of the hat to check wearer status for.
+- `wearer` - Address of the wearer to check status for.
+
+**Response**:
+```typescript
+{
+  status: 'success' | 'reverted';
+  transactionHash: `0x${string}`;
+  eligible: boolean;
+  standing: boolean;
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash.
+- `eligible` - Whether the wearer is eligible.
+- `standing` - Whether the wearer is in good standing.
+
+### renounceHat
+
+Burn the hat for the caller.
+
+```typescript
+const result = await hatsClient.renounceHat({
+  account,
+  hatId,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  account: Account;
+  hatId: bigint;
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `hatId` - ID of the hat to renounce.
+
+**Response**:
+```typescript
+{
+  status: 'success' | 'reverted';
+  transactionHash: `0x${string}`;
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash.
+
+### transferHat
+
+Transfer a hat from one wearer to another.
+
+```typescript
+const result = await hatsClient.transferHat({
+  account,
+  hatId,
+  from,
+  to,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  account: Account;
+  hatId: bigint;
+  from: `0x${string}`;
+  to: `0x${string}`;
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `hatId` - ID of the hat to transfer.
+- `from` - Address to transfer the hat from.
+- `to` - Address to transfer the hat to.
+
+**Response**:
+```typescript
+{
+  status: 'success' | 'reverted';
+  transactionHash: `0x${string}`;
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash.
+
+### makeHatImmutable
+
+Make a hat immutable.
+
+```typescript
+const result = await hatsClient.makeHatImmutable({
+  account,
+  hatId,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  account: Account;
+  hatId: bigint;
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `hatId` - ID of the hat to make immutable.
+
+**Response**:
+```typescript
+{
+  status: 'success' | 'reverted';
+  transactionHash: `0x${string}`;
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash.
+
+### changeHatDetails
+
+Change a hat's details.
+
+```typescript
+const result = await hatsClient.changeHatDetails({
+  account,
+  hatId,
+  newDetails,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  account: Account;
+  hatId: bigint;
+  newDetails: string;
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `hatId` - ID of the hat to change details for.
+- `newDetails` - New details to set.
+
+**Response**:
+```typescript
+{
+  status: 'success' | 'reverted';
+  transactionHash: `0x${string}`;
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash.
+
+### changeHatEligibility
+
+Change a hat's eligibility module.
+
+```typescript
+const result = await hatsClient.changeHatEligibility({
+  account,
+  hatId,
+  newEligibility,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  account: Account;
+  hatId: bigint;
+  newEligibility: `0x${string}`;
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `hatId` - ID of the hat to change eligibility for.
+- `newEligibility` - New eligibility module address.
+
+**Response**:
+```typescript
+{
+  status: 'success' | 'reverted';
+  transactionHash: `0x${string}`;
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash.
+
+### changeHatToggle
+
+Change a hat's toggle module.
+
+```typescript
+const result = await hatsClient.changeHatToggle({
+  account,
+  hatId,
+  newToggle,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  account: Account;
+  hatId: bigint;
+  newToggle: `0x${string}`;
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `hatId` - ID of the hat to change toggle for.
+- `newToggle` - New toggle module address.
+
+**Response**:
+```typescript
+{
+  status: 'success' | 'reverted';
+  transactionHash: `0x${string}`;
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash.
+
+### changeHatImageURI
+
+Change a hat's image URI.
+
+```typescript
+const result = await hatsClient.changeHatImageURI({
+  account,
+  hatId,
+  newImageURI,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  account: Account;
+  hatId: bigint;
+  newImageURI: string;
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `hatId` - ID of the hat to change image URI for.
+- `newImageURI` - New image URI to set.
+
+**Response**:
+```typescript
+{
+  status: 'success' | 'reverted';
+  transactionHash: `0x${string}`;
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash.
+
+### changeHatMaxSupply
+
+Change a hat's maximum supply.
+
+```typescript
+const result = await hatsClient.changeHatMaxSupply({
+  account,
+  hatId,
+  newMaxSupply,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  account: Account;
+  hatId: bigint;
+  newMaxSupply: bigint;
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `hatId` - ID of the hat to change maximum supply for.
+- `newMaxSupply` - New maximum supply to set.
+
+**Response**:
+```typescript
+{
+  status: 'success' | 'reverted';
+  transactionHash: `0x${string}`;
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash. 
+
+## Multicall
+
+For any write function, the SDK includes a corresponding call data version that returns the call data information instead of submitting a transaction. These objects can then be aggregated and passed into the `multicall` function in order to batch multiple operations into one transaction.
+
+### multicall
+
+Batch multiple write operations in one transaction.
+
+```typescript
+const result = await hatsClient.multicall({
+  account,
+  calls,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  account: Account;
+  calls: {
+    functionName: string;
+    callData: Hex;
+  }
+  [];
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `calls` - An array of call data objects, each one includes the function name and the call data to pass to the function.
+
+**Response**:
+```typescript
+{
+    status: "success" | "reverted";
+    transactionHash: `0x${string}`;
+    gasUsed: bigint;
+    hatsCreated: bigint[];
+    hatsMinted: {
+        hatId: bigint;
+        wearer: `0x${string}`;
+    }[];
+    hatsBurned: {
+        hatId: bigint;
+        wearer: `0x${string}`;
+    }[];
+    hatStatusChanges: {
+        hatId: bigint;
+        newStatus: "active" | "inactive";
+    }[];
+    wearerStandingChanges: {
+        hatId: bigint;
+        wearer: `0x${string}`;
+        newStanding: "good" | "bad";
+    }[];
+}
+```
+
+- `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+- `transactionHash` - Transaction's hash.
+- `gasUsed` - Amount of gas used in the transaction.
+- `hatsCreated` - Hats IDs of any newly created hats.
+- `hatsMinted` - For every hat minted, contains an object with the hat ID and the new wearer address.
+- `hatsBurned` - For every hat burned, contains an object with the hat ID and the wearer address.
+- `hatStatusChanges` - For every hat status change, contains an object with the hat ID and the new status.
+- `wearerStandingChanges` - For every wearer standing status change, contains an object with the hat ID, the wearer address and the new standing.
+
+**Example:**
+
+Create a new top-hat, then create one child hat and mint the child hat to a new wearer.
+
+```typescript
+const mintTopHatCallData = await hatsClient.mintTopHatCallData({
+  target,
+  details,
+  imageURI,
+});
+
+const createHatCallData = await hatsClient.createHatCallData({
+  admin,
+  details,
+  maxSupply,
+  eligibility,
+  toggle,
+  mutable,
+  imageURI,
+});
+
+const mintHatCallData = await hatsClient.mintHatCallData({
+  hatId,
+  wearer,
+});
+
+const result = await hatsClient.multicall({
+  account,
+  calls: [mintTopHatCallData, createHatCallData, mintHatCallData],
+});
+```
+
+### multicallPreFlightCheck
+
+Simulates the multicall function with the provided calls. The function has no return value, will revert on failure, with a custom error.
+
+```typescript
+await hatsClient.multicallPreFlightCheck({
+  account,
+  calls,
+});
+```
+
+**Arguments**:
+```typescript
+{
+  account: Account;
+  calls: {
+    functionName: string;
+    callData: Hex;
+  }
+  [];
+}
+```
+
+- `account` - Viem account to send the transaction from.
+- `calls` - An array of call data objects, each one includes the function name and the call data to pass to the function.
+```
+
+## Claiming Hats
+
+Hats can be made claimable by using the Multi Claims Hatter module.
+
+The following functions support the claiming functionality enabled by this module.
+
+### accountCanClaim
+
+Check whether an account can claim a given hat.
+
+```typescript
+const canClaim = await hatsClient.accountCanClaim({
+    hatId,
+    account,
+});
+```
+
+**Arguments**:
+```typescript
+{
+    hatId: bigint;
+    account: Address;
+}
+```
+
+* `hatId` - The hat ID to claim.
+* `account` - The claiming account's address.
+
+**Response**:
+```typescript
+boolean
+```
+
+`true` if can claim, `false` otherwise.
+
+### canClaimForAccount
+
+Check whether a hat can be claimed on behalf of a given account.
+
+```typescript
+const canClaimFor = await hatsClient.canClaimForAccount({
+    hatId,
+    account,
+});
+```
+
+**Arguments**:
+```typescript
+{
+    hatId: bigint;
+    account: Address;
+}
+```
+
+* `hatId` - The hat ID to claim-for.
+* `account` - The account address to claim on behalf of.
+
+**Response**:
+```typescript
+boolean
+```
+
+`true` if can claim-for, `false` otherwise.
+
+### claimHat
+
+Claim a hat for the calling account.
+
+```typescript
+const claimHatResult = await hatsClient.claimHat({
+    account,
+    hatId,
+});
+```
+
+**Arguments**:
+```typescript
+{
+    account: Account | Address;
+    hatId: bigint;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `hatId` - ID of the hat to claim.
+
+**Response**:
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+### claimHatFor
+
+Claim a hat on behalf of a chosen account.
+
+```typescript
+const claimHatForResult = await hatsClient.claimHatFor({
+    account,
+    hatId,
+    wearer,
+});
+```
+
+**Arguments**:
+```typescript
+{
+    account: Account | Address;
+    hatId: bigint;
+    wearer: Address;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `hatId` - ID of the hat to claim-for.
+* `wearer` - Address for which to claim the hat for.
+
+**Response**:
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+### multiClaimHatFor
+
+Claim a hat on behalf of multiple accounts.
+
+```typescript
+const claimHatForResult = await hatsClient.multiClaimHatFor({
+    account,
+    hatId,
+    wearers,
+});
+```
+
+**Arguments**:
+```typescript
+{
+    account: Account | Address;
+    hatId: bigint;
+    wearers: Address[];
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `hatId` - ID of the hat to claim-for.
+* `wearers` - Addresses for which to claim the hat for.
+
+**Response**:
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+```
+
+## Hat & Tree ID Utils
+
+Following are utility functions to handle various hat & tree ID formats.
+
+### hatIdDecimalToHex
+
+Convert a hat ID from decimal to hex.
+
+```typescript
+import { hatIdDecimalToHex } from "@hatsprotocol/sdk-v1-core";
+
+const hatIdHex = hatIdDecimalToHex(hatId);
+```
+
+**Arguments**:
+```typescript
+hatId: bigint
+```
+
+`hatId` - Hat ID in decimal format.
+
+**Response**:
+```typescript
+`0x${string}`
+```
+
+Hat ID in a hex format.
+
+### hatIdHexToDecimal
+
+Convert a hat ID from hex to decimal.
+
+```typescript
+import { hatIdHexToDecimal } from "@hatsprotocol/sdk-v1-core";
+
+const hatIdDecimal = hatIdHexToDecimal(hatId);
+```
+
+**Arguments**:
+```typescript
+hatId: string
+```
+
+`hatId` - Hat ID in hex format.
+
+**Response**:
+```typescript
+bigint
+```
+
+Hat ID in a decimal format.
+
+### treeIdDecimalToHex
+
+Convert a tree ID from decimal to hex. A tree ID is the first 4 bytes in a hat ID.
+
+```typescript
+import { treeIdDecimalToHex } from "@hatsprotocol/sdk-v1-core";
+
+const treeIdHex = treeIdDecimalToHex(treeId);
+```
+
+**Arguments**:
+```typescript
+treeId: number
+```
+
+`treeId` - Tree ID in decimal format.
+
+**Response**:
+```typescript
+`0x${string}`
+```
+
+Tree ID in a hex format.
+
+### treeIdHexToDecimal
+
+Convert a tree ID from hex to decimal. A tree ID is the first 4 bytes in a hat ID.
+
+```typescript
+import { treeIdHexToDecimal } from "@hatsprotocol/sdk-v1-core";
+
+const treeIdDecimal = treeIdHexToDecimal(treeId);
+```
+
+**Arguments**:
+```typescript
+treeId: string
+```
+
+`treeId` - Tree ID in hex format.
+
+**Response**:
+```typescript
+number
+```
+
+Tree ID in a decimal format.
+
+### treeIdToTopHatId
+
+Convert a tree ID to its top-hat ID. A tree ID is the first 4 bytes in a hat ID.
+
+```typescript
+import { treeIdToTopHatId } from "@hatsprotocol/sdk-v1-core";
+
+const tophatId = treeIdToTopHatId(treeId);
+```
+
+**Arguments**:
+```typescript
+treeId: number
+```
+
+`treeId` - Tree ID in decimal format.
+
+**Response**:
+```typescript
+bigint
+```
+
+Top-hat ID in decimal format.
+
+### hatIdToTreeId
+
+Convert a hat ID to its tree ID. A tree ID is the first 4 bytes in a hat ID.
+
+```typescript
+import { hatIdToTreeId } from "@hatsprotocol/sdk-v1-core";
+
+const treeId = hatIdToTreeId(hatId);
+```
+
+**Arguments**:
+```typescript
+hatId: bigint
+```
+
+`hatId` - Hat ID in decimal format.
+
+**Response**:
+```typescript
+number
+```
+
+Tree ID of the hat, in a decimal format.
+
+### hatIdDecimalToIp
+
+The IP format may be used as a "pretty" hat ID format for presenting.
+
+For example, a hat with a hex ID of:
+`0x00000001000a0002000000000000000000000000000000000000000000000000` will have an IP format of 1.10.2 - Each level is separated by a dot and presented as a decimal number, excluding zeros.
+
+```typescript
+import { hatIdDecimalToIp } from "@hatsprotocol/sdk-v1-core";
+
+const hatIdIp = hatIdDecimalToIp(hatId);
+```
+
+**Arguments**:
+```typescript
+hatId: bigint
+```
+
+`hatId` - Hat ID in decimal format.
+
+**Response**:
+```typescript
+string
+```
+
+Hat ID in IP format.
+
+### hatIdIpToDecimal
+
+Convert a hat ID from an IP format, to a decimal format.
+
+```typescript
+import { hatIdIpToDecimal } from "@hatsprotocol/sdk-v1-core";
+
+const hatIdDecimal = hatIdIpToDecimal(hatId);
+```
+
+**Arguments**:
+```typescript
+hatId: string
+```
+
+`hatId` - Hat ID in IP format.
+
+**Response**:
+```typescript
+bigint
+```
+
+Hat ID in decimal format.
+
+## Constants
+
+Following are Hats-specific exported constant values.
+
+```typescript
+import {   
+  HATS_V1, // Hats-Protocol v1 contract address
+  MAX_LEVELS, // Max levels on a Hats tree
+  MAX_LEVEL_HATS, // Max amount of hats on each level (excluding level 0)
+  ZERO_ID, // The zero Hat ID in hex format 
+  FALLBACK_ADDRESS, // The fallback address for eligibility and toggle 
+} from "@hatsprotocol/sdk-v1-core";
+```
