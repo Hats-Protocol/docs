@@ -153,7 +153,7 @@ From the id alone, we know a lot about this hat:
 | ------ | ------- |
 | Integer ("raw") | 6470400364654781217010529864562902351218663490360806944392503307010048 |
 | Hexadecimal | 0x0000000f000200050000a00010000000000000000000000000000000000000000 |
-| Hexadecimal with level delimiters | 0x0000000f.0002.0005.000a.0001.0000.0000.0000.0000.0000.0000.0000.0000.0000.0000<br><br>0x0000000f_0002_0005_000a_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 |
+| Hexadecimal with level delimiters | 0x0000000f.0002.0005.000a.0001.0000.0000.0000.0000.0000.0000.0000.0000.0000.0000<br><br>0x0000000f_0002_0005_000a_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 |
 | "IP address" | 15.2.5.10.1 |
 
 ### **Hat Tree Space**
@@ -3746,4 +3746,1392 @@ interface EndpointsConfig {
   [chainId: number]: { endpoint: string };
 }
 ```
+
+# 🎩 Hat Details SDK
+
+## Overview
+
+In Hats Protocol, each hat includes a details field, which is used for arbitrary metadata about the hat, such as a name, description, and other properties like authorities and responsibilities associated with the hat.
+
+A common way to use this field is to store the data on IPFS as a JSON object, and set the hat's details field with the object's CID (Content Identifier). This method allows to add rich metadata about a hat, while keeping the gas costs minimal.
+
+This package provides utility function to handle hats details, by both pinning metadata JSON objects to IPFS and reading from it.
+
+It was designed to work both in the browser and in Node.js.
+
+## Getting Started
+
+### Overview
+
+The package supports storing and reading a hat's metadata from IPFS.
+
+Data is stored in a JSON format, and follows a custom schema which is passed by the user at the client's initialization. By using a schema for the data, we're able to validate that the data is compatible with an expected format.
+
+The package uses the [Zod](https://zod.dev/) library for the schema definition and validation. The schema is also used for type inference, providing type-safety for its users.
+
+### Install
+
+yarn:
+```bash
+yarn add @hatsprotocol/details-sdk zod
+```
+
+npm:
+```bash
+npm install @hatsprotocol/details-sdk zod
+```
+
+### HatsDetailsClient Initialization
+
+A HatsDetailsClient instance is initialized with an IPFS provider (currently only [Pinata](https://www.pinata.cloud/) is supported) and a schema, defined with the [Zod](https://zod.dev/) library.
+
+#### Choose which schema to use
+
+##### Option 1 - use the default schema
+
+If the client is initialized without a custom schema, then the default schema will be used. This schema is compatible with the Hats App, meaning that this app will properly display hats with this type of details.
+
+```typescript
+import { HatsDetailsClient } from "@hatsprotocol/details-sdk";
+
+let hatsDetailsClient: HatsDetailsClient;
+hatsDetailsClient = new HatsDetailsClient({
+      provider: "pinata",
+      pinata: {
+        pinningKey: process.env.PINATA_JWT as string,
+      },
+});
+```
+
+Here's the default schema:
+
+```typescript
+z.object({
+  type: z.literal("1.0"),
+  data: z.object({
+    name: z.string(),
+    description: z.string().optional(),
+    responsabilities: z
+      .array(
+        z.object({
+          label: z.string(),
+          description: z.string().optional(),
+          link: z.string().optional(),
+          imageUrl: z.string().optional(),
+        })
+      )
+      .optional(),
+    authorities: z
+      .array(
+        z.object({
+          label: z.string(),
+          description: z.string().optional(),
+          link: z.string().optional(),
+          imageUrl: z.string().optional(),
+          gate: z.string().optional(),
+        })
+      )
+      .optional(),
+  }),
+});
+```
+
+The corresponding type for this schema is:
+
+```typescript
+{
+    type: "1.0";
+    data: {
+        name: string;
+        description?: string | undefined;
+        responsabilities?: {
+            label: string;
+            description?: string | undefined;
+            link?: string | undefined;
+            imageUrl?: string | undefined;
+        }[] | undefined;
+        authorities?: {
+            label: string;
+            description?: string | undefined;
+            link?: string | undefined;
+            imageUrl?: string | undefined;
+            gate?: string | undefined;
+        }[] | undefined;
+    };
+}
+```
+
+##### Option 2 - use a custom schema
+
+You can define a custom schema for the client, for example:
+
+```typescript
+import * as z from "zod";
+
+const schema = z.object({
+  name: z.string(),
+  description: z.string(),
+});
+
+let hatsDetailsClient: HatsDetailsClient<typeof schema>;
+hatsDetailsClient = new HatsDetailsClient({
+      schema,
+      provider: "pinata",
+      pinata: {
+        pinningKey: process.env.PINATA_JWT as string,
+      },
+});
+```
+
+#### Set up the Pinata provider
+
+The client is initialized with an IPFS provider that will be used for storing and reading to/from IPFS. Currently, Pinata is the only supported provider and is initialized with the following properties:
+
+```typescript
+{
+   pinningKey: string;
+   gateway?: string;
+   gatewayKey?: string;
+}
+```
+
+* `pinningKey` - this as a JWT that's used for pinning data, and is required at the client's initialization.
+* `gateway` - a dedicated gateway URL, that's provided by Pinata and is used to read IPFS data. This property is optional. If not provided, then the default gateway that's provided by https://ipfs.io will be used.
+* `gatewayKey` - optional key that is used to secure dedicated Pinata gateways. If provided along with a gateway, then the key will be used for fetching data.
+
+## Usage
+
+Once initialized, the HatsDetailsClient can be used for reading and storing data from/to IPFS, in a predetermined format.
+
+### Store
+
+Use the following function in order to store/pin data to IPFS.
+
+The data is expected to be compatible with the provided schema, otherwise an error will be thrown. If data was successfully pinned, its CID (content identifier) will be returned. This can then be used for reading the data back from IPFS.
+
+```typescript
+const cid = await hatsDetailsClient.pin({
+    type: "1.0",
+    data: {
+        name: "Hat",
+        description: "This is a hat",
+    },
+});
+```
+
+### Read
+
+Read data from IPFS.
+
+```typescript
+const data = await hatsDetailsClientDefaultSchema.get(
+    "QmcSopxmw5rMEEEU8NmGGQ2mbHJ293CGEiQ4r4w4jEECVy"
+);
+```
+
+The returned data has the following type:
+
+```typescript
+{
+    parsedData: z.infer<T> | null;
+    rawData: unknown | null;
+    error: { message: string } | null;
+}
+```
+
+* If data was successfully fetched and is compatible with the client's schema, then the parsed data will be in the `parsedData` field, while the `rawData` and `error` fields will be `null`.
+* If data was successfully fetched but is not compatible with the client's schema, then the data will be in the `rawData` field, while the `data` and `error` fields will be `null`.
+* If an error occurred, then the `data` and `rawData` fields will be `null`, and the `error` field will contain an object with a `message` field.
+
+# 🔭 v1 Subgraphs
+
+Check the [GitHub repository](https://github.com/Hats-Protocol/subgraph/tree/main) README for example queries and general documentation and/or our [Subgraph SDK](v1-sdk/subgraph/).
+
+**Hosted Endpoints (Free)**:
+
+* [Ethereum (mainnet)](https://api.studio.thegraph.com/query/55784/hats-v1-ethereum/version/latest)
+* [Arbitrum](https://api.studio.thegraph.com/query/55784/hats-v1-arbitrum/version/latest)
+* [Base](https://api.studio.thegraph.com/query/55784/hats-v1-base/version/latest)
+* [Celo](https://api.studio.thegraph.com/query/55784/hats-v1-celo/version/latest)
+* [Gnosis](https://api.studio.thegraph.com/query/55784/hats-v1-gnosis-chain/version/latest)
+* [Optimism](https://api.studio.thegraph.com/query/55784/hats-v1-optimism/version/latest)
+* [Polygon](https://api.studio.thegraph.com/query/55784/hats-v1-polygon/version/latest)
+* [Sepolia](https://api.studio.thegraph.com/query/55784/hats-v1-sepolia/version/latest)
+
+**The Graph Network Endpoints:**
+
+* [Ethereum (mainnet)](https://thegraph.com/explorer/subgraphs/AtrhAMCcVfPbmejxTez3G59Kdfu5tMFoiPsTUjdCzpKx?view=Overview&chain=arbitrum-one)
+* [Arbitrum](https://thegraph.com/explorer/subgraphs/4CiXQPjzKshBbyK2dgJiknTNWcj8cGUJsopTsXfm5HEk?view=Overview&chain=arbitrum-one)
+* [Celo](https://thegraph.com/explorer/subgraphs/GpKseh3Z4nX2X8W5HjQPp5hpSSxPxsaQ3t1KpEjhvz7t?view=Overview&chain=arbitrum-one)
+* [Gnosis](https://thegraph.com/explorer/subgraphs/2VPQUuAeS9Xy8VtinpjHRJEMnZS1sqzFQyCHAys1wb5n?view=Overview&chain=arbitrum-one)
+* [Optimism](https://thegraph.com/explorer/subgraphs/9nmXXk3ysDVY4sFygWQNQknwiJLCPnrUNzDRw8bxw61q?view=Overview&chain=arbitrum-one)
+* [Polygon](https://thegraph.com/explorer/subgraphs/7MxsRb1p4UQNET8AgrWd93h3GUgeQ7NWrk5SHLEPCxBP?view=Overview&chain=arbitrum-one)
+
+# 🧩 Hats Modules
+
+A Hats Module is any contract that serves as an Eligibility module, a Toggle module, and/or a Hatter contract. Modules customize, automate, and extend the behavior of Hats Protocol, and can also serve as adapters or integration points with other protocols and applications.
+
+In a sense, modules are the lifeblood of Hats Protocol. The design space is wide open, ready to be filled with all the possible building blocks of human organization and coordination.
+
+## Types of Modules
+
+### Eligibility Modules
+Eligibility modules enforce requirements that prospective wearers must meet in order to wear a given hat. Examples include:
+- ERC20 token holdings
+- ERC721 NFT ownership
+- ERC1155 token balance
+- Staking requirements
+- JokeRace contest participation
+
+### Toggle Modules
+Toggle modules control the activation and deactivation of hats based on specific conditions. Examples include:
+- Seasonal time expiry
+- Pass-through hat-based activation
+
+### Hatter Modules
+Hatter contracts can serve as the admin of one or more hats to implement specific logic, rules, or changes to hats, such as:
+- Changing hat details
+- Minting hats to new addresses based on custom logic
+- Making hats claimable based on eligibility criteria
+- Managing DAOhaus Moloch v3 membership and share allocation
+
+## Module Development
+
+Typically, Hats Modules inherit from the HatsModule.sol contract, which provides:
+1. Basic boilerplate for new module contracts
+2. Compatibility with HatsModuleFactory.sol for easy and cheap deployment
+3. Compatibility with the module registry for discovery and front-end integration
+
+Common module extensions include:
+- HatsEligibilityModule.sol: implements IHatsEligibility.sol
+- HatsToggleModule.sol: implements IHatsToggle.sol
+
+## Modules Registry
+
+The modules registry is a curated list of verified modules that includes:
+- Module name and description
+- GitHub repo information
+- Module type (eligibility, toggle, and/or hatter)
+- Implementation contract address and deployments
+- Immutable and mutable arguments specifications
+- Module ABI
+
+The registry is currently governed by the Hats Protocol core team, with plans to decentralize curation to the wider Hats community.
+
+Note: Modules do not need to be on the registry to be compatible at the protocol level, as Hats Protocol itself is fully permissionless.
+
+# 🔌 Modules SDK
+
+## Overview
+
+The Modules SDK is an open source JavaScript client that provides core functionality for using existing eligibility, toggle, and hatter Modules. It is designed to work both in the browser and in Node.js.
+
+The available Modules are included in the Modules registry - an open source registry (currently hosted on GitHub) which contains the various Hats Modules available to use.
+
+## Getting Started
+
+### _Install_
+
+yarn:
+
+```bash
+yarn add @hatsprotocol/modules-sdk viem
+```
+
+npm:
+
+```bash
+npm install @hatsprotocol/modules-sdk viem
+```
+
+The SDK uses Viem in order to interact with the various chains and includes it as a peer dependency.
+
+### _HatsModulesClient Initialization_
+
+Import and initialize HatsModulesClient:
+
+```typescript
+import { HatsModulesClient } from "@hatsprotocol/modules-sdk";
+
+const hatsModulesClient = new HatsModulesClient({
+    publicClient,
+    walletClient,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    publicClient: PublicClient;
+    walletClient: WalletClient;
+}
+```
+
+* `publicClient` - A Viem Public Client, used for onchain read operations.
+* `walletClient` - A Viem Wallet Client, used for onchain write operations.&#x20;
+
+### _Prepare_
+
+The `prepare` function fetches from the [modules registry](https://github.com/Hats-Protocol/modules-registry). This step is necessary in order to be able to use the client. Additionally, the function accepts an optional `registry` input , in order to support user's caching. If provided, then the client will use the given modules instead of fetching from the registry.
+
+```typescript
+await hatsModulesClient.prepare();
+```
+
+_**Arguments**_:
+
+```typescript
+registry?: Registry
+```
+
+`registry` - Optional [registry object](types.md#registry) to use, instead of fetching from the current registry.
+
+## Get Available Modules
+
+The following functions are used in order to get available modules, as exist in the [Modules Registry](../hats-modules/building-hats-modules/modules-registry.md).
+
+See the Module type [here](../hats-modules/modules-sdk/types.md#module).
+
+### <mark style="color:purple;">getModules</mark>
+
+Get all available modules, optionally use a filter function in order to retrieve only a subset of the modules.
+
+```typescript
+const modules = hatsModulesClient.getAllModules();
+```
+
+_**Arguments**_:
+
+```typescript
+filter?: (module: Module) => boolean
+```
+
+An optional filter function. For each [Module](../hats-modules/modules-sdk/types.md#module), should return `true` if the module should be included, `false` otherwise.
+
+_**Response**_:
+
+```typescript
+{ [id: string]: Module }
+```
+
+An object that maps between module IDs and the corresponding module objects. A module ID is its implementation address.
+
+### <mark style="color:purple;">getModuleById</mark>
+
+Get a module object by its ID.
+
+```typescript
+const module = hatsModulesClient.getModuleById(moduleId);
+```
+
+_**Arguments**_:
+
+```typescript
+string
+```
+
+Module's ID (implementation address).
+
+_**Response**_:
+
+<pre class="language-typescript"><code class="lang-typescript"><strong>Module | undefined
+</strong></code></pre>
+
+The module that matches the provided ID, or `undefined` in case no matching module was found.
+
+### <mark style="color:purple;">getModuleByImplementation</mark>
+
+Get a module object by its implementation address.
+
+```typescript
+const module = hatsModulesClient.getModuleByImplementation(address);
+```
+
+_**Arguments**_:
+
+```typescript
+`0x${string}`
+```
+
+Module's implementation address.
+
+_**Response**_:
+
+<pre class="language-typescript"><code class="lang-typescript"><strong>Module | undefined
+</strong></code></pre>
+
+The module that matches the provided address, or `undefined` in case no matching module was found.
+
+### <mark style="color:purple;">getModuleByInstance</mark>
+
+Get the module object of an instance.
+
+```typescript
+const module = await hatsModulesClient.getModuleByInstance(address);
+```
+
+_**Arguments**_:
+
+```typescript
+`0x${string}`
+```
+
+Module's instance address.
+
+_**Response**_:
+
+<pre class="language-typescript"><code class="lang-typescript"><strong>Module | undefined
+</strong></code></pre>
+
+The module that matches the provided address, or `undefined` in case no matching module was found.
+
+### <mark style="color:purple;">getModulesByInstances</mark>
+
+Get the module objects of instances.
+
+```typescript
+const modules = await hatsModulesClient.getModulesByInstances(addresses);
+```
+
+_**Arguments**_:
+
+```typescript
+`0x${string}`[]
+```
+
+Addresses of the module instances.
+
+_**Response**_:
+
+<pre class="language-typescript"><code class="lang-typescript"><strong>(Module | undefined)[]
+</strong></code></pre>
+
+The modules matching the provided addresses. For every address that is not an instance of a registry module, the corresponding return value in the array will be `undefined`.
+
+## Create New Instance/s
+
+### <mark style="color:purple;">createNewInstance</mark>
+
+Create a new module instance.
+
+```typescript
+const createInstanceResult = await hatsModulesClient.createNewInstance({
+    account,
+    moduleId,
+    hatId,
+    immutableArgs,
+    mutableArgs,
+    saltNonce,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    moduleId: string;
+    hatId: bigint;
+    immutableArgs: unknown[];
+    mutableArgs: unknown[];
+    saltNonce?: bigint;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `moduleId` - The module ID (implementation address).
+* `hatId` - The hat ID for which the module is created.
+* `immutableArgs` - The module's immutable args. The arguments should be in the same order as in the [Module](types.md#module) object.
+* `mutableArgs` - The module's mutable args. The arguments should be in the same order as in the [Module](types.md#module) object.
+* `saltNonce` - Optional salt nonce to use. If not provided, will be randomly generated.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+  newInstance: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+* `newInstance` - In case of success, the address of the new module instance.
+
+### <mark style="color:purple;">batchCreateNewInstances</mark>
+
+Batch create new module instances.
+
+Each module will be created according to the provided parameters, on the same corresponding array index.
+
+```typescript
+const createInstancesResult = await hatsModulesClient.batchCreateNewInstances({
+    account,
+    moduleIds,
+    hatIds,
+    immutableArgsArray,
+    mutableArgsArray,
+    saltNonces
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    moduleIds: string[];
+    hatIds: bigint[];
+    immutableArgsArray: unknown[][];
+    mutableArgsArray: unknown[][];
+    saltNonces?: bigint[]; 
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `moduleIds` - The module IDs (implementation address).
+* `hatIds` - The hat IDs for which the modules are created.
+* `immutableArgsArray` - Each module's immutable arguments. For each module, the arguments should be in the same order as in the [Module](types.md#module) object.
+* `mutableArgsArray` - Each module's mutable arguments. For each module, the arguments should be in the same order as in the [Module](types.md#module) object.
+* `saltNonces` - Optional salt nonces to use. If not provided, will be randomly generated.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+  newInstances: Array<`0x${string}`>;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+* `newInstances` - The address of the new module instances.
+
+### <mark style="color:purple;">predictHatsModuleAddress</mark>
+
+Predict a module's address before/after it was created, using its creation arguments.
+
+```typescript
+const predictedAddress = await hatsModulesClient.predictHatsModuleAddress({
+    moduleId,
+    hatId,
+    immutableArgs,
+    saltNonce,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+   moduleId: string;
+   hatId: bigint;
+   immutableArgs: unknown[];
+   saltNonce: bigint;
+}
+```
+
+* `moduleId` - Module's ID.
+* `hatId` - The target hat ID, as provided to the [instance creation function](create-new-instance-s.md#createnewinstance).
+* `immutableArgs` - The module's immutable args, as provided to the [instance creation function](create-new-instance-s.md#createnewinstance).
+* `saltNonce` - Salt nonce to use.
+
+_**Response**_:
+
+```typescript
+`0x${string}`
+```
+
+The predicted module address.
+
+## Composing Modules
+
+The following functions support the usage Eligibility/Toggle modules that compose other existing modules with "and"/"or" logical operations. Check out the documentation [here](../../building-hats-modules/about-module-chains.md) to learn more.
+
+### Create New Eligibility/Toggle Chains
+
+### <mark style="color:purple;">createEligibilitiesChain</mark>
+
+Create a new eligibilities chain module.&#x20;
+
+```typescript
+const createInstanceResult = await hatsModulesClient.createEligibilitiesChain({
+    account,
+    hatId,
+    numClauses,
+    clausesLengths,
+    modules,
+    saltNonce,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    hatId: bigint;
+    numClauses: number;
+    clausesLengths: number[];
+    modules: `0x${string}`[];
+    saltNonce?: bigint;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `hatId` - The hat ID for which the module is created.
+* `numClauses` - Number of conjunction clauses.
+* `clausesLengths` - Length of each clause.
+* `modules`- Array of module instances to chain, at the order corresponding to the provided clauses.
+* `saltNonce` - Optional salt nonce to use. If not provided, will be randomly generated.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+  newInstance: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+* `newInstance` - In case of success, the address of the new chain module instance.
+
+### <mark style="color:purple;">createTogglesChain</mark>
+
+Create a new toggles chain module.
+
+```typescript
+const createInstanceResult = await hatsModulesClient.createTogglesChain({
+    account,
+    hatId,
+    numClauses,
+    clausesLengths,
+    modules,
+    saltNonce,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    hatId: bigint;
+    numClauses: number;
+    clausesLengths: number[];
+    modules: `0x${string}`[];
+    saltNonce?: bigint;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `hatId` - The hat ID for which the module is created.
+* `numClauses` - Number of conjunction clauses.
+* `clausesLengths` - Length of each clause.
+* `modules`- Array of module instances to chain, at the order corresponding to the provided clauses.
+* `saltNonce` - Optional salt nonce to use. If not provided, will be randomly generated.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+  newInstance: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+* `newInstance` - In case of success, the address of the new chain module instance.
+
+### Read From Eligibility/Toggle Chains
+
+The following functions support reading from chain module instances.&#x20;
+
+### <mark style="color:purple;">getRulesets</mark>
+
+Get the rulesets of a module instance.
+
+A ruleset is an array of modules which are chained together with an "AND" logical operator. If the module is a chain with multiple rulesets, then these rulesets are chained together with an "OR" logical operator.
+
+If the provided address is a single module instance (not a chain), then the result will be a single ruleset, which will consist of the single module instance.
+
+```typescript
+const rulesets = await hatsModulesClient.getRulesets(address);
+```
+
+_**Arguments**_:
+
+```typescript
+`0x${string}`
+```
+
+Instance address.
+
+_**Response**_:
+
+```typescript
+Ruleset[] | undefined
+```
+
+The module's [rulesets](types.md#ruleset), or `undefined` if the provided address is not a module.
+
+### <mark style="color:purple;">getRulesetsBatched</mark>
+
+Get the rulesets of multiple module instances.
+
+A ruleset is an array of modules which are chained together with an "AND" logical operator. If the module is a chain with multiple rulesets, then these rulesets are chained together with an "OR" logical operator.
+
+If the provided address is a single module instance (not a chain), then the result will be a single ruleset, which will consist of the single module instance.
+
+```typescript
+const rulesets = await hatsModulesClient.getRulesetsBatched(addresses);
+```
+
+_**Arguments**_:
+
+```typescript
+`0x${string}`[]
+```
+
+Array of instance addresses.
+
+_**Response**_:
+
+```typescript
+(Ruleset[] | undefined)[]
+```
+
+For each module instance, returns the module's [rulesets](types.md#ruleset), or `undefined` if the provided address is not a module.
+
+### <mark style="color:purple;">isChain</mark>
+
+Check whether a module instance is a modules chain.
+
+```typescript
+const isChain = await hatsModulesClient.isChain(address);
+```
+
+_**Arguments**_:
+
+```typescript
+`0x${string}`
+```
+
+Instance address.
+
+_**Response**_:
+
+```typescript
+boolean
+```
+
+`true` if the instance is a chain, `false` otherwise.
+
+### <mark style="color:purple;">isChainBatched</mark>
+
+Check whether multiple module instances are modules chains.
+
+```typescript
+const isChainBatched = await hatsModulesClient.isChainBatched(addresses);
+```
+
+_**Arguments**_:
+
+```typescript
+`0x${string}`[]
+```
+
+Instance addresses.
+
+_**Response**_:
+
+```typescript
+boolean[]
+```
+
+For each instance, `true` if the instance is a chain, `false` otherwise.
+
+## Interact With Instances
+
+The following functions provide utilities to support the interaction with module instances: checking whether a certain instance was created, reading instance's [display parameters](types.md#module) (as specified in the 'parameter' property in the Module's object) and calling its write functions.
+
+To get the module's object from an instance address, use [this function](../../modules-sdk/get-available-modules.md#getmodulebyinstance).
+
+### <mark style="color:purple;">isModuleDeployed</mark>
+
+Check if a module is already deployed, using its creation arguments.
+
+```typescript
+const isDeployed = await hatsModulesClient.isModuleDeployed({
+    moduleId,
+    hatId,
+    immutableArgs,
+    saltNonce,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+   moduleId: string;
+   hatId: bigint;
+   immutableArgs: unknown[];
+   saltNonce: bigint;
+}
+```
+
+* `moduleId` - Module's ID.
+* `hatId` - The target hat ID, as provided to the [instance creation function](create-new-instance-s.md#createnewinstance).
+* `immutableArgs` - The module's immutable args, as provided to the [instance creation function](create-new-instance-s.md#createnewinstance).
+* `saltNonce` - Salt nonce to use.
+
+_**Response**_:
+
+```typescript
+boolean
+```
+
+`true` if the module was deployed, `false` otherwise.
+
+### <mark style="color:purple;">getInstanceParameters</mark>
+
+Get a module's instance live parameters.&#x20;
+
+The parameters to fetch are listed in the [Module's registry object](types.md#module) (in the 'parameters' property), and their purpose is to display relevant information for each module instance.
+
+```typescript
+const module = await hatsModulesClient.getInstanceParameters(instance);
+```
+
+_**Arguments**_:
+
+```typescript
+instance: `0x${string}`
+```
+
+`instance` - Instance's address.
+
+_**Response**_:
+
+```typescript
+{
+  label: string;
+  value: unknown;
+  solidityType: string;
+  displayType: string;
+}[]
+```
+
+An array of objects, each containing a parameter's information:
+
+* `label` - The parameter's name/description.
+* `value` - The parameter's value, as was returned from the instance contract.
+* `solidityType` - The parameter's Solidity type.
+* `displayType`- The parameter's display type. Its purpose is for UIs to be able to render an appropriate component for the parameter. For example, rendering a date for timestamps.
+
+### <mark style="color:purple;">callInstanceWriteFunction</mark>
+
+Call a module's write function.
+
+The 'customRoles' and 'writeFunctions' properties of a [Module's object](types.md#module) enable to programmatically get all the write functions of a module, together with any necessary information to call them: expected input arguments and the roles (Hats) that have the permission to call each function.
+
+```typescript
+const res = await hatsModulesClient.callInstanceWriteFunction({
+    account,
+    moduleId,
+    instance,
+    func,
+    args,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    moduleId: string;
+    instance: Address;
+    func: WriteFunction;
+    args: unknown[];
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `moduleId` - Module's ID (implementation address).
+* `instance` - Instance's address.
+* `func` - The function to call, provided as an object of [WriteFunction](types.md#writefunction) type.
+* `args` - The input arguments to pass the function.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+## Utilities
+
+### <mark style="color:purple;">getSchema</mark>
+
+The SDK uses Zod schemas in order to verify inputs for [createNewInstance](broken-reference), according to their target Solidity types. The `getSchema` function is exported as a utility function, to get the Zod schema for a corresponding Solidity type.
+
+```typescript
+import { getSchema } from "@hatsprotocol/modules-sdk";
+
+const schema = getSchema(solidityType);
+```
+
+_**Arguments**_:
+
+```typescript
+solidityType: string
+```
+
+`solidityType` - The name of the Solidity type, e.g. "uint256".
+
+_**Response**_:
+
+```typescript
+ZodType
+```
+
+The Zod schema for the provided type.&#x20;
+
+### <mark style="color:purple;">verify</mark>
+
+Verify a value according to its target Solidity type.
+
+```typescript
+import { verify } from "@hatsprotocol/modules-sdk";
+
+const isValid = verify(val, type);
+```
+
+_**Arguments**_:
+
+```typescript
+(val: unknown, type: string)
+```
+
+* `val` - The value to verify.
+* `type` - The target Solidity type for the provided value.
+
+_**Response**_:
+
+```typescript
+boolean
+```
+
+`true` if the provided value is compatible with the Solidity type, `false` otherwise.
+
+### <mark style="color:purple;">solidityToTypescriptType</mark>
+
+Utility function that maps between a Solidity type to its compatible Typescript type.
+
+```typescript
+import { solidityToTypescriptType } from "@hatsprotocol/modules-sdk";
+
+const tsType = solidityToTypescriptType(solidityType);
+```
+
+_**Arguments**_:
+
+```typescript
+solidityType: string
+```
+
+`solidityType` - The name of the Solidity type, e.g. "uint256".
+
+_**Response**_:
+
+```typescript
+"number"    | 
+"bigint"    |
+"string"    |
+"boolean"   |
+"number[]"  | 
+"bigint[]"  | 
+"string[]"  | 
+"boolean[]" | 
+"unknown"
+```
+
+The name of the Typescript type which is compatible to the provided Solidity one.
+
+### <mark style="color:purple;">checkAndEncodeArgs</mark>
+
+Check and encode the immutable and mutable arguments for module creation.
+
+This is a utility function for interacting with the [HatsModuleFactory](../building-hats-modules/how-module-instances-are-deployed.md) directly, rather than using the [createNewInstance](create-new-instance-s.md#createnewinstance) function from the SDK. This may be useful in cases where the module creation is proxied by another contract and expects similar input parameters as the [createHatsModule](https://github.com/Hats-Protocol/hats-module/blob/38f80eed6ce444f924f5982858daf75e724be6f9/src/HatsModuleFactory.sol#L69C12-L69C28) function from the factory.
+
+```typescript
+import { checkAndEncodeArgs } from "@hatsprotocol/modules-sdk";
+
+const { encodedImmutableArgs, encodedMutableArgs } = checkAndEncodeArgs({
+   module,
+   immutableArgs,
+   mutableArgs,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+  module: Module;
+  immutableArgs: unknown[];
+  mutableArgs: unknown[];
+}
+```
+
+`module` - The module object of the module that will be created.
+
+`immutableArgs` - The module's immutable arguments.
+
+`mutableArgs` - The modules's mutable arguments.
+
+_**Response**_:
+
+```typescript
+{
+  encodedImmutableArgs: "" | `0x${string}`;
+  encodedMutableArgs: "" | `0x${string}`;
+}
+```
+
+The encoded immutable and mutable arguments, as expected by the [createHatsModule](https://github.com/Hats-Protocol/hats-module/blob/38f80eed6ce444f924f5982858daf75e724be6f9/src/HatsModuleFactory.sol#L69C12-L69C28) function from the factory.&#x20;
+
+### <mark style="color:purple;">checkImmutableArgs</mark>
+
+Check the immutable arguments for module creation.
+
+Checks that the provided immutable arguments are valid according to the module's schema from the registry. If not, the function will throw a detailed error.
+
+```typescript
+import { checkImmutableArgs } from "@hatsprotocol/modules-sdk";
+
+checkImmutableArgs({ module, immutableArgs });
+```
+
+_**Arguments**_:
+
+```typescript
+{
+  module: Module;
+  immutableArgs: unknown[];
+}
+```
+
+`module` - The module object of the module that will be created.
+
+`immutableArgs` - The module's immutable arguments.
+
+### <mark style="color:purple;">checkMutableArgs</mark>
+
+Check the mutable arguments for module creation.
+
+Checks that the provided mutable arguments are valid according to the module's schema from the registry. If not, the function will throw a detailed error.
+
+```typescript
+import { checkMutableArgs } from "@hatsprotocol/modules-sdk";
+
+checkMutableArgs({ module, mutableArgs });
+```
+
+_**Arguments**_:
+
+```typescript
+{
+  module: Module;
+  mutableArgs: unknown[];
+}
+```
+
+`module` - The module object of the module that will be created.
+
+`mutableArgs` - The module's mutable arguments.
+
+### <mark style="color:purple;">getNewInstancesFromReceipt</mark>
+
+Get the addresses of newly created module instance/s, using the creation transaction receipt.
+
+```typescript
+import { getNewInstancesFromReceipt } from "@hatsprotocol/modules-sdk";
+
+const instances = getNewInstancesFromReceipt(receipt);
+```
+
+_**Arguments**_:
+
+```typescript
+receipt: TransactionReceipt
+```
+
+`receipt` - The transaction receipt as a TransactionReceipt Viem object.
+
+_**Response**_:
+
+```typescript
+`0x${string}`[]
+```
+
+An array of the newly created instances/s.
+
+## Types
+
+### <mark style="color:purple;">Module</mark>
+
+Represents a module object, compatible with the registry's module objects.
+
+```typescript
+{
+  name: string; // module's name
+  details: string[]; // array of strings representing paragraphs that describe the module to end users.
+  links: { // relevant links about the module
+    label: string; // link's name
+    link: string; // URL
+  }[];
+  parameters: { // module's dispaly parameters, chosen by its creator as relevant for dispaly to end users
+    label: string; // parameter's name
+    functionName: string; // name of the view or pure function that gets the parameter value
+    displayType: string; // a free-text field that tells front ends how to generate a proper UI component for the parameter
+  }[];
+  type: { // type of module
+    eligibility: boolean;
+    toggle: boolean;
+    hatter: boolean;
+  };
+  tags: {
+    description: string;
+    label: string;
+    value: string;
+  }[];
+  implementationAddress: string; // module's implementation address, equal in every network
+  deployments: { // networks the implementation is deployed and supported
+    chainId: string; // chain's ID
+    block: string; // block number of the deployment transaction
+  }[];
+  creationArgs: ModuleCreationArgs; // the arguments that are passed to the module factory's creation function
+  customRoles: Role[]; // module's custom roles
+  writeFunctions: WriteFunction[]; // module's write functions
+  abi: Abi; // module's ABI
+}
+```
+
+### <mark style="color:purple;">Role</mark>
+
+A module's custom role. Each module role is associated with a hat and grants permissions to the hat's wearer(s) to call certain functions on the module contract.
+
+There are two special roles with a reserved ID that are automatically added to each module:
+
+1. `public` role, associated with functions that are permitted to any caller
+2. `hatAdmins` role, associated with functions that are permitted to the target hat's admins
+
+```typescript
+{
+  id: string; // role's ID
+  name: string; // role's name
+  criteria: string; // The name of the contract function which can be used to retrieve the role's hat
+  hatAdminsFallback?: boolean; // 'true' indicates that the role is granted to the target hat's admin(s) if/when the role's criteria function returns zero.
+}
+```
+
+### <mark style="color:purple;">WriteFunction</mark>
+
+The module's write functions. Each write function is associated with a role and grants permissions to the role's wearer(s) to call the function on the module contract.
+
+```typescript
+{
+  roles: string[]; // IDs of the roles that have the authority to call the function
+  functionName: string; // the name of the function in the contract
+  label: string; // the name to be displayed to end users
+  description: string; // a description of the function to be displayed to end users
+  primary?: boolean; // 'true' indicates that this function is the primary function of the roles it is associated with. Front ends can use this information to display the function more prominently for each role
+  args: WriteFunctionArg[]; // the arguments of the function
+}
+```
+
+### <mark style="color:purple;">WriteFunctionArg</mark>
+
+Module write function argument.
+
+```typescript
+{
+  name: string; // arg's name 
+  description: string; // arg's description
+  type: string; // arg's solidity type, e.g. 'uint256'
+  displayType: string; // a free-text field that tells front ends how to generate a proper UI component for the parameter
+  optional?: boolean; // setting to 'true' indicates that this input is optional
+}
+```
+
+### <mark style="color:purple;">ModuleCreationArgs</mark>
+
+The arguments that are passed to the module [factory's creation function](create-new-instance-s.md#createnewinstance). The arguments are divided into two arrays: `immutable` and `mutable`. The `immutable` array contains arguments that are set once when the module instance is created and cannot be changed. The `mutable` array contains arguments that can be changed after the module instance is created.
+
+* `useHatId` - By default, new instances should be created with the `hatId` value set to the target hat's ID.  A `false` value here indicates that the module's `hatId` value should be set to zero.
+* In both the `immutable` and `mutable` array properties, the order of the arguments must match the order expected by the contract.
+
+```typescript
+{
+  useHatId: boolean; 
+  immutable: ModuleCreationArg[];
+  mutable: ModuleCreationArg[];
+}
+```
+
+### <mark style="color:purple;">ModuleCreationArg</mark>
+
+Immutable/mutable argument, provided in the module's [creation arguments](types.md#modulecreationargs).
+
+<pre class="language-typescript"><code class="lang-typescript">{
+  name: string; // arg's name
+  description: string; // arg's description
+  type: string; // arg's solidity type, e.g. 'uint256'
+  example: unknown; // example value 
+  displayType: string; // a free-text field that tells front ends how to generate a proper UI component for the parameter
+<strong>  optional?: boolean;
+</strong>}
+</code></pre>
+
+### <mark style="color:purple;">Registry</mark>
+
+A [Hats Modules Registry](../building-hats-modules/modules-registry.md) object.
+
+```typescript
+{
+  modules: Module[];
+}
+```
+
+### <mark style="color:purple;">ModuleParameter</mark>
+
+Module parameter object, as returned by the [getInstanceParameters](interact-with-instances.md#getinstanceparameters) function.
+
+```typescript
+{
+  label: string;
+  value: unknown;
+  solidityType: string;
+  displayType: string;
+}
+```
+
+### <mark style="color:purple;">ArgumentTsType</mark>
+
+A Typescript type, as returned by the [solidityToTypescriptType function](utilities.md#soliditytotypescripttype).
+
+```typescript
+| "number"
+| "bigint"
+| "string"
+| "boolean"
+| "number[]"
+| "bigint[]"
+| "string[]"
+| "boolean[]"
+| "unknown";
+```
+
+### <mark style="color:purple;">Ruleset</mark>
+
+A modules ruleset is an array of module instances which are chained together with an 'AND' logical operator.&#x20;
+
+```typescript
+{
+  module: Module; // the module's object from the registry
+  address: `0x${string}`; // the module's instance address
+}[]
+```
+
+# ⚒ Building Hats Modules
+
+This section provides an overview of how Hats modules are built and deployed into production. In the docs below, you'll learn how to create new modules and about the tools we've developed to make that easier.
+
+### Developer Community
+
+For technical support, questions, and to explore/share ideas, join the [Hats Protocol Dev Chat](https://t.me/+HrcKPUxaWvg3Zjhh) on Telegram.
+
+### All About Hats Modules
+
+{% content-ref url="inside-a-hats-module/" %}
+[inside-a-hats-module](inside-a-hats-module/)
+{% endcontent-ref %}
+
+{% content-ref url="creating-new-modules.md" %}
+[creating-new-modules.md](creating-new-modules.md)
+{% endcontent-ref %}
+
+{% content-ref url="how-module-instances-are-deployed.md" %}
+[how-module-instances-are-deployed.md](how-module-instances-are-deployed.md)
+{% endcontent-ref %}
+
+{% content-ref url="modules-registry.md" %}
+[modules-registry.md](modules-registry.md)
+{% endcontent-ref %}
+
+{% content-ref url="../../building-hats-modules/about-module-chains.md" %}
+[about-module-chains.md](../../building-hats-modules/about-module-chains.md)
+{% endcontent-ref %}
+
+# Inside a Hats Module
+
+Typically, Hats Modules inherit from the [HatsModule.sol](https://github.com/Hats-Protocol/hats-module/blob/main/src/HatsModule.sol) contract. This is an abstract contract that provides a generic structure that modules can extend to support any specific use case.
+
+It serves several key functions:
+
+1. Provide the basic boiler plate required for a new Hats module contract.
+2. Enable compatibility with [HatsModuleFactory.sol](../how-module-instances-are-deployed.md), the easiest and cheapest way for users to deploy new instances of a given module.
+3. Enable compatibility with the [module registry](https://github.com/Hats-Protocol/modules-registry), which facilitates user discovery and integration into Hats front ends.
+
+{% hint style="info" %}
+Inheriting from HatsModule.sol is necessary to be deployable via HatsModuleFactory, to be listed in the Module registry, and to appear natively in the applications using the registry.&#x20;
+
+However, it is _not_ required for compatibility with Hats Protocol more generally. See the docs for [Eligibility](../../../hats-protocol-for-developers/eligibility-modules.md) and [Toggle](../../../hats-protocol-for-developers/toggle-modules.md) modules for those requirements.
+
+The remainder of this documentation assumes inheritance of HatsModule.
+{% endhint %}
+
+## HatsModule.sol
+
+HatsModule.sol's primary function is to enable a module to be configured and deployed via [HatsModuleFactory](../how-module-instances-are-deployed.md). Often, each new hat to which a module is attached involves a new instance of that module, so its important for deployment to be gas-efficient. Additionally, each module is likely to be called many times over its life, so its also important for runtime execution to be gas-efficient.&#x20;
+
+For these reasons, HatsModule.sol is structured as a minimal proxy (clone) contract — similar to the [EIP-1167](https://eips.ethereum.org/EIPS/eip-1167) standard — that also supports immutable arguments. It implements the gas-efficient [LibClone.sol](https://github.com/Vectorized/solady/blob/6c54795ef69838e233020e9ab29f3f6288efdf06/src/utils/LibClone.sol) library.
+
+See the following pages for more detail about how HatsModule.sol operates:
+
+{% content-ref url="immutable-arguments.md" %}
+[immutable-arguments.md](immutable-arguments.md)
+{% endcontent-ref %}
+
+{% content-ref url="module-setup.md" %}
+[module-setup.md](module-setup.md)
+{% endcontent-ref %}
+
+{% content-ref url="versioning.md" %}
+[versioning.md](versioning.md)
+{% endcontent-ref %}
+
+### Extensions
+
+There are a couple stock extensions to HatsModule.sol that are useful starting points for common types of modules:
+
+* HatsEligibilityModule.sol: implements [`IHatsEligibility.sol`](../../../hats-protocol-for-developers/eligibility-modules.md)
+* HatsToggleModule.sol: implements [`IHatsToggle.sol`](../../../hats-protocol-for-developers/toggle-modules.md)
 
