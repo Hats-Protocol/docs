@@ -4280,53 +4280,6 @@ A Hats Module is any contract that serves as an Eligibility module, a Toggle mod
 
 In a sense, modules are the lifeblood of Hats Protocol. The design space is wide open, ready to be filled with all the possible building blocks of human organization and coordination.
 
-## Types of Modules
-
-### Eligibility Modules
-Eligibility modules enforce requirements that prospective wearers must meet in order to wear a given hat. Examples include:
-- ERC20 token holdings
-- ERC721 NFT ownership
-- ERC1155 token balance
-- Staking requirements
-- JokeRace contest participation
-
-### Toggle Modules
-Toggle modules control the activation and deactivation of hats based on specific conditions. Examples include:
-- Seasonal time expiry
-- Pass-through hat-based activation
-
-### Hatter Modules
-Hatter contracts can serve as the admin of one or more hats to implement specific logic, rules, or changes to hats, such as:
-- Changing hat details
-- Minting hats to new addresses based on custom logic
-- Making hats claimable based on eligibility criteria
-- Managing DAOhaus Moloch v3 membership and share allocation
-
-## Module Development
-
-Typically, Hats Modules inherit from the HatsModule.sol contract, which provides:
-1. Basic boilerplate for new module contracts
-2. Compatibility with HatsModuleFactory.sol for easy and cheap deployment
-3. Compatibility with the module registry for discovery and front-end integration
-
-Common module extensions include:
-- HatsEligibilityModule.sol: implements IHatsEligibility.sol
-- HatsToggleModule.sol: implements IHatsToggle.sol
-
-## Modules Registry
-
-The modules registry is a curated list of verified modules that includes:
-- Module name and description
-- GitHub repo information
-- Module type (eligibility, toggle, and/or hatter)
-- Implementation contract address and deployments
-- Immutable and mutable arguments specifications
-- Module ABI
-
-The registry is currently governed by the Hats Protocol core team, with plans to decentralize curation to the wider Hats community.
-
-Note: Modules do not need to be on the registry to be compatible at the protocol level, as Hats Protocol itself is fully permissionless.
-
 # 🔌 Modules SDK
 
 ## Overview
@@ -4335,9 +4288,9 @@ The Modules SDK is an open source JavaScript client that provides core functiona
 
 The available Modules are included in the Modules registry - an open source registry (currently hosted on GitHub) which contains the various Hats Modules available to use.
 
-## Getting Started
+# Getting Started
 
-### _Install_
+## _Install_
 
 yarn:
 
@@ -4353,7 +4306,7 @@ npm install @hatsprotocol/modules-sdk viem
 
 The SDK uses Viem in order to interact with the various chains and includes it as a peer dependency.
 
-### _HatsModulesClient Initialization_
+## _HatsModulesClient Initialization_
 
 Import and initialize HatsModulesClient:
 
@@ -4378,7 +4331,7 @@ _**Arguments**_:
 * `publicClient` - A Viem Public Client, used for onchain read operations.
 * `walletClient` - A Viem Wallet Client, used for onchain write operations.&#x20;
 
-### _Prepare_
+## _Prepare_
 
 The `prepare` function fetches from the [modules registry](https://github.com/Hats-Protocol/modules-registry). This step is necessary in order to be able to use the client. Additionally, the function accepts an optional `registry` input , in order to support user's caching. If provided, then the client will use the given modules instead of fetching from the registry.
 
@@ -4394,13 +4347,13 @@ registry?: Registry
 
 `registry` - Optional [registry object](types.md#registry) to use, instead of fetching from the current registry.
 
-## Get Available Modules
+# Get Available Modules
 
 The following functions are used in order to get available modules, as exist in the [Modules Registry](../hats-modules/building-hats-modules/modules-registry.md).
 
 See the Module type [here](../hats-modules/modules-sdk/types.md#module).
 
-### <mark style="color:purple;">getModules</mark>
+## <mark style="color:purple;">getModules</mark>
 
 Get all available modules, optionally use a filter function in order to retrieve only a subset of the modules.
 
@@ -4424,7 +4377,7 @@ _**Response**_:
 
 An object that maps between module IDs and the corresponding module objects. A module ID is its implementation address.
 
-### <mark style="color:purple;">getModuleById</mark>
+## <mark style="color:purple;">getModuleById</mark>
 
 Get a module object by its ID.
 
@@ -4516,9 +4469,9 @@ _**Response**_:
 
 The modules matching the provided addresses. For every address that is not an instance of a registry module, the corresponding return value in the array will be `undefined`.
 
-## Create New Instance/s
+# Create New Instance/s
 
-### <mark style="color:purple;">createNewInstance</mark>
+## <mark style="color:purple;">createNewInstance</mark>
 
 Create a new module instance.
 
@@ -4567,7 +4520,7 @@ _**Response**_:
 * `transactionHash` - transaction's hash.
 * `newInstance` - In case of success, the address of the new module instance.
 
-### <mark style="color:purple;">batchCreateNewInstances</mark>
+## <mark style="color:purple;">batchCreateNewInstances</mark>
 
 Batch create new module instances.
 
@@ -4655,7 +4608,7 @@ _**Response**_:
 
 The predicted module address.
 
-## Composing Modules
+# Composing Modules
 
 The following functions support the usage Eligibility/Toggle modules that compose other existing modules with "and"/"or" logical operations. Check out the documentation [here](../../building-hats-modules/about-module-chains.md) to learn more.
 
@@ -4867,13 +4820,13 @@ boolean[]
 
 For each instance, `true` if the instance is a chain, `false` otherwise.
 
-## Interact With Instances
+# Interact With Instances
 
 The following functions provide utilities to support the interaction with module instances: checking whether a certain instance was created, reading instance's [display parameters](types.md#module) (as specified in the 'parameter' property in the Module's object) and calling its write functions.
 
 To get the module's object from an instance address, use [this function](../../modules-sdk/get-available-modules.md#getmodulebyinstance).
 
-### <mark style="color:purple;">isModuleDeployed</mark>
+## <mark style="color:purple;">isModuleDeployed</mark>
 
 Check if a module is already deployed, using its creation arguments.
 
@@ -4910,7 +4863,7 @@ boolean
 
 `true` if the module was deployed, `false` otherwise.
 
-### <mark style="color:purple;">getInstanceParameters</mark>
+## <mark style="color:purple;">getInstanceParameters</mark>
 
 Get a module's instance live parameters.&#x20;
 
@@ -4992,9 +4945,9 @@ _**Response**_:
 * `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 * `transactionHash` - transaction's hash.
 
-## Utilities
+# Utilities
 
-### <mark style="color:purple;">getSchema</mark>
+## <mark style="color:purple;">getSchema</mark>
 
 The SDK uses Zod schemas in order to verify inputs for [createNewInstance](broken-reference), according to their target Solidity types. The `getSchema` function is exported as a utility function, to get the Zod schema for a corresponding Solidity type.
 
@@ -5020,7 +4973,7 @@ ZodType
 
 The Zod schema for the provided type.&#x20;
 
-### <mark style="color:purple;">verify</mark>
+## verify
 
 Verify a value according to its target Solidity type.
 
@@ -5047,7 +5000,7 @@ boolean
 
 `true` if the provided value is compatible with the Solidity type, `false` otherwise.
 
-### <mark style="color:purple;">solidityToTypescriptType</mark>
+## solidityToTypescriptType
 
 Utility function that maps between a Solidity type to its compatible Typescript type.
 
@@ -5081,7 +5034,7 @@ _**Response**_:
 
 The name of the Typescript type which is compatible to the provided Solidity one.
 
-### <mark style="color:purple;">checkAndEncodeArgs</mark>
+## checkAndEncodeArgs
 
 Check and encode the immutable and mutable arguments for module creation.
 
@@ -5124,7 +5077,7 @@ _**Response**_:
 
 The encoded immutable and mutable arguments, as expected by the [createHatsModule](https://github.com/Hats-Protocol/hats-module/blob/38f80eed6ce444f924f5982858daf75e724be6f9/src/HatsModuleFactory.sol#L69C12-L69C28) function from the factory.&#x20;
 
-### <mark style="color:purple;">checkImmutableArgs</mark>
+## checkImmutableArgs
 
 Check the immutable arguments for module creation.
 
@@ -5149,7 +5102,7 @@ _**Arguments**_:
 
 `immutableArgs` - The module's immutable arguments.
 
-### <mark style="color:purple;">checkMutableArgs</mark>
+## checkMutableArgs
 
 Check the mutable arguments for module creation.
 
@@ -5174,7 +5127,7 @@ _**Arguments**_:
 
 `mutableArgs` - The module's mutable arguments.
 
-### <mark style="color:purple;">getNewInstancesFromReceipt</mark>
+## getNewInstancesFromReceipt
 
 Get the addresses of newly created module instance/s, using the creation transaction receipt.
 
@@ -5200,9 +5153,9 @@ _**Response**_:
 
 An array of the newly created instances/s.
 
-## Types
+# Types
 
-### <mark style="color:purple;">Module</mark>
+## Module
 
 Represents a module object, compatible with the registry's module objects.
 
@@ -5241,7 +5194,7 @@ Represents a module object, compatible with the registry's module objects.
 }
 ```
 
-### <mark style="color:purple;">Role</mark>
+## Role
 
 A module's custom role. Each module role is associated with a hat and grants permissions to the hat's wearer(s) to call certain functions on the module contract.
 
@@ -5259,7 +5212,7 @@ There are two special roles with a reserved ID that are automatically added to e
 }
 ```
 
-### <mark style="color:purple;">WriteFunction</mark>
+## WriteFunction
 
 The module's write functions. Each write function is associated with a role and grants permissions to the role's wearer(s) to call the function on the module contract.
 
@@ -5274,7 +5227,7 @@ The module's write functions. Each write function is associated with a role and 
 }
 ```
 
-### <mark style="color:purple;">WriteFunctionArg</mark>
+## WriteFunctionArg
 
 Module write function argument.
 
@@ -5288,7 +5241,7 @@ Module write function argument.
 }
 ```
 
-### <mark style="color:purple;">ModuleCreationArgs</mark>
+## ModuleCreationArgs
 
 The arguments that are passed to the module [factory's creation function](create-new-instance-s.md#createnewinstance). The arguments are divided into two arrays: `immutable` and `mutable`. The `immutable` array contains arguments that are set once when the module instance is created and cannot be changed. The `mutable` array contains arguments that can be changed after the module instance is created.
 
@@ -5303,7 +5256,7 @@ The arguments that are passed to the module [factory's creation function](create
 }
 ```
 
-### <mark style="color:purple;">ModuleCreationArg</mark>
+## ModuleCreationArg
 
 Immutable/mutable argument, provided in the module's [creation arguments](types.md#modulecreationargs).
 
@@ -5317,7 +5270,7 @@ Immutable/mutable argument, provided in the module's [creation arguments](types.
 </strong>}
 </code></pre>
 
-### <mark style="color:purple;">Registry</mark>
+## Registry
 
 A [Hats Modules Registry](../building-hats-modules/modules-registry.md) object.
 
@@ -5327,7 +5280,7 @@ A [Hats Modules Registry](../building-hats-modules/modules-registry.md) object.
 }
 ```
 
-### <mark style="color:purple;">ModuleParameter</mark>
+## ModuleParamete
 
 Module parameter object, as returned by the [getInstanceParameters](interact-with-instances.md#getinstanceparameters) function.
 
@@ -5340,7 +5293,7 @@ Module parameter object, as returned by the [getInstanceParameters](interact-wit
 }
 ```
 
-### <mark style="color:purple;">ArgumentTsType</mark>
+## ArgumentTsType
 
 A Typescript type, as returned by the [solidityToTypescriptType function](utilities.md#soliditytotypescripttype).
 
@@ -5356,7 +5309,7 @@ A Typescript type, as returned by the [solidityToTypescriptType function](utilit
 | "unknown";
 ```
 
-### <mark style="color:purple;">Ruleset</mark>
+## Ruleset
 
 A modules ruleset is an array of module instances which are chained together with an 'AND' logical operator.&#x20;
 
@@ -5371,11 +5324,11 @@ A modules ruleset is an array of module instances which are chained together wit
 
 This section provides an overview of how Hats modules are built and deployed into production. In the docs below, you'll learn how to create new modules and about the tools we've developed to make that easier.
 
-### Developer Community
+## Developer Community
 
 For technical support, questions, and to explore/share ideas, join the [Hats Protocol Dev Chat](https://t.me/+HrcKPUxaWvg3Zjhh) on Telegram.
 
-### All About Hats Modules
+## All About Hats Modules
 
 {% content-ref url="inside-a-hats-module/" %}
 [inside-a-hats-module](inside-a-hats-module/)
@@ -5435,7 +5388,7 @@ See the following pages for more detail about how HatsModule.sol operates:
 [versioning.md](versioning.md)
 {% endcontent-ref %}
 
-### Extensions
+## Extensions
 
 There are a couple stock extensions to HatsModule.sol that are useful starting points for common types of modules:
 
@@ -5448,7 +5401,7 @@ Immutable arguments are variables which are set at each module instance creation
 
 Accessing these variables is significantly cheaper than accessing regular storage variables, and so using this kind of variables is recommended for any variables which can be defined once, during instance creation, and then stay constant.
 
-### Standard HatsModule Immutable Args
+## Standard HatsModule Immutable Args
 
 HatsModule includes several immutable arguments as standard, which are then included in any inheriting module.&#x20;
 
@@ -5456,7 +5409,7 @@ HatsModule includes several immutable arguments as standard, which are then incl
 * `HATS`: The Hats Protocol address (Hats.sol).
 * `hatId`: The hat ID for which the instance has been deployed. This can be utilized in various ways depending on the module's use case.
 
-### Immutable Arg "Storage"
+## Immutable Arg "Storage"
 
 LibClone.sol handles "storage" of these values in the instance's bytecode, with the following layout:
 
@@ -5478,7 +5431,7 @@ function hatId() public pure returns (uint256) {
 }
 ```
 
-### Custom Immutable Arguments
+## Custom Immutable Arguments
 
 Modules can include as many additional immutable arguments as they need, and each can be made accessible by similar pure functions.
 
@@ -5522,7 +5475,7 @@ function version() public view returns (string memory) {
 
 # Creating New Modules
 
-### Getting Started
+## Getting Started
 
 The [hats-module-template](https://github.com/Hats-Protocol/hats-module-template) repository makes it easy to get started building a new module. It has everything you need, including:
 
@@ -5544,11 +5497,11 @@ Similarly, for toggle modules, import and inherit from the [HatsToggleModule](ht
 import { HatsToggleModule } from "hats-module/HatsModule.sol";
 ```
 
-### Best Practices
+## Best Practices
 
 For compatibility with [module chains](../../building-hats-modules/about-module-chains.md), it is strongly recommended to adhere to the following practices:
 
-#### Pull, don't push
+### Pull, don't push
 
 Avoid pushing hat or hat wearer status directly to the protocol, i.e. via `IHats.setHatStatus` or `IHats.setHatWearerStatus`. These functions are only authorized to contracts set directly on the given hat as the toggle or eligibility module, respectively. Those calls would therefore revert when called from a module in a chain.
 
@@ -5556,7 +5509,7 @@ The simplest alternative is to not force the protocol to recognize any status up
 
 If you must have the protocol immediately recognize a new status, have the protocol pull the updates, ie via `IHats.checkHatStatus` or `IHats.checkHatWearerStatus`. These are fully public functions that will trigger the protocol to pull the current status from the modules set on the hat; if that's a chain, it will read from all the modules in the chain.
 
-#### Don't force claiming
+### Don't force claiming
 
 Some eligibility modules (such as [agreement-eligibility.md](../../../hats-integrations/eligibility-and-accountability-criteria/agreement-eligibility.md "mention") and [staking-eligibility.md](../../../hats-integrations/eligibility-and-accountability-criteria/staking-eligibility.md "mention")) include an option for would-be-wearers to [claim the hat](../../v1-sdk/core/claiming-hats.md) at the same time as they take an action to become eligible (e.g., signing the agreement and staking, respectively).
 
@@ -5564,7 +5517,7 @@ When building such a module, avoid _requiring_ that would-be-wearers claim the h
 
 This is necessary because of the way the protocol handles minting when an eligibility module is attached to the hat. With a module attached, the protocol will only allow the hat to be minted if the recipient wearer is "explicitly eligible," i.e. eligible according to the module. In the case of a module chain, this will include eligibility information from all the modules in the chain, and so the would-be wearer may not be eligible for the hat as a whole even after they execute the qualifying action for one of its chained modules.
 
-### Learn From Examples
+## Learn From Examples
 
 To learn more and get inspiration, check out the awesome module that are already here:
 
@@ -5583,7 +5536,7 @@ All contracts that inherit from [HatsModule](https://github.com/Hats-Protocol/ha
 
 Each of these functions can be called directly on the HatsModuleFactory contract, or they can be accessed via the [Modules SDK](../modules-sdk/) to easily deploy new module instances and more.
 
-### Create New Instance
+## Create New Instance
 
 The [createHatsModule](https://github.com/Hats-Protocol/hats-module/blob/5a69da357e70cc2e3727d6ec02097711439ec32b/src/HatsModuleFactory.sol#L69) function deploys a new proxy instance, for the provided implementation, to a deterministic address. The instance's immutable arguments are set its creation, and then `instance.setUp` is called with the provided initialization data.
 
@@ -5617,7 +5570,7 @@ event HatsModuleFactory_ModuleDeployed(
 );
 ```
 
-### Batch Create Multiple Instances
+## Batch Create Multiple Instances
 
 The [batchCreateHatsModule](https://github.com/Hats-Protocol/hats-module/blob/5a69da357e70cc2e3727d6ec02097711439ec32b/src/HatsModuleFactory.sol#L106) function creates multiple instances, using the [createHatsModule](how-module-instances-are-deployed.md#create-new-instance) function.&#x20;
 
@@ -5653,7 +5606,7 @@ event HatsModuleFactory_ModuleDeployed(
 );
 ```
 
-### Predict Module's Address
+## Predict Module's Address
 
 The [getHatsModuleAddress](https://github.com/Hats-Protocol/hats-module/blob/5a69da357e70cc2e3727d6ec02097711439ec32b/src/HatsModuleFactory.sol#L136) function predicts the address of a module instance before it was created.
 
@@ -5674,7 +5627,7 @@ _Returns_:
 
 * The predicted instance address.&#x20;
 
-### Check If Deployed
+## Check If Deployed
 
 The [deployed](https://github.com/Hats-Protocol/hats-module/blob/5a69da357e70cc2e3727d6ec02097711439ec32b/src/HatsModuleFactory.sol#L154) function checks if a certain module instance has been deployed.
 
@@ -5695,7 +5648,7 @@ _Returns_:
 
 * `True` if the instance has been deployed, `false` otherwise.&#x20;
 
-### HatsModuleFactory Deployments
+## HatsModuleFactory Deployments
 
 HatsModuleFactory [v0.6.0](https://github.com/Hats-Protocol/hats-module/releases/tag/v0.6.0) is deployed to the same address on all networks: 0xfE661c01891172046feE16D3a57c3Cf456729efA
 
@@ -5725,7 +5678,7 @@ The Hats Modules Registry is a curated modules database. Tools, apps, and platfo
 
 Today, the primary consumer of the registry is the Modules SDK, which is used by the [Hats App](https://app.hatsprotocol.xyz/) to enable users to easily discover, configure, and attach modules to hats.
 
-### Submit a module to the registry
+## Submit a module to the registry
 
 To submit a module to the registry, open a pull requests to the [registry repo](https://github.com/Hats-Protocol/modules-registry). You will need the following information for your submission:
 
@@ -5741,7 +5694,7 @@ To submit a module to the registry, open a pull requests to the [registry repo](
 
 For more specifics on the submission requirements, see the [registry repo README](https://github.com/Hats-Protocol/modules-registry/blob/main/README.md).
 
-### Governance
+## Governance
 
 The registry is currently governed and curated by the Hats Protocol core team. Over time, however, curation will decentralize to the wider Hats community.
 
@@ -5799,7 +5752,7 @@ function MODULES() public pure returns (address[] memory)
 
 Hats Signer Gate (HSG) v2 is a contract that grants multisig signing rights to addresses wearing a given hats, enabling on-chain organizations to revocably delegate to individuals constrained authority and responsibility to operate an account (i.e. a Safe) owned by the organization.
 
-### **Zodiac Module**
+## **Zodiac Module**
 
 [HatsSignerGate.sol](https://github.com/hats-protocol/hats-zodiac) is a [Zodiac](https://github.com/gnosisguild/zodiac) **module** that...
 
@@ -5807,7 +5760,7 @@ Hats Signer Gate (HSG) v2 is a contract that grants multisig signing rights to a
 2. Removes signers who are no long valid (i.e. no longer wearing the signer Hat)
 3. Manages the multisig threshold within the owner-specified range as new signers are added or removed.
 
-### **Zodiac Guard**
+## **Zodiac Guard**
 
 Since Hat-wearing is dynamic — Hats can be programmatically revoked from wearers — this contract also services as a [Zodiac](https://github.com/gnosisguild/zodiac) **guard** to ensure that:
 
@@ -5830,17 +5783,17 @@ Protections against (3c) and (3d) above only hold if the Safe does not have any 
 Proceed with caution if granting such authority to a Safe attached to HatsSignerGate.
 {% endhint %}
 
-### Signer Management
+## Signer Management
 
 Hats Signer Gate provides several ways to manage Safe signers based on their hat-wearing status:
 
-#### **Claiming Signer Rights**
+### **Claiming Signer Rights**
 
 * Individual hat wearers can claim their own signing rights via `claimSigner()`
 * Must be wearing a valid signer hat at time of claim
 * Each signer's hat ID is registered and tracked for future validation
 
-#### **Claiming for Others**
+### **Claiming for Others**
 
 When enabled by the owner (`claimableFor = true`):
 
@@ -5848,17 +5801,17 @@ When enabled by the owner (`claimableFor = true`):
 * Useful for batch onboarding of signers
 * Prevents re-registration if signer is still wearing their currently registered hat
 
-#### **Signer Removal**
+### **Signer Removal**
 
 * Signers who no longer wear their registered hat can be removed via `removeSigner()`
 * Threshold automatically adjusts according to the threshold configuration
 * If the removed signer was the last valid signer, the contract itself becomes the sole owner
 
-### Threshold Configuration
+## Threshold Configuration
 
 The threshold (number of required signatures) is managed dynamically based on the `ThresholdConfig`:
 
-#### **Threshold Types**
+### **Threshold Types**
 
 1. **ABSOLUTE**
    * Sets a fixed target number of required signatures
@@ -5870,7 +5823,7 @@ The threshold (number of required signatures) is managed dynamically based on th
    * Actual number of required signatures rounds up
    * Still bounded by min threshold
 
-#### **Configuration Parameters**
+### **Configuration Parameters**
 
 * `min`: Minimum number of required signatures (must be > 0)
 * `target`: Either fixed number (ABSOLUTE) or percentage in basis points (PROPORTIONAL)
@@ -5882,7 +5835,7 @@ The Safe's threshold is automatically adjusted when:
 * Existing signers are removed
 * Threshold configuration is changed
 
-### Delegatecall Targets
+## Delegatecall Targets
 
 HSG restricts delegatecalls to protect the Safe from unauthorized modifications. Only approved targets can receive delegatecalls.
 
@@ -5894,7 +5847,7 @@ The following MultiSend libraries are enabled by default:
 
 See [safe-deployments](https://github.com/safe-global/safe-deployments/tree/main/src/assets) for more information.
 
-### **Security Considerations**
+## **Security Considerations**
 
 * Delegatecalls can modify Safe state if not properly restricted. Owners should NOT approve delegatecall targets that enable the following:
   * Directly modifying any of the Safe's state, including the Safe's nonce.
@@ -5903,7 +5856,7 @@ See [safe-deployments](https://github.com/safe-global/safe-deployments/tree/main
 * Direct calls to the Safe are always prohibited
 * When detaching HSG from a Safe — i.e. when calling `detach()` — the owner must trust that admin(s) of the signer Hat(s) will not front-run the detachment to add arbitrary signers. Since admins in Hats Protocol are already trusted (and can be revoked, held accountable, etc.) this is not an additional risk, but HSG owners should nonetheless be aware of this risk.
 
-### Contract Ownership
+## Contract Ownership
 
 The wearer of the `ownerHat` can make the following changes to Hats Signer Gate:
 
@@ -5918,7 +5871,7 @@ The wearer of the `ownerHat` can make the following changes to Hats Signer Gate:
 9. Enable or disable specific delegatecall targets
 10. Lock the contract permanently, preventing any further owner changes
 
-### Deploying New Instances
+## Deploying New Instances
 
 Instances of HSG can be created via the [Zodiac module proxy factory](https://github.com/gnosisguild/zodiac/blob/18b7575bb342424537883f7ebe0a94cd7f3ec4f6/contracts/factory/ModuleProxyFactory.sol).
 
@@ -5936,7 +5889,7 @@ v2 — the present version — has received the following security audits. See t
 Since this audit was completed, HSG code was updated to add a variable salt to the Safe proxy creation within the `SafeManagerLib.deploySafeAndAttachHSG` function. This ensures that the address of the Safe proxy is unique to the HSG instance.
 {% endhint %}
 
-### Recent Deployments
+## Recent Deployments
 
 See [Releases](https://github.com/Hats-Protocol/hats-zodiac/releases) for deployments. Specific deployment parameters are stored here.
 
@@ -6023,7 +5976,7 @@ _**Arguments**_:
 
 Create new Instances of Hats Signer Gate (HSG) and/or Multi Hats Signer Gate (MHSG), optionally together with a new Safe, using the [Hats Signer Gate Factory](https://github.com/Hats-Protocol/hats-zodiac/blob/main/src/HatsSignerGateFactory.sol).&#x20;
 
-### <mark style="color:purple;">deployHatsSignerGateAndSafe</mark>
+## deployHatsSignerGateAndSafe
 
 Create a new HSG and a new Safe, all wired up together.
 
@@ -6074,7 +6027,7 @@ _**Response**_:
 * `newHsgInstance` - In case of success, the address of the new HSG instance.
 * newSafeInstance - In case of success, the address of the new Safe instance.
 
-### <mark style="color:purple;">deployHatsSignerGate</mark>
+## deployHatsSignerGate
 
 Deploy a new HSG and relate it to an existing Safe. In order to wire it up to the existing Safe, the owners of the Safe must enable it as a module and guard.
 
@@ -6131,7 +6084,7 @@ _**Response**_:
 * `transactionHash` - transaction's hash.
 * `newHsgInstance` - In case of success, the address of the new HSG instance.
 
-### <mark style="color:purple;">deployMultiHatsSignerGateAndSafe</mark>
+## deployMultiHatsSignerGateAndSafe
 
 Create a new MHSG and a new Safe, all wired up together.
 
@@ -6245,7 +6198,7 @@ Interact with [HSG](https://github.com/Hats-Protocol/hats-zodiac/blob/main/src/H
 
 ## Signers Management
 
-### <mark style="color:purple;">hsgClaimSigner</mark>
+## hsgClaimSigner
 
 Claim signer rights on the safe.&#x20;
 
@@ -6316,7 +6269,7 @@ boolean
 
 `true` if valid, `false` otherwise.
 
-### <mark style="color:purple;">claimedAndStillValid</mark>
+## claimedAndStillValid
 
 Check if an account has claimed signer rights and is still valid.
 
@@ -6346,7 +6299,7 @@ boolean
 
 `true` if the account is one of the safe's owners and is still valid, `false` otherwise.
 
-### <mark style="color:purple;">validSignerCount</mark>
+## validSignerCount
 
 Tallies the number of existing Safe owners that wear the Signers Hat.
 
@@ -6373,7 +6326,7 @@ bigint
 
 The number of valid signers on the Safe.
 
-### <mark style="color:purple;">reconcileSignerCount</mark>
+## reconcileSignerCount
 
 Tallies the number of existing Safe owners that wear a Signers Hat and updates the Safe's threshold if necessary. Does NOT remove invalid Safe owners.
 
@@ -6408,7 +6361,7 @@ _**Response**_:
 * `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 * `transactionHash` - transaction's hash.
 
-### <mark style="color:purple;">removeSigner</mark>
+## removeSigner
 
 Removes an invalid signer from the Safe, updating its threshold if appropriate.
 
@@ -7487,78 +7440,147 @@ HSG/MHSG write function argument.
   optional?: boolean; // setting to 'true' indicates that this input is optional
 }
 ```
+# 1 of N Hats Account
 
-### <mark style="color:purple;">ModuleCreationArgs</mark>
+HatsAccount1ofN is a flavor of HatsAccount that mirrors the typical 1-of-n security model of hat-based role and permission management. Any single wearer of a HatsAccount1ofN instance's hat has full control over that HatsAccount. If a hat has multiple wearers, they each individually have full control.
 
-The arguments that are passed to the module [factory's creation function](create-new-instance-s.md#createnewinstance). The arguments are divided into two arrays: `immutable` and `mutable`. The `immutable` array contains arguments that are set once when the module instance is created and cannot be changed. The `mutable` array contains arguments that can be changed after the module instance is created.
+# Getting Started
 
-* `useHatId` - By default, new instances should be created with the `hatId` value set to the target hat's ID.  A `false` value here indicates that the module's `hatId` value should be set to zero.
-* In both the `immutable` and `mutable` array properties, the order of the arguments must match the order expected by the contract.
+## _Install_
+
+yarn:
+
+```bash
+yarn add @hatsprotocol/hats-account-sdk viem
+```
+
+npm:
+
+```bash
+npm install @hatsprotocol/hats-account-sdk viem
+```
+
+The SDK uses Viem in order to interact with the various chains and includes it as a peer dependency.
+
+## _HatsAccount1ofNClient Initialization_
+
+Import and initialize _HatsAccount1ofNClient_:
+
+```typescript
+import { HatsAccount1ofNClient } from "@hatsprotocol/hats-account-sdk";
+
+const hatsAccount1ofNClient = new HatsAccount1ofNClient({
+    publicClient,
+    walletClient,
+});
+```
+
+_**Arguments**_:
 
 ```typescript
 {
-  useHatId: boolean; 
-  immutable: ModuleCreationArg[];
-  mutable: ModuleCreationArg[];
+    publicClient: PublicClient;
+    walletClient: WalletClient;
 }
 ```
 
-### <mark style="color:purple;">ModuleCreationArg</mark>
+* `publicClient` - A Viem Public Client, used for onchain read operations.
+* `walletClient` - A Viem Wallet Client, used for onchain write operations.&#x20;
 
-Immutable/mutable argument, provided in the module's [creation arguments](types.md#modulecreationargs).
+# Creating New Instances
 
-<pre class="language-typescript"><code class="lang-typescript">{
-  name: string; // arg's name
-  description: string; // arg's description
-  type: string; // arg's solidity type, e.g. 'uint256'
-  example: unknown; // example value 
-  displayType: string; // a free-text field that tells front ends how to generate a proper UI component for the parameter
-<strong>  optional?: boolean;
-</strong>}
-</code></pre>
+Create new Instances of a 1 of N Hats Account, and/or predict the addresses of accounts.
 
-### <mark style="color:purple;">Registry</mark>
+## createAccount
 
-A [Hats Modules Registry](../building-hats-modules/modules-registry.md) object.
+Create a new 1 of N Hats Account instance.
+
+```typescript
+const createHatsAccountResult = await hatsAccount1ofNClient.createAccount({
+    account,
+    hatId,
+    salt,
+});
+```
+
+_**Arguments**_:
 
 ```typescript
 {
-  modules: Module[];
+    account: Account | Address;
+    hatId: bigint;
+    salt: bigint;
 }
 ```
 
-### <mark style="color:purple;">ModuleParameter</mark>
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `hatId` - ID of the hat for which to create the account.
+* `signersHatId` - arbitrary number as "salt".
 
-Module parameter object, as returned by the [getInstanceParameters](interact-with-instances.md#getinstanceparameters) function.
+_**Response**_:
 
 ```typescript
 {
-  label: string;
-  value: unknown;
-  solidityType: string;
-  displayType: string;
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+  newAccount: `0x${string}`;
 }
 ```
 
-### <mark style="color:purple;">ArgumentTsType</mark>
+An object of type [CreateAccountResult](types.md#createaccountresult), includes:
 
-A Typescript type, as returned by the [solidityToTypescriptType function](utilities.md#soliditytotypescripttype).
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+* `newAccount` - In case of success, the address of the new account.
+
+## predictAccountAddress
+
+Predict the address of a 1 of N Hats Account instance.
 
 ```typescript
-| "number"
-| "bigint"
-| "string"
-| "boolean"
-| "number[]"
-| "bigint[]"
-| "string[]"
-| "boolean[]"
-| "unknown";
+const predictedAccount = await hatsAccount1ofNClient.predictAccountAddress({
+    hatId,
+    salt,
+});
 ```
 
-### <mark style="color:purple;">Ruleset</mark>
+_**Arguments**_:
 
-A modules ruleset is an array of module instances which are chained together with an 'AND' logical operator.&#x20;
+```typescript
+{
+    hatId: bigint;
+    salt: bigint;
+}
+```
+
+* `hatId` - ID of the hat for which to create the account.
+* `signersHatId` - arbitrary number as "salt".
+
+_**Response**_:
+
+```typescript
+`0x${string}`
+```
+
+The predicted account address.
+
+# Executing From An Instance
+
+Execute operations from a Hats Account instance. Only wearers of the instance's hat can call the following functions.
+
+## execute
+
+Execute an operation.
+
+```typescript
+const executionResult = await hatsAccount1ofNClient.execute({
+    account,
+    instance,
+    operation,
+});
+```
+
+_**Arguments**_:
 
 ```typescript
 {
@@ -7586,7 +7608,7 @@ An object of type [ExecutionResult](types.md#executionresult), includes:
 * `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 * `transactionHash` - transaction's hash.
 
-### <mark style="color:purple;">executeBatch</mark>
+## executeBatch
 
 Execute a batch of operations.
 
@@ -7640,7 +7662,7 @@ Following constant values are exported:
 
 # Types
 
-### <mark style="color:purple;">Operation</mark>
+## <mark style="color:purple;">Operation</mark>
 
 Execution data for a Hats Account operation.
 
@@ -7658,7 +7680,7 @@ Execution data for a Hats Account operation.
 * data - The encoded operation calldata.
 * operation - A value of type [OperationType](types.md#operationtype), indicating the type of operation to perform (call or delegate-call).
 
-### <mark style="color:purple;">OperationType</mark>
+## <mark style="color:purple;">OperationType</mark>
 
 Enum describing the operation to execute.
 
@@ -7669,7 +7691,7 @@ enum OperationType {
 }
 ```
 
-### <mark style="color:purple;">CreateAccountResult</mark>
+## <mark style="color:purple;">CreateAccountResult</mark>
 
 Account creation result.
 
@@ -7681,7 +7703,7 @@ enum OperationType {
 }
 ```
 
-### <mark style="color:purple;">ExecutionResult</mark>
+## <mark style="color:purple;">ExecutionResult</mark>
 
 Hats Account execution result.
 
