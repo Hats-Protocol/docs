@@ -5632,3 +5632,1866 @@ Since this audit was completed, HSG code was updated to add a variable salt to t
 ### Recent Deployments
 
 See [Releases](https://github.com/Hats-Protocol/hats-zodiac/releases) for deployments. Specific deployment parameters are stored here.
+
+# 👒 Hats Signer Gate SDK
+
+{% hint style="warning" %}
+This SDK currently uses Hats Signer Gate v1. There is a new version, [Hats Signer Gate v2](../hats-signer-gate-v2.md), which should be used instead. The docs for this SDK will be updated and this note will be removed once this SDK has been updated to work with v2.
+{% endhint %}
+
+## Overview
+
+Hats Signer Gate (HSG) is a contract that grants multisig signing rights to addresses wearing a given Hat, enabling on-chain organizations (such as DAOs) to revocably delegate constrained signing authority and responsibility to individuals.
+
+Multi Hats Signer Gate (MHSG) is a modification of HSG that supports setting multiple Hats as valid signer Hats.
+
+The SDK is an open source JavaScript client for creating and interacting with HSG and/or MHSG instances and was designed to work both in the browser and in Node.js.
+
+For an in-depth overview of Hats Signer Gate, click [here](../../hats-integrations/permissions-and-authorities/safe-multisig-signing-authority.md).
+
+{% content-ref url="getting-started.md" %}
+[getting-started.md](getting-started.md)
+{% endcontent-ref %}
+
+{% content-ref url="creating-new-instances.md" %}
+[creating-new-instances.md](creating-new-instances.md)
+{% endcontent-ref %}
+
+{% content-ref url="hats-signer-gate.md" %}
+[hats-signer-gate.md](hats-signer-gate.md)
+{% endcontent-ref %}
+
+{% content-ref url="multi-hats-signer-gate.md" %}
+[multi-hats-signer-gate.md](multi-hats-signer-gate.md)
+{% endcontent-ref %}
+
+{% content-ref url="hsg-and-mhsg-handlers.md" %}
+[hsg-and-mhsg-handlers.md](hsg-and-mhsg-handlers.md)
+{% endcontent-ref %}
+
+# Getting Started
+
+### _Install_
+
+yarn:
+
+```bash
+yarn add @hatsprotocol/hsg-sdk viem
+```
+
+npm:
+
+```bash
+npm install @hatsprotocol/hsg-sdk viem
+```
+
+The SDK uses Viem in order to interact with the various chains and includes it as a peer dependency.
+
+### _HatsSignerGateClient Initialization_
+
+Import and initialize _HatsSignerGateClient_:
+
+```typescript
+import { HatsSignerGateClient } from "@hatsprotocol/hsg-sdk";
+
+const hatsSignerGateClient = new HatsSignerGateClient({
+    publicClient,
+    walletClient,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    publicClient: PublicClient;
+    walletClient: WalletClient;
+}
+```
+
+* `publicClient` - A Viem Public Client, used for onchain read operations.
+* `walletClient` - A Viem Wallet Client, used for onchain write operations.&#x20;
+
+# Creating New Instances
+
+Create new Instances of Hats Signer Gate (HSG) and/or Multi Hats Signer Gate (MHSG), optionally together with a new Safe, using the [Hats Signer Gate Factory](https://github.com/Hats-Protocol/hats-zodiac/blob/main/src/HatsSignerGateFactory.sol).&#x20;
+
+### <mark style="color:purple;">deployHatsSignerGateAndSafe</mark>
+
+Create a new HSG and a new Safe, all wired up together.
+
+```typescript
+const createHsgResult = await hatsSignerGateClient.deployHatsSignerGateAndSafe({
+    account,
+    ownerHatId,
+    signersHatId,
+    minThreshold,
+    targetThreshold,
+    maxSigners,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    ownerHatId: bigint;
+    signersHatId: bigint;
+    minThreshold: bigint;
+    targetThreshold: bigint;
+    maxSigners: bigint;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `ownerHatId` - ID of the HSG's Owner Hat.
+* `signersHatId` - ID of the HSG's Signers Hat.
+* `minThreshold` - HSG's min threshold.
+* `targetThreshold` - HSG's target threshold.
+* `maxSigners` - HSG's max amount of signers.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+  newHsgInstance: `0x${string}`;
+  newSafeInstance: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+* `newHsgInstance` - In case of success, the address of the new HSG instance.
+* newSafeInstance - In case of success, the address of the new Safe instance.
+
+### <mark style="color:purple;">deployHatsSignerGate</mark>
+
+Deploy a new HSG and relate it to an existing Safe. In order to wire it up to the existing Safe, the owners of the Safe must enable it as a module and guard.
+
+* WARNING: HatsSignerGate must not be attached to a Safe with any other modules.
+* WARNING: HatsSignerGate must not be attached to its Safe if `validSignerCount() >= _maxSigners`
+
+Before wiring up HatsSignerGate to its Safe, call `canAttachHSGToSafe` and make sure the result is `true`. Failure to do so may result in the Safe being locked forever.
+
+```typescript
+const createHsgResult = await hatsSignerGateClient.deployHatsSignerGate({
+    account,
+    ownerHatId,
+    signersHatId,
+    safe,
+    minThreshold,
+    targetThreshold,
+    maxSigners,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    ownerHatId: bigint;
+    signersHatId: bigint;
+    safe: Address;
+    minThreshold: bigint;
+    targetThreshold: bigint;
+    maxSigners: bigint;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `ownerHatId` - ID of the HSG's Owner Hat.
+* `signersHatId` - ID of the HSG's Signers Hat.
+* `safe` - Existing Gnosis Safe that the signers will join.
+* `minThreshold` - HSG's min threshold.
+* `targetThreshold` - HSG's target threshold.
+* `maxSigners` - HSG's max amount of signers.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+  newHsgInstance: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+* `newHsgInstance` - In case of success, the address of the new HSG instance.
+
+### <mark style="color:purple;">deployMultiHatsSignerGateAndSafe</mark>
+
+Create a new MHSG and a new Safe, all wired up together.
+
+```typescript
+const createMhsgResult = await hatsSignerGateClient.deployMultiHatsSignerGateAndSafe({
+    account,
+    ownerHatId,
+    signersHatIds,
+    minThreshold,
+    targetThreshold,
+    maxSigners,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    ownerHatId: bigint;
+    signersHatIds: bigint[];
+    minThreshold: bigint;
+    targetThreshold: bigint;
+    maxSigners: bigint;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `ownerHatId` - ID of the MHSG's Owner Hat.
+* `signersHatIds` - IDs of the MHSG's Signers Hats.
+* `minThreshold` - MHSG's min threshold.
+* `targetThreshold` - MHSG's target threshold.
+* `maxSigners` - MHSG's max amount of signers.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+  newMultiHsgInstance: `0x${string}`;
+  newSafeInstance: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+* `newMultiHsgInstance` - In case of success, the address of the new MHSG instance.
+* newSafeInstance - In case of success, the address of the new Safe instance.
+
+### <mark style="color:purple;">deployMultiHatsSignerGate</mark>
+
+Deploy a new MHSG and relate it to an existing Safe. In order to wire it up to the existing Safe, the owners of the Safe must enable it as a module and guard.
+
+* WARNING: MultiHatsSignerGate must not be attached to a Safe with any other modules.
+* WARNING: MultiHatsSignerGate must not be attached to its Safe if `validSignerCount()` >= `_maxSigners`
+
+Before wiring up MultiHatsSignerGate to its Safe, call `canAttachMHSGToSafe` and make sure the result is `true`. Failure to do so may result in the Safe being locked forever.
+
+```typescript
+const createMhsgResult = await hatsSignerGateClient.deployMultiHatsSignerGate({
+    account,
+    ownerHatId,
+    signersHatIds,
+    safe,
+    minThreshold,
+    targetThreshold,
+    maxSigners,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    ownerHatId: bigint;
+    signersHatIds: bigint[];
+    safe: Address;
+    minThreshold: bigint;
+    targetThreshold: bigint;
+    maxSigners: bigint;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `ownerHatId` - ID of the MHSG's Owner Hat.
+* `signersHatIds` - IDs of the MHSG's Signers Hats.
+* `safe` - Existing Gnosis Safe that the signers will join.
+* `minThreshold` - MHSG's min threshold.
+* `targetThreshold` - MHSG's target threshold.
+* `maxSigners` - MHSG's max amount of signers.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+  newMultiHsgInstance: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+* `newMultiHsgInstance` - In case of success, the address of the new MHSG instance.
+
+# Hats Signer Gate
+
+Interact with [HSG](https://github.com/Hats-Protocol/hats-zodiac/blob/main/src/HatsSignerGate.sol) instances.
+
+## Signers Management
+
+### <mark style="color:purple;">hsgClaimSigner</mark>
+
+Claim signer rights on the safe.&#x20;
+
+In order to successfully claim:
+
+* The calling account must wear the [Signers Hat](hats-signer-gate.md#hsgsignershatid). Use [this](hats-signer-gate.md#hsgisvalidsigner) function is order to check whether an account is a valid signer.
+* Caller must not be already a signer.
+* The current amount of valid signers should be smaller than the configured amount of maximum signers.
+
+```typescript
+const claimSignerResult = await hatsSignerGateClient.hsgClaimSigner({
+    account,
+    hsgInstance,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    hsgInstance: Address;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `hsgInstance` - HSG's instance address.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+### <mark style="color:purple;">hsgIsValidSigner</mark>
+
+Check if an account is wearing the Signers Hat (regardless whether the account has claimed signer rights or not).
+
+<pre class="language-typescript"><code class="lang-typescript">const isValid = await hatsSignerGateClient.hsgIsValidSigner({
+<strong>    hsgInstance,
+</strong><strong>    address    
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    hsgInstance: Address;
+    address: Address;
+}
+```
+
+* `hsgInstance` - HSG's instance address.
+* `address` -The address to check.
+
+_**Response**_:
+
+```typescript
+boolean
+```
+
+`true` if valid, `false` otherwise.
+
+### <mark style="color:purple;">claimedAndStillValid</mark>
+
+Check if an account has claimed signer rights and is still valid.
+
+<pre class="language-typescript"><code class="lang-typescript">const claimedAndValid = await hatsSignerGateClient.claimedAndStillValid({
+<strong>    instance,
+</strong><strong>    address    
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    instance: Address;
+    address: Address;
+}
+```
+
+* `instance` - HSG's instance address.
+* `address` -The address to check.
+
+_**Response**_:
+
+```typescript
+boolean
+```
+
+`true` if the account is one of the safe's owners and is still valid, `false` otherwise.
+
+### <mark style="color:purple;">validSignerCount</mark>
+
+Tallies the number of existing Safe owners that wear the Signers Hat.
+
+<pre class="language-typescript"><code class="lang-typescript">const count = await hatsSignerGateClient.validSignerCount({
+<strong>    instance 
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    instance: Address;
+}
+```
+
+* `instance` - HSG's instance address.
+
+_**Response**_:
+
+```typescript
+bigint
+```
+
+The number of valid signers on the Safe.
+
+### <mark style="color:purple;">reconcileSignerCount</mark>
+
+Tallies the number of existing Safe owners that wear a Signers Hat and updates the Safe's threshold if necessary. Does NOT remove invalid Safe owners.
+
+```typescript
+const res = await hatsSignerGateClient.reconcileSignerCount({
+    account,
+    instance,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    instance: Address;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `instance` - HSG's instance address.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+### <mark style="color:purple;">removeSigner</mark>
+
+Removes an invalid signer from the Safe, updating its threshold if appropriate.
+
+```typescript
+const res = await hatsSignerGateClient.removeSigner({
+    account,
+    instance,
+    signer,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    instance: Address;
+    signer: Address;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `instance` - HSG's instance address.
+* `signer` - The address to remove if not a valid signer.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+## HSG Instance Properties
+
+Getters for the basic properties of a HSG instance.
+
+### <mark style="color:purple;">hsgSignersHatId</mark>
+
+Get a HSG's Signers Hat ID.
+
+<pre class="language-typescript"><code class="lang-typescript">const signersHat = await hatsSignerGateClient.hsgSignersHatId({
+<strong>    hsgInstance 
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    hsgInstance: Address;
+}
+```
+
+* `hsgInstance` - HSG's instance address.
+
+_**Response**_:
+
+```typescript
+bigint
+```
+
+HSG's Signers Hat ID.
+
+### <mark style="color:purple;">getSafe</mark>
+
+Get a HSG's attached Safe.
+
+<pre class="language-typescript"><code class="lang-typescript">const safe = await hatsSignerGateClient.getSafe({
+<strong>    instance 
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    instance: Address;
+}
+```
+
+* `instance` - HSG's instance address.
+
+_**Response**_:
+
+```typescript
+Address
+```
+
+Address of the attached Safe.
+
+### <mark style="color:purple;">getMinThreshold</mark>
+
+Get a HSG's minimum threshold.
+
+<pre class="language-typescript"><code class="lang-typescript">const minThreshold = await hatsSignerGateClient.getMinThresholde({
+<strong>    instance 
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    instance: Address;
+}
+```
+
+* `instance` - HSG's instance address.
+
+_**Response**_:
+
+```typescript
+bigint
+```
+
+The instance's min threshold.
+
+### <mark style="color:purple;">getTargetThreshold</mark>
+
+Get a HSG's target threshold.
+
+<pre class="language-typescript"><code class="lang-typescript">const targetThreshold = await hatsSignerGateClient.getTargetThreshold({
+<strong>    instance 
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    instance: Address;
+}
+```
+
+* `instance` - HSG's instance address.
+
+_**Response**_:
+
+```typescript
+bigint
+```
+
+The instance's target threshold.
+
+### <mark style="color:purple;">getMaxSigners</mark>
+
+Get a HSG's maximum amount of signers.
+
+<pre class="language-typescript"><code class="lang-typescript">const maxSigners = await hatsSignerGateClient.getMaxSigners({
+<strong>    instance 
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    instance: Address;
+}
+```
+
+* `instance` - HSG's instance address.
+
+_**Response**_:
+
+```typescript
+bigint
+```
+
+The instance's max signers.
+
+### <mark style="color:purple;">getOwnerHat</mark>
+
+Get a HSG's Owner Hat.
+
+<pre class="language-typescript"><code class="lang-typescript">const ownerHat = await hatsSignerGateClient.getOwnerHat({
+<strong>    instance 
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    instance: Address;
+}
+```
+
+* `instance` - HSG's instance address.
+
+_**Response**_:
+
+```typescript
+bigint
+```
+
+The instance's Owner Hat.
+
+## HSG Owner
+
+Following functions are only authorized to the wearer(s) of the HSG instance's Owner Hat.
+
+### <mark style="color:purple;">setTargetThreshold</mark>
+
+Sets a new target threshold, and changes Safe's threshold if appropriate.&#x20;
+
+In order to successfully execute the function:
+
+* The caller must be a wearer of the HSG's Owner Hat.
+* The new target threshold should not be smaller than the minimum threshold.
+* The new target threshold should not be larger than the maximum amount of signers.
+
+```typescript
+const res = await hatsSignerGateClient.setTargetThreshold({
+    account,
+    instance,
+    targetThreshold,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    instance: Address;
+    targetThreshold: bigint;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `instance` - HSG's instance address.
+* `targetThreshold` - The new target threshold to set.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+### <mark style="color:purple;">setMinThreshold</mark>
+
+Sets a new minimum threshold.
+
+In order to successfully execute the function:
+
+* The caller must be a wearer of the HSG's Owner Hat.
+* The new minimum threshold should not be larger than the target threshold.
+* The new minimum threshold should not be larger than the maximum amount of signers.
+
+```typescript
+const res = await hatsSignerGateClient.setMinThreshold({
+    account,
+    instance,
+    minThreshold,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    instance: Address;
+    minThreshold: bigint;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `instance` - HSG's instance address.
+* `minThreshold` - The new minimum threshold to set.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+### <mark style="color:purple;">setOwnerHat</mark>
+
+Sets a new Owner Hat.
+
+In order to successfully execute the function:
+
+* The caller must be a wearer of the current Owner Hat.
+
+```typescript
+const res = await hatsSignerGateClient.setOwnerHat({
+    account,
+    instance,
+    newOwnerHat,
+    hatsContractAddress,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    instance: Address;
+    newOwnerHat: bigint;
+    hatsContractAddress: Address;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `instance` - HSG's instance address.
+* `newOwnerHat` - The new Owner Hat to set.
+* `hatsContractAddress` - The Hats.sol contract address of the new Owner Hat.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+# Multi Hats Signer Gate
+
+Interact with [MHSG](https://github.com/Hats-Protocol/hats-zodiac/blob/main/src/MultiHatsSignerGate.sol) instances.
+
+## Signers Management
+
+### <mark style="color:purple;">mhsgClaimSigner</mark>
+
+Claim signer rights on the safe.&#x20;
+
+In order to successfully claim:
+
+* The provided `hatId` parameter should be a [valid Signers Hat ](multi-hats-signer-gate.md#mhsgisvalidsignershat)and the caller is one of its [wearers](multi-hats-signer-gate.md#mhsgisvalidsigner).
+* Caller must not be already a signer.
+* The current amount of valid signers should be smaller than the configured amount of maximum signers.
+
+```typescript
+const claimSignerResult = await hatsSignerGateClient.mhsgClaimSigner({
+    account,
+    mhsgInstance,
+    hatId,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    mhsgInstance: Address;
+    hatId: bigint;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `mhsgInstance` - MHSG's instance address.
+* `hatId` - The hat ID to claim signer rights for, must be a valid Signers Hat.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+### <mark style="color:purple;">mhsgIsValidSigner</mark>
+
+Check if an account is wearing one of the Signers Hats and also claimed signer rights for it.
+
+<pre class="language-typescript"><code class="lang-typescript">const isValid = await hatsSignerGateClient.mhsgIsValidSigner({
+<strong>    mhsgInstance,
+</strong><strong>    address    
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    mhsgInstance: Address;
+    address: Address;
+}
+```
+
+* `mhsgInstance` - MHSG's instance address.
+* `address` -The address to check.
+
+_**Response**_:
+
+```typescript
+boolean
+```
+
+`true` if valid, `false` otherwise.
+
+### <mark style="color:purple;">claimedAndStillValid</mark>
+
+Check if an account has claimed signer rights and is still valid.
+
+<pre class="language-typescript"><code class="lang-typescript">const claimedAndValid = await hatsSignerGateClient.claimedAndStillValid({
+<strong>    instance,
+</strong><strong>    address    
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    instance: Address;
+    address: Address;
+}
+```
+
+* `instance` - HSG's instance address.
+* `address` -The address to check.
+
+_**Response**_:
+
+```typescript
+boolean
+```
+
+`true` if the account is one of the safe's owners and is still valid, `false` otherwise.
+
+### <mark style="color:purple;">validSignerCount</mark>
+
+Tallies the number of existing Safe owners that wear the Signers Hat.
+
+<pre class="language-typescript"><code class="lang-typescript">const count = await hatsSignerGateClient.validSignerCount({
+<strong>    instance 
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    instance: Address;
+}
+```
+
+* `instance` - MHSG's instance address.
+
+_**Response**_:
+
+```typescript
+bigint
+```
+
+The number of valid signers on the Safe.
+
+### <mark style="color:purple;">reconcileSignerCount</mark>
+
+Tallies the number of existing Safe owners that wear a Signers Hat and updates the Safe's threshold if necessary. Does NOT remove invalid Safe owners.
+
+```typescript
+const res = await hatsSignerGateClient.reconcileSignerCount({
+    account,
+    instance,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    instance: Address;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `instance` - MHSG's instance address.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+### <mark style="color:purple;">removeSigner</mark>
+
+Removes an invalid signer from the Safe, updating its threshold if appropriate.
+
+```typescript
+const res = await hatsSignerGateClient.removeSigner({
+    account,
+    instance,
+    signer,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    instance: Address;
+    signer: Address;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `instance` - MHSG's instance address.
+* `signer` - The address to remove if not a valid signer.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+## MHSG Instance Properties
+
+Getters for the basic properties of a MHSG instance.
+
+### <mark style="color:purple;">mhsgIsValidSignersHat</mark>
+
+Check if a given Hat is a valid Signers Hat.
+
+<pre class="language-typescript"><code class="lang-typescript">const isValid = await hatsSignerGateClient.mhsgIsValidSignersHat({
+<strong>    mhsgInstance,
+</strong><strong>    hatId    
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    mhsgInstance: Address;
+    hatId: bigint;
+}
+```
+
+* `mhsgInstance` - MHSG's instance address.
+* `hatId` -The Hat to check.
+
+_**Response**_:
+
+```typescript
+boolean
+```
+
+`true` if valid, `false` otherwise.
+
+### <mark style="color:purple;">getSafe</mark>
+
+Get a MHSG's attached Safe
+
+<pre class="language-typescript"><code class="lang-typescript">const safe = await hatsSignerGateClient.getSafe({
+<strong>    instance 
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    instance: Address;
+}
+```
+
+* `hsgInstance` - MHSG's instance address.
+
+_**Response**_:
+
+```typescript
+Address
+```
+
+Address of the attached Safe.
+
+### <mark style="color:purple;">getMinThreshold</mark>
+
+Get a MHSG's minimum threshold.
+
+<pre class="language-typescript"><code class="lang-typescript">const minThreshold = await hatsSignerGateClient.getMinThresholde({
+<strong>    instance 
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    instance: Address;
+}
+```
+
+* `instance` - MHSG's instance address.
+
+_**Response**_:
+
+```typescript
+bigint
+```
+
+The instance's min threshold.
+
+### <mark style="color:purple;">getTargetThreshold</mark>
+
+Get a MHSG's target threshold.
+
+<pre class="language-typescript"><code class="lang-typescript">const targetThreshold = await hatsSignerGateClient.getTargetThreshold({
+<strong>    instance 
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    instance: Address;
+}
+```
+
+* `instance` - MHSG's instance address.
+
+_**Response**_:
+
+```typescript
+bigint
+```
+
+The instance's target threshold.
+
+### <mark style="color:purple;">getMaxSigners</mark>
+
+Get a MHSG's maximum amount of signers.
+
+<pre class="language-typescript"><code class="lang-typescript">const maxSigners = await hatsSignerGateClient.getMaxSigners({
+<strong>    instance 
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    instance: Address;
+}
+```
+
+* `instance` - MHSG's instance address.
+
+_**Response**_:
+
+```typescript
+bigint
+```
+
+The instance's max signers.
+
+### <mark style="color:purple;">getOwnerHat</mark>
+
+Get a MHSG's Owner Hat.
+
+<pre class="language-typescript"><code class="lang-typescript">const ownerHat = await hatsSignerGateClient.getOwnerHat({
+<strong>    instance 
+</strong>});
+</code></pre>
+
+_**Arguments**_:
+
+```typescript
+{
+    instance: Address;
+}
+```
+
+* `instance` - MHSG's instance address.
+
+_**Response**_:
+
+```typescript
+bigint
+```
+
+The instance's Owner Hat.
+
+## HSG Owner
+
+Following functions are only authorized to the wearer(s) of the MHSG instance's Owner Hat.
+
+### <mark style="color:purple;">mhsgAddSignerHats</mark>
+
+Add new approved Signers Hats.
+
+In order to successfully execute the function:
+
+* The caller must be a wearer of the MHSG's Owner Hat.
+
+```typescript
+const res = await hatsSignerGateClient.mhsgAddSignerHats({
+    account,
+    mhsgInstance,
+    newSignerHats,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    mhsgInstance: Address;
+    newSignerHats: bigint[];
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `mhsgInstance` - MHSG's instance address.
+* `newSignerHats` - Array of Hat IDs to add as approved Signers Hats.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+### <mark style="color:purple;">setTargetThreshold</mark>
+
+Sets a new target threshold, and changes the Safe's threshold if appropriate.&#x20;
+
+In order to successfully execute the function:
+
+* The caller must be a wearer of the MHSG's Owner Hat.
+* The new target threshold should not be smaller than the minimum threshold.
+* The new target threshold should not be larger than the maximum amount of signers.
+
+```typescript
+const res = await hatsSignerGateClient.setTargetThreshold({
+    account,
+    instance,
+    targetThreshold,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    instance: Address;
+    targetThreshold: bigint;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `instance` - HSG's instance address.
+* `targetThreshold` - The new target threshold to set.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+### <mark style="color:purple;">setMinThreshold</mark>
+
+Sets a new minimum threshold.
+
+In order to successfully execute the function:
+
+* The caller must be a wearer of the MHSG's Owner Hat.
+* The new minimum threshold should not be larger than the target threshold.
+* The new minimum threshold should not be larger than the maximum amount of signers.
+
+```typescript
+const res = await hatsSignerGateClient.setMinThreshold({
+    account,
+    instance,
+    minThreshold,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    instance: Address;
+    minThreshold: bigint;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `instance` - HSG's instance address.
+* `minThreshold` - The new minimum threshold to set.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+### <mark style="color:purple;">setOwnerHat</mark>
+
+Sets a new Owner Hat.
+
+In order to successfully execute the function:
+
+* The caller must be a wearer of the current Owner Hat.
+
+```typescript
+const res = await hatsSignerGateClient.setOwnerHat({
+    account,
+    instance,
+    newOwnerHat,
+    hatsContractAddress,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    instance: Address;
+    newOwnerHat: bigint;
+    hatsContractAddress: Address;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `instance` - MHSG's instance address.
+* newOwnerHat - The new Owner Hat to set.
+* `hatsContractAddress` - The Hats.sol contract address of the new Owner Hat.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+# HSG & MHSG Handlers
+
+The following section describes a different way of interacting with HSG and MHSG instances, than documented in the previous sections. In particular, in the previous sections, for each operation on the [HSG](hats-signer-gate.md) and [MHSG](multi-hats-signer-gate.md) contracts, there's a matching function in the SDK. &#x20;
+
+In addition to these individual functions, the SDK also includes a single handler for calling the write operations of both HSG and MHSG instances. This enables HSG/MHSG interactions to be optionally handled in a similar way to [Hats Modules interactions](../hats-modules/modules-sdk/interact-with-instances.md#callinstancewritefunction), by working with the HSG and MHSG [metadata objects](hsg-and-mhsg-handlers.md#metadata) and the single write functions [handler](hsg-and-mhsg-handlers.md#handler).
+
+## Handlers
+
+### <mark style="color:purple;">callInstanceWriteFunction</mark>
+
+Call a HSG/MHSG instance's write function.
+
+```typescript
+const res = await hatsSignerGateClient.callInstanceWriteFunction({
+    account,
+    type,
+    instance,
+    func,
+    args,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    type: HsgType;
+    instance: Address;
+    func: WriteFunction;
+    args: unknown[];
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `type` - 'HSG' or 'MHSG'.
+* `instance` - The MHSG/HSG instance address.
+* `func` - The write function to call, provided as an object of type [WriteFunction](hsg-and-mhsg-handlers.md#writefunction).
+* `args` - The arguments with which to call the function, as objects of type [WriteFunctionArg](hsg-and-mhsg-handlers.md#writefunctionarg).
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+### <mark style="color:purple;">getInstanceParameters</mark>
+
+Get a HSG or MHSG instance live parameters:
+
+* Safe address
+* Min threshold
+* Target threshold
+* Max signers
+* Owner Hat
+
+```typescript
+const params = await hatsSignerGateClient.getInstanceParameters(instance);
+```
+
+_**Arguments**_:
+
+```typescript
+instance: `0x${string}`
+```
+
+`instance` - Instance's address.
+
+_**Response**_:
+
+```typescript
+{
+  label: string;
+  value: unknown;
+  solidityType: string;
+  displayType: string;
+}[]
+```
+
+An array of objects, each containing a parameter's information:
+
+* `label` - The parameter's name/description.
+* `value` - The parameter's value, as was returned from the instance contract.
+* `solidityType` - The parameter's Solidity type.
+* `displayType`- The parameter's display type. Its purpose is for UIs to be able to render an appropriate component for the parameter
+
+## Metadata
+
+Both the HSG and MHSG metadata objects include their ABIs, all their [write functions](hsg-and-mhsg-handlers.md#writefunction) together with the metadata of each function and the [custom roles](hsg-and-mhsg-handlers.md#role) that are associated with them.&#x20;
+
+### <mark style="color:purple;">getMetadata</mark>
+
+Get the metadata object of HSG or MHSG.
+
+```typescript
+const metadata = await hatsSignerGateClient.getMetadata(type);
+```
+
+_**Arguments**_:
+
+```typescript
+HsgType
+```
+
+"HSG" or "MHSG"
+
+_**Response**_:
+
+```typescript
+HsgMetadata
+```
+
+An object of type [HsgMetadata](hsg-and-mhsg-handlers.md#hsgmetadata).
+
+## Types
+
+### <mark style="color:purple;">HsgMetadata</mark>
+
+Represents a HSG or MHSG metadata object.
+
+```typescript
+{
+  customRoles: Role[]; // HSG/MHSG custom roles
+  writeFunctions: WriteFunction[]; // HSG/MHSG write functions
+  abi: Abi; // HSG/MHSG ABI
+}
+```
+
+### <mark style="color:purple;">Role</mark>
+
+A  custom HSG/MHSG role. Each role is associated with a hat and grants permissions to the hat's wearer(s) to call certain functions on the contract.
+
+There are two special roles with a reserved ID:
+
+1. `public` role, associated with functions that are permitted to any caller.
+2. `hatAdmins` role, associated with functions that are permitted to the target hat's admins.
+
+```typescript
+{
+  id: string; // role's ID
+  name: string; // role's name
+  criteria: string; // The name of the contract function which can be used to retrieve the role's hat
+  hatAdminsFallback?: boolean; // 'true' indicates that the role is granted to the target hat's admin(s) if/when the role's criteria function returns zero.
+}
+```
+
+### <mark style="color:purple;">WriteFunction</mark>
+
+The HSG/MHSG write functions. Each write function is associated with a role that grants permissions to the role's wearer(s) to call the function on the contract.
+
+```typescript
+{
+  roles: string[]; // IDs of the roles that have the authority to call the function
+  functionName: string; // the name of the function in the contract
+  label: string; // the name to be displayed to end users
+  description: string; // a description of the function to be displayed to end users
+  primary?: boolean; // 'true' indicates that this function is the primary function of the roles it is associated with. Front ends can use this information to display the function more prominently for each role
+  args: WriteFunctionArg[]; // the arguments of the function
+}
+```
+
+### <mark style="color:purple;">WriteFunctionArg</mark>
+
+HSG/MHSG write function argument.
+
+```typescript
+{
+  name: string; // arg's name
+  description: string; // arg's description
+  type: string; // arg's solidity type, e.g. 'uint256'
+  displayType: string; // a free-text field that tells front ends how to generate a proper UI component for the parameter
+  optional?: boolean; // setting to 'true' indicates that this input is optional
+}
+```
+
+# 💼 Hats Account SDK
+
+## Overview
+
+HatsAccount gives every Hats Protocol hat a smart contract account. Each hat can have multiple flavors of HatsAccount, each following the ERC6551 standard and designed to be deployed via the ERC6551Registry factory.
+
+HatsAccount gives every hat the ability to do the following:
+
+* Send ETH, ERC20, ERC721, and ERC1155 tokens
+* Sign ERC1271-compatible messages, e.g. as a signer on a multisig
+* Become a member of a DAO and make/vote on proposals, e.g. in a Moloch DAO
+* Call functions on other contracts
+* `Delegatecall` to other contracts, via [tokenbound](https://github.com/tokenbound/contracts)'s [sandbox](https://github.com/jaydenwindle/delegatecall-sandbox/) concept
+* Be assigned permissions in address-based onchain access control schemes
+
+Apart from the first and last, all of these actions are performed by the hat's wearer(s), with the security model determined by the flavor of HatsAccount.
+
+The SDK is an open source JavaScript client for creating and interacting with Hats Account instances and was designed to work both in the browser and in Node.js.
+
+{% content-ref url="1-of-n-hats-account/" %}
+[1-of-n-hats-account](1-of-n-hats-account/)
+{% endcontent-ref %}
+
+# 1 of N Hats Account
+
+HatsAccount1ofN is a flavor of HatsAccount that mirrors the typical 1-of-n security model of hat-based role and permission management. Any single wearer of a HatsAccount1ofN instance's hat has full control over that HatsAccount. If a hat has multiple wearers, they each individually have full control.
+
+{% content-ref url="getting-started.md" %}
+[getting-started.md](getting-started.md)
+{% endcontent-ref %}
+
+{% content-ref url="creating-new-instances.md" %}
+[creating-new-instances.md](creating-new-instances.md)
+{% endcontent-ref %}
+
+# Getting Started
+
+### _Install_
+
+yarn:
+
+```bash
+yarn add @hatsprotocol/hats-account-sdk viem
+```
+
+npm:
+
+```bash
+npm install @hatsprotocol/hats-account-sdk viem
+```
+
+The SDK uses Viem in order to interact with the various chains and includes it as a peer dependency.
+
+### _HatsAccount1ofNClient Initialization_
+
+Import and initialize _HatsAccount1ofNClient_:
+
+```typescript
+import { HatsAccount1ofNClient } from "@hatsprotocol/hats-account-sdk";
+
+const hatsAccount1ofNClient = new HatsAccount1ofNClient({
+    publicClient,
+    walletClient,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    publicClient: PublicClient;
+    walletClient: WalletClient;
+}
+```
+
+* `publicClient` - A Viem Public Client, used for onchain read operations.
+* `walletClient` - A Viem Wallet Client, used for onchain write operations.&#x20;
+
+# Creating New Instances
+
+Create new Instances of a 1 of N Hats Account, and/or predict the addresses of accounts.
+
+### <mark style="color:purple;">createAccount</mark>
+
+Create a new 1 of N Hats Account instance.
+
+```typescript
+const createHatsAccountResult = await hatsAccount1ofNClient.createAccount({
+    account,
+    hatId,
+    salt,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    hatId: bigint;
+    salt: bigint;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `hatId` - ID of the hat for which to create the account.
+* `signersHatId` - arbitrary number as "salt".
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+  newAccount: `0x${string}`;
+}
+```
+
+An object of type [CreateAccountResult](types.md#createaccountresult), includes:
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+* `newAccount` - In case of success, the address of the new account.
+
+### <mark style="color:purple;">predictAccountAddress</mark>
+
+Predict the address of a 1 of N Hats Account instance.
+
+```typescript
+const predictedAccount = await hatsAccount1ofNClient.predictAccountAddress({
+    hatId,
+    salt,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    hatId: bigint;
+    salt: bigint;
+}
+```
+
+* `hatId` - ID of the hat for which to create the account.
+* `signersHatId` - arbitrary number as "salt".
+
+_**Response**_:
+
+```typescript
+`0x${string}`
+```
+
+The predicted account address.
+
+# Executing From An Instance
+
+Execute operations from a Hats Account instance. Only wearers of the instance's hat can call the following functions.
+
+### <mark style="color:purple;">execute</mark>
+
+Execute an operation.
+
+```typescript
+const executionResult = await hatsAccount1ofNClient.execute({
+    account,
+    instance,
+    operation,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    instance: Address;
+    operation: Operation;
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `instance` - The Hats Account instance.
+* `operation` - An object of type [Operation](types.md#operation), which includes the operation's execution data.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+An object of type [ExecutionResult](types.md#executionresult), includes:
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+### <mark style="color:purple;">executeBatch</mark>
+
+Execute a batch of operations.
+
+```typescript
+const executionResult = await hatsAccount1ofNClient.executeBatch({
+    account,
+    instance,
+    operations,
+});
+```
+
+_**Arguments**_:
+
+```typescript
+{
+    account: Account | Address;
+    instance: Address;
+    operations: Operation[];
+}
+```
+
+* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
+* `instance` - The Hats Account instance.
+* `operations` - An array of  [Operation](types.md#operation) objects, each includes an operation's execution data.
+
+_**Response**_:
+
+```typescript
+{
+  status: "success" | "reverted";
+  transactionHash: `0x${string}`;
+}
+```
+
+An object of type [ExecutionResult](types.md#executionresult), includes:
+
+* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
+* `transactionHash` - transaction's hash.
+
+# Constants
+
+Following constant values are exported:
+
+<pre class="language-typescript"><code class="lang-typescript"><strong>import {   
+</strong>  HATS_ACCOUNT_1OFN_ABI, // Hats Account 1 of N ABI
+  ERC6551_REGISTRY_ABI, // The registry's ABI (factory which deploys Hats Account instances)
+  HATS_ACCOUNT_1OFN_IMPLEMENTATION, // Mapping between a chain ID to the Hats Account 1 of N implementation address in this chain
+  ERC6551_REGISTRY, // The registry's address
+<strong>} from "@hatsprotocol/hats-account-sdk";
+</strong></code></pre>
+
+# Types
+
+### <mark style="color:purple;">Operation</mark>
+
+Execution data for a Hats Account operation.
+
+```typescript
+{
+  to: Address;
+  value: bigint;
+  data: Hex;
+  operation: OperationType;
+}
+```
+
+* to - The target address of the operation.
+* value - The Ether value to be sent to the target.
+* data - The encoded operation calldata.
+* operation - A value of type [OperationType](types.md#operationtype), indicating the type of operation to perform (call or delegate-call).
+
+### <mark style="color:purple;">OperationType</mark>
+
+Enum describing the operation to execute.
+
+```typescript
+enum OperationType {
+  Call,
+  DelegateCall,
+}
+```
+
+### <mark style="color:purple;">CreateAccountResult</mark>
+
+Account creation result.
+
+```typescript
+enum OperationType {
+  status: "success" | "reverted";
+  transactionHash: Address;
+  newAccount: Address;
+}
+```
+
+### <mark style="color:purple;">ExecutionResult</mark>
+
+Hats Account execution result.
+
+```typescript
+enum OperationType {
+  status: "success" | "reverted";
+  transactionHash: Address;
+}
+```
+
+# 🌐 Hats Security Audits
+
+Both [Hats Protocol v1](https://github.com/Hats-Protocol/hats-protocol) and [Hats Signer Gate](https://github.com/Hats-Protocol/hats-zodiac#security-audits) have received two security audits, listed below. See the [audits](https://github.com/Hats-Protocol/hats-protocol/tree/main/audits) directory for the detailed reports.&#x20;
+
+| Auditor        | Report Date  | Review Commit Hash                                                                                        |
+| -------------- | ------------ | --------------------------------------------------------------------------------------------------------- |
+| Trust Security | Feb 23, 2023 | [60f07df](https://github.com/Hats-Protocol/hats-protocol/commit/60f07df0679ba52d4ad818b1bb3700d2f4f5a63a) |
+| Sherlock       | May 3, 2023  | [fafcfd](https://github.com/Hats-Protocol/hats-protocol/commit/fafcfdf046c0369c1f9e077eacd94a328f9d7af0)  |
+
