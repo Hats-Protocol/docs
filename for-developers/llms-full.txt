@@ -47,7 +47,7 @@ Wearing a hat is a binary state. If all three of the above factors are true for 
 
 Hats Protocol has an `isWearerOfHat()` convenience function that wraps `balanceOf()` and returns a bool for `balance == 1`.
 
-### Dynamic hat balances
+## Dynamic hat balances
 
 In Hats Protocol, the `balanceOf()` function does not simply reflect static contract storage — i.e., (1) from the above section. In addition, it reads (via a `staticcall`) dynamically from the hat's Eligibility and Toggle modules — (2) and (3) from above — and combines the three factors to arrive at the answer of whether a given address has a balance.
 
@@ -60,7 +60,7 @@ In such cases, there are two solutions:
 1. Read directly from the contract — i.e., `isWearerOfHat()`
 2. Trigger a contract state change by calling `checkHatWearerStatus()` and/or `checkHatStatus()`
 
-### Who can wear a hat?
+## Who can wear a hat?
 
 Any account can wear a hat, including:
 
@@ -76,7 +76,7 @@ The admin of every hat is another hat. This means that the authority to perform 
 
 The scope of authority for a hat's admin is to determine who can wear it. This is reflected in the ability to create the hat and to mint or (for mutable hats) transfer the hat's token.
 
-### Transitive Admin Powers
+## Transitive Admin Powers
 
 In Hats Protocol v1, admin powers are transitive. All of a hat's ancestors — its direct admin, its admin's admin, etc — can serve as its admin.
 
@@ -90,7 +90,7 @@ In most contexts, an "admin" role has broad, generalized control over the entity
 | Eligibility Module | - Prevent ineligible addresses from wearing hat<br>- Revoke hat from specific wearer(s) |
 | Toggle Module | - Activate / de-active hat ⇒ all wearers lose the hat |
 
-### **Hatter Contracts**
+## **Hatter Contracts**
 
 Logic contracts that serve as admins are informally known as "hatter" contracts. These are contracts that implement specific logic or rules. The admin of a hatter contract is the true admin, but has delegated said admin authority to the logic embedded in the hatter.
 
@@ -109,13 +109,13 @@ The fact that all hat's have hats as admins means that every hat exist within a 
 
 Within a given branch of a hat tree, hats closer to the root of the tree have admin authorities for hats further down the branch. This is consistent with the direction of delegation of authority for DAOs, and combats the tendency for accountability to dilute as delegated authorities reach the edges of a network.
 
-### **Top Hats**
+## **Top Hats**
 
 Top Hats are the one exception to the rule that a hat's admin must be another hat. A Top Hat is a hat that serves as its own admin.
 
 The root of a Hat tree is always a Top Hat. Typically, a DAO will wear the Top Hat that serves as admin for the tree of Hats related to the DAO's operations.
 
-### Hat Trees and Hat Ids
+## Hat Trees and Hat Ids
 
 Each hat tree has a max depth of 15 and a branching factor of 2^16. This means that each hat can have up to 2^16 = 65,536 children, and this pattern can repeat 14 times.
 
@@ -134,7 +134,7 @@ The 32 bytes of a hat's id are structured as follows:
 
 There are 15 total hat levels, beginning with the top hat at level 0 and going up to level 14.
 
-#### Example
+## Example
 
 Consider the following hat id (in hex): 0x0000000f00020005000a00010000000000000000000000000000000000000000
 
@@ -147,16 +147,16 @@ From the id alone, we know a lot about this hat:
 * Its immediate admin (aka parent) is 15.2.5.10
 * Its grandparent is 15.2.5
 
-#### Other hat id formats
+## Other hat id formats
 
 | Format | Example |
 | ------ | ------- |
 | Integer ("raw") | 6470400364654781217010529864562902351218663490360806944392503307010048 |
 | Hexadecimal | 0x0000000f000200050000a00010000000000000000000000000000000000000000 |
-| Hexadecimal with level delimiters | 0x0000000f.0002.0005.000a.0001.0000.0000.0000.0000.0000.0000.0000.0000.0000.0000<br><br>0x0000000f_0002_0005_000a_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 |
+| Hexadecimal with level delimiters | 0x0000000f.0002.0005.000a.0001.0000.0000.0000.0000.0000.0000.0000.0000.0000.0000<br><br>0x0000000f_0002_0005_000a_0001_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000_0000 |
 | "IP address" | 15.2.5.10.1 |
 
-### **Hat Tree Space**
+## **Hat Tree Space**
 
 A hat tree can have up to 14 levels, plus the top hat (tree root). Within those 14 levels are 224 bits of address space (remember, one level contains 16 bits of space), so the maximum number of hats in a single hat tree is approximately:
 
@@ -164,11 +164,33 @@ A hat tree can have up to 14 levels, plus the top hat (tree root). Within those 
 
 which is well beyond the number of stars in the universe.
 
+# Linking Hats Trees
+
+Not all Hats trees will unfurl from top down or inside out. Sometimes, new branches will form independently from the main tree, or multiple trees will form before a main tree even exists.
+
+In these cases, Hats trees can be grafted onto other trees. This is done via a request-approve process where the wearer of one tree's Top Hat requests to link their Top Hat to a hat in another tree, whose admin can approve if desired. This has three main effects:
+
+1. The linked Top Hat loses its Top Hat status (i.e., `Hats.isTopHat` will return `false`) and turns into what we call a "tree root" or "linked Top Hat", and
+2. The hat to which it is linked becomes its new admin; it is no longer its own admin
+3. On linking, the linked Top Hat can be assigned eligibility and/or toggle modules like any other hat
+
+Linked hat trees can also be unlinked by the tree root from its linked admin, via `Hats.unlinkTopHatFromTree`. This causes the tree root to regain its status as a top hat and to once again become its own admin. Any eligibility or toggle modules added on linking are cleared. Note that unlinking is only allowed if the tree root is active and has an eligible wearer.
+
+**CAUTION**: Be careful when nesting multiple Hat trees. If the nested linkages become too long, the higher level admins may lose control of the lowest level hats because admin actions at that distance may cost-prohibitive or even exceed the gas limit. Best practice is to not attach external authorities (e.g. via token gating) to hats in trees that are more than ~10 nested trees deep (varies by network).
+
+### **Relinking**
+
+A linked Top Hat can be relinked to a different hat within the same tree. This is useful for groups that want to reorganize their subtrees without having to go through the request and approve steps. Valid relinks must meet the following criteria in order to ensure security:
+
+1. The hat wearer executing the relink is an admin of both the linked topHat and the new admin (destination)
+2. The new admin (destination) is within the same local tree as the existing admin (origin), or within the Tippy Top Hat's local tree. Tippy Top Hats executing a relink are not subject to these restrictions.
+3. The new link does not create a circular linkage.
+
 # Eligibility Modules
 
 Eligibility modules have authority to rule on the a) eligibility b) good standing of wearer(s) of a given hat.
 
-### Wearer Eligibility
+## Wearer Eligibility
 
 Wearer Eligibility (A) determines whether a given address is eligible to wear the hat. This applies both before and while the address wears the hat. Consider the following scenarios for a given address:
 
@@ -179,7 +201,7 @@ Wearer Eligibility (A) determines whether a given address is eligible to wear th
 
 When a hat is revoked, its token is burned.
 
-### Wearer Standing
+## Wearer Standing
 
 Wearer Standing (B) determines whether a given address is in good or bad standing. Standing is stored on-chain in `Hats.sol` to facilitate accountability.
 
@@ -226,7 +248,7 @@ Changes are allowed to the following Hat properties:
 
 Additionally, mutable hats can be transferred by their admins to a different wearer. Immutable hats cannot be transferred.
 
-### **Top Hat Exception**
+## **Top Hat Exception**
 
 The only exception to the above mutability rules is for Top Hats, which despite being immutable are allowed to change their own `details` and `imageURI` (but not other properties).
 
@@ -238,7 +260,7 @@ The creator of a hat must be its admin. In other words, the admin of a hat must 
 
 Creating a Top Hat (a hat that serves as its own admin) requires a special function `mintTophat`, which creates a new hat, sets that hat as its own admin, and then mints its token to a `_target`. Any address wanting to create a hat that is not already wearing an admin hat of some kind must first create a Top Hat with itself as the wearer.
 
-#### **Batch Creation**
+## **Batch Creation**
 
 In some scenarios, a DAO may want to create many hats at once -- including an entire hat tree -- at once. This is particularly useful when setting up an initial structure for a DAO or working group (e.g., from a hats template) or when forking an existing Hats structure from a template.
 
@@ -259,7 +281,7 @@ To mint a hat:
 
 A hat's admin can mint its token individually by calling `Hats.mintHat`.
 
-#### **Batch Minting**
+## **Batch Minting**
 
 An admin can also mint multiple hats by calling `Hats.batchMintHats`. This enables an admin to mint instances of the same hat to multiple wearers, to mint several hats at once, or even to mint an entire hats tree it just created.
 
@@ -280,28 +302,6 @@ With the exception of Top Hats — which can always transfer themselves — only
 # Renouncing Hats
 
 The wearer of a hat can "take off" their hat via `Hats.renounceHat`. This burns the token and revokes any associated authorities and responsibilities from the now-former wearer, but does not put the wearer in bad standing.
-
-# Linking Hats Trees
-
-Not all Hats trees will unfurl from top down or inside out. Sometimes, new branches will form independently from the main tree, or multiple trees will form before a main tree even exists.
-
-In these cases, Hats trees can be grafted onto other trees. This is done via a request-approve process where the wearer of one tree's Top Hat requests to link their Top Hat to a hat in another tree, whose admin can approve if desired. This has three main effects:
-
-1. The linked Top Hat loses its Top Hat status (i.e., `Hats.isTopHat` will return `false`) and turns into what we call a "tree root" or "linked Top Hat", and
-2. The hat to which it is linked becomes its new admin; it is no longer its own admin
-3. On linking, the linked Top Hat can be assigned eligibility and/or toggle modules like any other hat
-
-Linked hat trees can also be unlinked by the tree root from its linked admin, via `Hats.unlinkTopHatFromTree`. This causes the tree root to regain its status as a top hat and to once again become its own admin. Any eligibility or toggle modules added on linking are cleared. Note that unlinking is only allowed if the tree root is active and has an eligible wearer.
-
-**CAUTION**: Be careful when nesting multiple Hat trees. If the nested linkages become too long, the higher level admins may lose control of the lowest level hats because admin actions at that distance may cost-prohibitive or even exceed the gas limit. Best practice is to not attach external authorities (e.g. via token gating) to hats in trees that are more than ~10 nested trees deep (varies by network).
-
-### **Relinking**
-
-A linked Top Hat can be relinked to a different hat within the same tree. This is useful for groups that want to reorganize their subtrees without having to go through the request and approve steps. Valid relinks must meet the following criteria in order to ensure security:
-
-1. The hat wearer executing the relink is an admin of both the linked topHat and the new admin (destination)
-2. The new admin (destination) is within the same local tree as the existing admin (origin), or within the Tippy Top Hat's local tree. Tippy Top Hats executing a relink are not subject to these restrictions.
-3. The new link does not create a circular linkage.
 
 # Batch Actions
 
@@ -333,55 +333,75 @@ Developers building on top of Hats Protocol should note that mints and transfers
 
 To avoid confusion, Hats Protocol does not claim to be ERC1155-_compliant_. Instead, we say that Hats Protocol has "ERC1155-_similar_" tokens. When referring specifically to the ERC1155 _interface_, however, we do say that Hats Protocol conforms fully.
 
+# ⛓️ Hats Protocol Supported Chains
+
+Hats Protocol has the same contract address for each chain is it deployed to (ENS: v1.hatsprotocol.eth): `0x3bc1A0Ad72417f2d411118085256fC53CBdDd137`
+
+See below for links to the specific contracts for each chain Hats Protocol is currently on:
+
+* [**Ethereum (mainnet)**](https://etherscan.io/address/0x3bc1A0Ad72417f2d411118085256fC53CBdDd137)
+* [**Arbitrum**](https://arbiscan.io/address/0x3bc1A0Ad72417f2d411118085256fC53CBdDd137)
+* [**Gnosis Chain**](https://gnosisscan.io/address/0x3bc1A0Ad72417f2d411118085256fC53CBdDd137)
+* [**Optimism**](https://optimistic.etherscan.io/address/0x3bc1A0Ad72417f2d411118085256fC53CBdDd137)
+* [**Polygon**](https://polygonscan.com/address/0x3bc1A0Ad72417f2d411118085256fC53CBdDd137)
+* [**Scroll**](https://scrollscan.com/address/0x3bc1a0ad72417f2d411118085256fc53cbddd137)
+* [**Celo**](https://celoscan.io/address/0x3bc1A0Ad72417f2d411118085256fC53CBdDd137)
+* [**Base**](https://basescan.org/address/0x3bc1A0Ad72417f2d411118085256fC53CBdDd137)
+* [**Sepolia (testnet)**](https://sepolia.etherscan.io/address/0x3bc1A0Ad72417f2d411118085256fC53CBdDd137)
+* [**Holesky (testnet)**](https://holesky.etherscan.io/address/0x3bc1A0Ad72417f2d411118085256fC53CBdDd137)
+* [**Goerli (testnet)**](https://goerli.etherscan.io/address/0x3bc1A0Ad72417f2d411118085256fC53CBdDd137)
+
+If you would like to use Hats on a chain not listed above, please reach out to us at support \[at] hatsprotocol \[dot] xyz.
+
 # 🤖 v1 Protocol Spec
 
 In this section, you'll find Ethereum Natspec documentation for each of the contracts, events, errors, and interfaces that comprise Hats Protocol.
 
 -------------------
 
-## Hats.sol
+# Hats.sol
 
-### Overview
+## Overview
 
 Hats are DAO-native, revocable, and programmable roles that are represented as non-transferable ERC-1155-similar tokens for composability.
 
 This is a multi-tenant contract that can manage all hats for a given chain. While it fully implements the ERC1155 interface, it does not fully comply with the ERC1155 standard.
 
-### State Variables
+## State Variables
 
-#### name
+### name
 The name of the contract, typically including the version
 ```solidity
 string public name;
 ```
 
-#### lastTopHatId
+### lastTopHatId
 The first 4 bytes of the id of the last tophat created.
 ```solidity
 uint32 public lastTopHatId;
 ```
 
-#### baseImageURI
+### baseImageURI
 The fallback image URI for hat tokens with no `imageURI` specified in their branch
 ```solidity
 string public baseImageURI;
 ```
 
-#### _hats
+### _hats
 Internal mapping of hats to hat ids. See HatsIdUtilities.sol for more info on how hat ids work
 ```solidity
 mapping(uint256 => Hat) internal _hats;
 ```
 
-#### badStandings
+### badStandings
 Mapping of wearers in bad standing for certain hats. Used by external contracts to trigger penalties for wearers in bad standing hatId => wearer => !standing
 ```solidity
 mapping(uint256 => mapping(address => bool)) public badStandings;
 ```
 
-### Functions
+## Functions
 
-#### constructor
+### constructor
 All arguments are immutable; they can only be set once during construction
 ```solidity
 constructor(string memory _name, string memory _baseImageURI);
@@ -393,7 +413,7 @@ constructor(string memory _name, string memory _baseImageURI);
 | `_name`         | `string` | The name of this contract, typically including the version |
 | `_baseImageURI` | `string` | The fallback image URI                                     |
 
-#### mintTopHat
+### mintTopHat
 Creates and mints a Hat that is its own admin, i.e. a "topHat". A topHat has no eligibility and no toggle.
 ```solidity
 function mintTopHat(address _target, string calldata _details, string calldata _imageURI)
@@ -413,7 +433,7 @@ function mintTopHat(address _target, string calldata _details, string calldata _
 | ---------- | --------- | ---------------------------------- |
 | `topHatId` | `uint256` | The id of the newly created topHat |
 
-#### createHat
+### createHat
 
 Creates a new hat. The msg.sender must wear the `_admin` hat.
 
@@ -481,7 +501,7 @@ function batchCreateHats(
 | --------- | ------ | ------------------------------------- |
 | `success` | `bool` | True if all createHat calls succeeded |
 
-#### getNextId
+### getNextId
 
 Gets the id of the next child hat of the hat `_admin`
 
@@ -501,7 +521,7 @@ function getNextId(uint256 _admin) public view returns (uint256 nextId);
 | -------- | --------- | -------------- |
 | `nextId` | `uint256` | The new hat id |
 
-#### mintHat
+### mintHat
 
 Mints an ERC1155-similar token of the Hat to an eligible recipient, who then "wears" the hat
 
@@ -522,7 +542,7 @@ function mintHat(uint256 _hatId, address _wearer) public returns (bool success);
 | --------- | ------ | -------------------------- |
 | `success` | `bool` | Whether the mint succeeded |
 
-#### batchMintHats
+### batchMintHats
 
 Mints new hats in batch. The msg.sender must be an admin of each hat.
 
@@ -543,7 +563,7 @@ function batchMintHats(uint256[] calldata _hatIds, address[] calldata _wearers) 
 | --------- | ------ | ----------------------------------- |
 | `success` | `bool` | True if all mintHat calls succeeded |
 
-#### setHatStatus
+### setHatStatus
 
 Toggles a Hat's status from active to deactive, or vice versa
 
@@ -564,7 +584,7 @@ function setHatStatus(uint256 _hatId, bool _newStatus) external returns (bool to
 | --------- | ------ | ------------------------------ |
 | `toggled` | `bool` | Whether the status was toggled |
 
-#### checkHatStatus
+### checkHatStatus
 
 Checks a hat's toggle module and processes the returned status
 
@@ -584,13 +604,13 @@ function checkHatStatus(uint256 _hatId) public returns (bool toggled);
 | --------- | ------ | ------------------------------ |
 | `toggled` | `bool` | Whether there was a new status |
 
-#### _pullHatStatus
+### _pullHatStatus
 
 ```solidity
 function _pullHatStatus(Hat storage _hat, uint256 _hatId) internal view returns (bool success, bool newStatus);
 ```
 
-#### setHatWearerStatus
+### setHatWearerStatus
 
 Report from a hat's eligibility on the status of one of its wearers and, if `false`, revoke their hat
 
@@ -601,8 +621,6 @@ function setHatWearerStatus(uint256 _hatId, address _wearer, bool _eligible, boo
 ```
 
 -------------------
-
-## HatsEvents.sol
 
 # HatsEvents.sol
 
@@ -703,8 +721,6 @@ Emitted when a tophat is linked to a another tree
 ```solidity
 event TopHatLinked(uint32 domain, uint256 newAdmin);
 ```
-
-## HatsErrors.sol
 
 # HatsErrors.sol
 
@@ -888,95 +904,308 @@ _This protects against a DOS attack where an admin iteratively extend's a hat's 
 error StringTooLong();
 ```
 
-## HatsIdUtilities.sol
+# HatsIdUtilities.sol
 
-## IHatsIdUtilities.sol
+## HatsIdUtilities
 
-# IHatsIdUtilities.sol
+[Git Source](https://github.com/Hats-Protocol/hats-protocol/blob/b43ad0d1dbe4a4190febc036ee8a2849e3f221b4/src/HatsIdUtilities.sol)
 
-## IHatsIdUtilities
+**Inherits:** IHatsIdUtilities
 
-[Git Source](https://github.com/Hats-Protocol/hats-protocol/blob/b43ad0d1dbe4a4190febc036ee8a2849e3f221b4/src/Interfaces/IHatsIdUtilities.sol)
+**Author:** Haberdasher Labs
+
+_Functions for working with Hat Ids from Hats Protocol. Factored out of Hats.sol for easier use by other contracts._
+
+### State Variables
+
+#### linkedTreeRequests
+
+Mapping of tophats requesting to link to admin hats in other trees
+
+_Linkage only occurs if request is approved by the new admin_
+
+```solidity
+mapping(uint32 => uint256) public linkedTreeRequests;
+```
+
+#### linkedTreeAdmins
+
+Mapping of approved & linked tophats to admin hats in other trees, used for grafting one hats tree onto another
+
+_Trees can only be linked to another tree via their tophat_
+
+```solidity
+mapping(uint32 => uint256) public linkedTreeAdmins;
+```
+
+#### TOPHAT\_ADDRESS\_SPACE
+
+Hat Ids serve as addresses. A given Hat's Id represents its location in its hat tree: its level, its admin, its admin's admin (etc, all the way up to the tophat). The top level consists of 4 bytes and references all tophats. Each level below consists of 16 bits, and contains up to 65,536 child hats. A uint256 contains 4 bytes of space for tophat addresses, giving room for ((256 - 32) / 16) = 14 levels of delegation, with the admin at each level having space for 65,536 different child hats. A hat tree consists of a single tophat and has a max depth of 14 levels.
+
+_Number of bits of address space for tophat ids, ie the tophat domain_
+
+```solidity
+uint256 internal constant TOPHAT_ADDRESS_SPACE = 32;
+```
+
+#### LOWER\_LEVEL\_ADDRESS\_SPACE
+
+_Number of bits of address space for each level below the tophat_
+
+```solidity
+uint256 internal constant LOWER_LEVEL_ADDRESS_SPACE = 16;
+```
+
+#### MAX\_LEVELS
+
+_Maximum number of levels below the tophat, ie max tree depth (256 - TOPHAT\_ADDRESS\_SPACE) / LOWER\_LEVEL\_ADDRESS\_SPACE;_
+
+```solidity
+uint256 internal constant MAX_LEVELS = 14;
+```
 
 ### Functions
 
 #### buildHatId
 
+Constructs a valid hat id for a new hat underneath a given admin
+
+_Reverts if the admin has already reached `MAX_LEVELS`_
+
 ```solidity
-function buildHatId(uint256 _admin, uint16 _newHat) external pure returns (uint256 id);
+function buildHatId(uint256 _admin, uint16 _newHat) public pure returns (uint256 id);
 ```
+
+**Parameters**
+
+| Name      | Type      | Description                         |
+| --------- | --------- | ----------------------------------- |
+| `_admin`  | `uint256` | the id of the admin for the new hat |
+| `_newHat` | `uint16`  | the uint16 id of the new hat        |
+
+**Returns**
+
+| Name | Type      | Description            |
+| ---- | --------- | ---------------------- |
+| `id` | `uint256` | The constructed hat id |
 
 #### getHatLevel
 
+Identifies the level a given hat in its hat tree
+
 ```solidity
-function getHatLevel(uint256 _hatId) external view returns (uint32 level);
+function getHatLevel(uint256 _hatId) public view returns (uint32 level);
 ```
+
+**Parameters**
+
+| Name     | Type      | Description                   |
+| -------- | --------- | ----------------------------- |
+| `_hatId` | `uint256` | the id of the hat in question |
+
+**Returns**
+
+| Name    | Type     | Description             |
+| ------- | -------- | ----------------------- |
+| `level` | `uint32` | (0 to type(uint32).max) |
 
 #### getLocalHatLevel
 
+Identifies the level a given hat in its local hat tree
+
+_Similar to getHatLevel, but does not account for linked trees_
+
 ```solidity
-function getLocalHatLevel(uint256 _hatId) external pure returns (uint32 level);
+function getLocalHatLevel(uint256 _hatId) public pure returns (uint32 level);
 ```
+
+**Parameters**
+
+| Name     | Type      | Description                   |
+| -------- | --------- | ----------------------------- |
+| `_hatId` | `uint256` | the id of the hat in question |
+
+**Returns**
+
+| Name    | Type     | Description                   |
+| ------- | -------- | ----------------------------- |
+| `level` | `uint32` | The local level, from 0 to 14 |
 
 #### isTopHat
 
+Checks whether a hat is a topHat
+
 ```solidity
-function isTopHat(uint256 _hatId) external view returns (bool _topHat);
+function isTopHat(uint256 _hatId) public view returns (bool _isTopHat);
 ```
+
+**Parameters**
+
+| Name     | Type      | Description         |
+| -------- | --------- | ------------------- |
+| `_hatId` | `uint256` | The hat in question |
+
+**Returns**
+
+| Name        | Type   | Description                 |
+| ----------- | ------ | --------------------------- |
+| `_isTopHat` | `bool` | Whether the hat is a topHat |
 
 #### isLocalTopHat
 
+Checks whether a hat is a topHat in its local hat tree
+
+_Similar to isTopHat, but does not account for linked trees_
+
 ```solidity
-function isLocalTopHat(uint256 _hatId) external pure returns (bool _localTopHat);
+function isLocalTopHat(uint256 _hatId) public pure returns (bool _isLocalTopHat);
 ```
+
+**Parameters**
+
+| Name     | Type      | Description         |
+| -------- | --------- | ------------------- |
+| `_hatId` | `uint256` | The hat in question |
+
+**Returns**
+
+| Name             | Type   | Description                                    |
+| ---------------- | ------ | ---------------------------------------------- |
+| `_isLocalTopHat` | `bool` | Whether the hat is a topHat for its local tree |
 
 #### isValidHatId
 
 ```solidity
-function isValidHatId(uint256 _hatId) external view returns (bool validHatId);
+function isValidHatId(uint256 _hatId) public pure returns (bool validHatId);
 ```
 
 #### getAdminAtLevel
 
+Gets the hat id of the admin at a given level of a given hat
+
+_This function traverses trees by following the linkedTreeAdmin pointer to a hat located in a different tree_
+
 ```solidity
-function getAdminAtLevel(uint256 _hatId, uint32 _level) external view returns (uint256 admin);
+function getAdminAtLevel(uint256 _hatId, uint32 _level) public view returns (uint256 admin);
 ```
+
+**Parameters**
+
+| Name     | Type      | Description                   |
+| -------- | --------- | ----------------------------- |
+| `_hatId` | `uint256` | the id of the hat in question |
+| `_level` | `uint32`  | the admin level of interest   |
+
+**Returns**
+
+| Name    | Type      | Description                       |
+| ------- | --------- | --------------------------------- |
+| `admin` | `uint256` | The hat id of the resulting admin |
 
 #### getAdminAtLocalLevel
 
+Gets the hat id of the admin at a given level of a given hat local to the tree containing the hat.
+
 ```solidity
-function getAdminAtLocalLevel(uint256 _hatId, uint32 _level) external pure returns (uint256 admin);
+function getAdminAtLocalLevel(uint256 _hatId, uint32 _level) public pure returns (uint256 admin);
 ```
+
+**Parameters**
+
+| Name     | Type      | Description                   |
+| -------- | --------- | ----------------------------- |
+| `_hatId` | `uint256` | the id of the hat in question |
+| `_level` | `uint32`  | the admin level of interest   |
+
+**Returns**
+
+| Name    | Type      | Description                       |
+| ------- | --------- | --------------------------------- |
+| `admin` | `uint256` | The hat id of the resulting admin |
 
 #### getTopHatDomain
 
+Gets the tophat domain of a given hat
+
+_A domain is the identifier for a given hat tree, stored in the first 4 bytes of a hat's id_
+
 ```solidity
-function getTopHatDomain(uint256 _hatId) external view returns (uint32 domain);
+function getTopHatDomain(uint256 _hatId) public pure returns (uint32 domain);
 ```
+
+**Parameters**
+
+| Name     | Type      | Description                   |
+| -------- | --------- | ----------------------------- |
+| `_hatId` | `uint256` | the id of the hat in question |
+
+**Returns**
+
+| Name     | Type     | Description                    |
+| -------- | -------- | ------------------------------ |
+| `domain` | `uint32` | The domain of the hat's tophat |
 
 #### getTippyTopHatDomain
 
+Gets the domain of the highest parent tophat — the "tippy tophat"
+
 ```solidity
-function getTippyTopHatDomain(uint32 _topHatDomain) external view returns (uint32 domain);
+function getTippyTopHatDomain(uint32 _topHatDomain) public view returns (uint32 domain);
 ```
+
+**Parameters**
+
+| Name            | Type     | Description                                   |
+| --------------- | -------- | --------------------------------------------- |
+| `_topHatDomain` | `uint32` | the 32 bit domain of a (likely linked) tophat |
+
+**Returns**
+
+| Name     | Type     | Description             |
+| -------- | -------- | ----------------------- |
+| `domain` | `uint32` | The tippy tophat domain |
 
 #### noCircularLinkage
 
+Checks For any circular linkage of trees
+
 ```solidity
-function noCircularLinkage(uint32 _topHatDomain, uint256 _linkedAdmin) external view returns (bool notCircular);
+function noCircularLinkage(uint32 _topHatDomain, uint256 _linkedAdmin) public view returns (bool notCircular);
 ```
+
+**Parameters**
+
+| Name            | Type      | Description                                |
+| --------------- | --------- | ------------------------------------------ |
+| `_topHatDomain` | `uint32`  | the 32 bit domain of the tree to be linked |
+| `_linkedAdmin`  | `uint256` | the hatId of the potential tree admin      |
+
+**Returns**
+
+| Name          | Type   | Description                      |
+| ------------- | ------ | -------------------------------- |
+| `notCircular` | `bool` | circular link has not been found |
 
 #### sameTippyTopHatDomain
 
+Checks that a tophat domain and its potential linked admin are from the same tree, ie have the same tippy tophat domain
+
 ```solidity
-function sameTippyTopHatDomain(uint32 _topHatDomain, uint256 _newAdminHat) external view returns (bool sameDomain);
+function sameTippyTopHatDomain(uint32 _topHatDomain, uint256 _newAdminHat) public view returns (bool sameDomain);
 ```
 
--------------------
+**Parameters**
 
-## Interfaces
+| Name            | Type      | Description                                  |
+| --------------- | --------- | -------------------------------------------- |
+| `_topHatDomain` | `uint32`  | The 32 bit domain of the tophat to be linked |
+| `_newAdminHat`  | `uint256` | The new admin for the linked tree            |
 
-### IHats.sol
+**Returns**
+
+| Name         | Type   | Description                                                                                          |
+| ------------ | ------ | ---------------------------------------------------------------------------------------------------- |
+| `sameDomain` | `bool` | Whether the \_topHatDomain and the domain of its potential linked \_newAdminHat domains are the same |
 
 # IHats.sol
 
@@ -1248,9 +1477,85 @@ function balanceOfBatch(address[] calldata _wearers, uint256[] calldata _hatIds)
 function uri(uint256 id) external view returns (string memory _uri);
 ```
 
--------------------
+# IHatsIdUtilities.sol
 
-### IHatsEligibility.sol
+## IHatsIdUtilities
+
+[Git Source](https://github.com/Hats-Protocol/hats-protocol/blob/b43ad0d1dbe4a4190febc036ee8a2849e3f221b4/src/Interfaces/IHatsIdUtilities.sol)
+
+### Functions
+
+#### buildHatId
+
+```solidity
+function buildHatId(uint256 _admin, uint16 _newHat) external pure returns (uint256 id);
+```
+
+#### getHatLevel
+
+```solidity
+function getHatLevel(uint256 _hatId) external view returns (uint32 level);
+```
+
+#### getLocalHatLevel
+
+```solidity
+function getLocalHatLevel(uint256 _hatId) external pure returns (uint32 level);
+```
+
+#### isTopHat
+
+```solidity
+function isTopHat(uint256 _hatId) external view returns (bool _topHat);
+```
+
+#### isLocalTopHat
+
+```solidity
+function isLocalTopHat(uint256 _hatId) external pure returns (bool _localTopHat);
+```
+
+#### isValidHatId
+
+```solidity
+function isValidHatId(uint256 _hatId) external view returns (bool validHatId);
+```
+
+#### getAdminAtLevel
+
+```solidity
+function getAdminAtLevel(uint256 _hatId, uint32 _level) external view returns (uint256 admin);
+```
+
+#### getAdminAtLocalLevel
+
+```solidity
+function getAdminAtLocalLevel(uint256 _hatId, uint32 _level) external pure returns (uint256 admin);
+```
+
+#### getTopHatDomain
+
+```solidity
+function getTopHatDomain(uint256 _hatId) external view returns (uint32 domain);
+```
+
+#### getTippyTopHatDomain
+
+```solidity
+function getTippyTopHatDomain(uint32 _topHatDomain) external view returns (uint32 domain);
+```
+
+#### noCircularLinkage
+
+```solidity
+function noCircularLinkage(uint32 _topHatDomain, uint256 _linkedAdmin) external view returns (bool notCircular);
+```
+
+#### sameTippyTopHatDomain
+
+```solidity
+function sameTippyTopHatDomain(uint32 _topHatDomain, uint256 _newAdminHat) external view returns (bool sameDomain);
+```
 
 # IHatsEligibility.sol
 
@@ -1284,8 +1589,6 @@ function getWearerStatus(address _wearer, uint256 _hatId) external view returns 
 
 -------------------
 
-### IHatsToggle.sol
-
 # IHatsToggle.sol
 
 ## IHatsToggle
@@ -1312,13 +1615,15 @@ function getHatStatus(uint256 _hatId) external view returns (bool);
 
 -------------------
 
-[Next we'll read and add each referenced file in sequence]
-
 # 🖥️ v1 SDK Core
 
-## Getting Started
+Hats Protocol v1 Core and Subgraph SDKs.&#x20;
 
-### Install
+Check out the open source code [here](https://github.com/Hats-Protocol/sdk-v1-core).
+
+# Getting Started
+
+## Install
 
 yarn:
 ```bash
@@ -1330,7 +1635,7 @@ npm:
 npm install @hatsprotocol/sdk-v1-core
 ```
 
-### HatsClient Initialization
+## HatsClient Initialization
 
 Import and initialize HatsClient with a Viem client.
 
@@ -1359,9 +1664,9 @@ const hatsClient = new HatsClient({
 }
 ```
 
-## Onchain Reads
+# Onchain Reads
 
-### viewHat
+## viewHat
 
 Get a Hat's properties.
 
@@ -1401,7 +1706,7 @@ const hat = await hatsClient.viewHat({
 - `status` - Whether the Hat is active.
 - `admin` - Hat's admin Hat ID.
 
-### isWearerOfHat
+## isWearerOfHat
 
 Check if an address wears a specific hat.
 
@@ -1428,7 +1733,7 @@ boolean;
 ```
 `true` if the given address wears the hat, `false` otherwise.
 
-### isActive
+## isActive
 
 Check if a hat is active.
 
@@ -1475,7 +1780,7 @@ boolean;
 ```
 `true` if the given wearer is in good standing, `false` otherwise.
 
-### isEligible
+## isEligible
 
 Check if an address is eligible for a specific hat.
 
@@ -1502,7 +1807,7 @@ boolean;
 ```
 `true` if the given address is eligible for the hat, `false` otherwise.
 
-### predictHatId
+## predictHatId
 
 Predict the ID of a yet to be created hat.
 
@@ -1536,7 +1841,7 @@ number;
 ```
 Current number of trees.
 
-### getLinkageRequest
+## getLinkageRequest
 
 Get the linkage request of a tree.
 
@@ -1604,7 +1909,7 @@ number;
 ```
 The level of the Hat in the global tree.
 
-### getLocalHatLevel
+## getLocalHatLevel
 
 Get a Hat's level in its local tree.
 
@@ -1628,7 +1933,7 @@ number;
 ```
 The level of the Hat in its local tree.
 
-### getTopHatDomain
+## getTopHatDomain
 
 Get a Hat's tree domain.
 
@@ -1676,9 +1981,9 @@ number;
 ```
 The domain of the global tree's tophat.
 
-## Onchain Writes
+# Onchain Writes
 
-### mintTopHat
+## mintTopHat
 
 Mint a new top hat.
 
@@ -1719,7 +2024,7 @@ const result = await hatsClient.mintTopHat({
 - `transactionHash` - Transaction's hash.
 - `hatId` - ID of the newly created top hat.
 
-### createHat
+## createHat
 
 Create a new hat.
 
@@ -1772,7 +2077,7 @@ const result = await hatsClient.createHat({
 - `transactionHash` - Transaction's hash.
 - `hatId` - ID of the newly created hat.
 
-### batchCreateHats
+## batchCreateHats
 
 Create multiple hats in one transaction.
 
@@ -1825,7 +2130,7 @@ const result = await hatsClient.batchCreateHats({
 - `transactionHash` - Transaction's hash.
 - `hatIds` - IDs of the newly created hats.
 
-### mintHat
+## mintHat
 
 Mint a hat to a wearer.
 
@@ -1861,7 +2166,7 @@ const result = await hatsClient.mintHat({
 - `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 - `transactionHash` - Transaction's hash.
 
-### batchMintHats
+## batchMintHats
 
 Mint multiple hats to multiple wearers in one transaction.
 
@@ -1933,7 +2238,7 @@ const result = await hatsClient.setHatStatus({
 - `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 - `transactionHash` - Transaction's hash.
 
-### checkHatStatus
+## checkHatStatus
 
 Check a hat's status and return whether it was toggled.
 
@@ -1968,7 +2273,7 @@ const result = await hatsClient.checkHatStatus({
 - `transactionHash` - Transaction's hash.
 - `toggled` - Whether the hat's status was toggled.
 
-### setHatWearerStatus
+## setHatWearerStatus
 
 Set a hat's wearer status.
 
@@ -2010,7 +2315,7 @@ const result = await hatsClient.setHatWearerStatus({
 - `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 - `transactionHash` - Transaction's hash.
 
-### checkHatWearerStatus
+## checkHatWearerStatus
 
 Check a wearer's status and burn the hat if ineligible or in bad standing.
 
@@ -2083,7 +2388,7 @@ const result = await hatsClient.renounceHat({
 - `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 - `transactionHash` - Transaction's hash.
 
-### transferHat
+## transferHat
 
 Transfer a hat from one wearer to another.
 
@@ -2122,7 +2427,7 @@ const result = await hatsClient.transferHat({
 - `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 - `transactionHash` - Transaction's hash.
 
-### makeHatImmutable
+## makeHatImmutable
 
 Make a hat immutable.
 
@@ -2155,7 +2460,7 @@ const result = await hatsClient.makeHatImmutable({
 - `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 - `transactionHash` - Transaction's hash.
 
-### changeHatDetails
+## changeHatDetails
 
 Change a hat's details.
 
@@ -2191,7 +2496,7 @@ const result = await hatsClient.changeHatDetails({
 - `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 - `transactionHash` - Transaction's hash.
 
-### changeHatEligibility
+## changeHatEligibility
 
 Change a hat's eligibility module.
 
@@ -2227,7 +2532,7 @@ const result = await hatsClient.changeHatEligibility({
 - `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 - `transactionHash` - Transaction's hash.
 
-### changeHatToggle
+## changeHatToggle
 
 Change a hat's toggle module.
 
@@ -2263,7 +2568,7 @@ const result = await hatsClient.changeHatToggle({
 - `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 - `transactionHash` - Transaction's hash.
 
-### changeHatImageURI
+## changeHatImageURI
 
 Change a hat's image URI.
 
@@ -2299,7 +2604,7 @@ const result = await hatsClient.changeHatImageURI({
 - `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 - `transactionHash` - Transaction's hash.
 
-### changeHatMaxSupply
+## changeHatMaxSupply
 
 Change a hat's maximum supply.
 
@@ -2335,11 +2640,11 @@ const result = await hatsClient.changeHatMaxSupply({
 - `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 - `transactionHash` - Transaction's hash. 
 
-## Multicall
+# Multicall
 
 For any write function, the SDK includes a corresponding call data version that returns the call data information instead of submitting a transaction. These objects can then be aggregated and passed into the `multicall` function in order to batch multiple operations into one transaction.
 
-### multicall
+## multicall
 
 Batch multiple write operations in one transaction.
 
@@ -2433,7 +2738,7 @@ const result = await hatsClient.multicall({
 });
 ```
 
-### multicallPreFlightCheck
+## multicallPreFlightCheck
 
 Simulates the multicall function with the provided calls. The function has no return value, will revert on failure, with a custom error.
 
@@ -2460,13 +2765,13 @@ await hatsClient.multicallPreFlightCheck({
 - `calls` - An array of call data objects, each one includes the function name and the call data to pass to the function.
 ```
 
-## Claiming Hats
+# Claiming Hats
 
-Hats can be made claimable by using the Multi Claims Hatter module.
+Hats can be made claimable by using the [Multi Claims Hatter module](https://docs.hatsprotocol.xyz/hats-integrations/hatter-modules/multi-claims-hatter).
 
 The following functions support the claiming functionality enabled by this module.
 
-### accountCanClaim
+## accountCanClaim
 
 Check whether an account can claim a given hat.
 
@@ -2524,7 +2829,7 @@ boolean
 
 `true` if can claim-for, `false` otherwise.
 
-### claimHat
+## claimHat
 
 Claim a hat for the calling account.
 
@@ -2557,7 +2862,7 @@ const claimHatResult = await hatsClient.claimHat({
 * `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 * `transactionHash` - transaction's hash.
 
-### claimHatFor
+## claimHatFor
 
 Claim a hat on behalf of a chosen account.
 
@@ -2593,7 +2898,7 @@ const claimHatForResult = await hatsClient.claimHatFor({
 * `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 * `transactionHash` - transaction's hash.
 
-### multiClaimHatFor
+## multiClaimHatFor
 
 Claim a hat on behalf of multiple accounts.
 
@@ -2629,6 +2934,8 @@ const claimHatForResult = await hatsClient.multiClaimHatFor({
 * `status` - "success" if transaction was successful, "reverted" if transaction reverted.
 * `transactionHash` - transaction's hash.
 ```
+
+# Utilities
 
 ## Hat & Tree ID Utils
 
@@ -2849,9 +3156,9 @@ import {
 
 The SDK is an open source JavaScript client, providing utility functions for fetching data from the Hats Protocol Subgraphs and is designed to work both in the browser and in Node.js.
 
-## Getting Started
+# Getting Started
 
-### Install
+## Install
 
 yarn:
 ```bash
@@ -2863,7 +3170,7 @@ npm:
 npm install @hatsprotocol/sdk-v1-subgraph
 ```
 
-### HatsSubgraphClient Initialization
+## HatsSubgraphClient Initialization
 
 Import and initialize HatsSubgraphClient.
 
@@ -2885,9 +3192,9 @@ const hatsSubgraphClient = new HatsSubgraphClient({
 * `config` - Optional subgraph endpoints configuration. If not provided, then the default, un-gated development endpoints will be used. See the `EndpointsConfig` type for more details.
 ```
 
-## Fetching Hats
+# Fetching Hats
 
-### getHat
+## getHat
 
 Get a Hat by its ID.
 
@@ -2943,7 +3250,7 @@ const res = await client.getHat({
 });
 ```
 
-### getHatsByIds
+## getHatsByIds
 
 Get Hats by their IDs.
 
@@ -3272,7 +3579,7 @@ const res = await client.getTreesPaginated({
 
 # Misc
 
-### searchTreesHatsWearers
+## searchTreesHatsWearers
 
 Search for a Hat, Tree or Wearer by ID.
 
@@ -3759,9 +4066,9 @@ This package provides utility function to handle hats details, by both pinning m
 
 It was designed to work both in the browser and in Node.js.
 
-## Getting Started
+# Getting Started
 
-### Overview
+## Overview
 
 The package supports storing and reading a hat's metadata from IPFS.
 
@@ -3769,7 +4076,7 @@ Data is stored in a JSON format, and follows a custom schema which is passed by 
 
 The package uses the [Zod](https://zod.dev/) library for the schema definition and validation. The schema is also used for type inference, providing type-safety for its users.
 
-### Install
+## Install
 
 yarn:
 ```bash
@@ -3781,13 +4088,13 @@ npm:
 npm install @hatsprotocol/details-sdk zod
 ```
 
-### HatsDetailsClient Initialization
+## HatsDetailsClient Initialization
 
 A HatsDetailsClient instance is initialized with an IPFS provider (currently only [Pinata](https://www.pinata.cloud/) is supported) and a schema, defined with the [Zod](https://zod.dev/) library.
 
-#### Choose which schema to use
+### Choose which schema to use
 
-##### Option 1 - use the default schema
+#### Option 1 - use the default schema
 
 If the client is initialized without a custom schema, then the default schema will be used. This schema is compatible with the Hats App, meaning that this app will properly display hats with this type of details.
 
@@ -3861,7 +4168,7 @@ The corresponding type for this schema is:
 }
 ```
 
-##### Option 2 - use a custom schema
+#### Option 2 - use a custom schema
 
 You can define a custom schema for the client, for example:
 
@@ -3883,7 +4190,7 @@ hatsDetailsClient = new HatsDetailsClient({
 });
 ```
 
-#### Set up the Pinata provider
+### Set up the Pinata provider
 
 The client is initialized with an IPFS provider that will be used for storing and reading to/from IPFS. Currently, Pinata is the only supported provider and is initialized with the following properties:
 
@@ -3899,11 +4206,11 @@ The client is initialized with an IPFS provider that will be used for storing an
 * `gateway` - a dedicated gateway URL, that's provided by Pinata and is used to read IPFS data. This property is optional. If not provided, then the default gateway that's provided by https://ipfs.io will be used.
 * `gatewayKey` - optional key that is used to secure dedicated Pinata gateways. If provided along with a gateway, then the key will be used for fetching data.
 
-## Usage
+# Usage
 
 Once initialized, the HatsDetailsClient can be used for reading and storing data from/to IPFS, in a predetermined format.
 
-### Store
+## Store
 
 Use the following function in order to store/pin data to IPFS.
 
@@ -3919,7 +4226,7 @@ const cid = await hatsDetailsClient.pin({
 });
 ```
 
-### Read
+## Read
 
 Read data from IPFS.
 
@@ -5112,7 +5419,7 @@ The remainder of this documentation assumes inheritance of HatsModule.
 
 HatsModule.sol's primary function is to enable a module to be configured and deployed via [HatsModuleFactory](../how-module-instances-are-deployed.md). Often, each new hat to which a module is attached involves a new instance of that module, so its important for deployment to be gas-efficient. Additionally, each module is likely to be called many times over its life, so its also important for runtime execution to be gas-efficient.&#x20;
 
-For these reasons, HatsModule.sol is structured as a minimal proxy (clone) contract — similar to the [EIP-1167](https://eips.ethereum.org/EIPS/eip-1167) standard — that also supports immutable arguments. It implements the gas-efficient [LibClone.sol](https://github.com/Vectorized/solady/blob/6c54795ef69838e233020e9ab29f3f6288efdf06/src/utils/LibClone.sol) library.
+For these reasons, HatsModule.sol is structured as a minimal proxy (clone) contract — similar to the [EIP-1167](https://eips.ethereum.org/EIPS/eip-1167) standard — that also supports immutable arguments. It implements the gas-efficient [LibClone.sol](https://github.com/Vectorized/solady/blob/6c54795ef69838e233020e9ab29f3f6288efdf06/src/utils/LibClone.sol) library.
 
 See the following pages for more detail about how HatsModule.sol operates:
 
@@ -5251,7 +5558,7 @@ If you must have the protocol immediately recognize a new status, have the proto
 
 #### Don't force claiming
 
-Some eligibility modules (such as [agreement-eligibility.md](../../../hats-integrations/eligibility-and-accountability-criteria/agreement-eligibility.md "mention") and [staking-eligibility.md](../../../hats-integrations/eligibility-and-accountability-criteria/staking-eligibility.md "mention")) include an option for would-be-wearers to [claim the hat](../../v1-sdk/core/claiming-hats.md) at the same time as they take an action to become eligible (e.g., signing the agreement and staking, respectively).
+Some eligibility modules (such as [agreement-eligibility.md](../../../hats-integrations/eligibility-and-accountability-criteria/agreement-eligibility.md "mention") and [staking-eligibility.md](../../../hats-integrations/eligibility-and-accountability-criteria/staking-eligibility.md "mention")) include an option for would-be-wearers to [claim the hat](../../v1-sdk/core/claiming-hats.md) at the same time as they take an action to become eligible (e.g., signing the agreement and staking, respectively).
 
 When building such a module, avoid _requiring_ that would-be-wearers claim the hat at the same time as taking the action to become eligible. Instead, give them an option to take the qualifying action independently, as well as bundled with claiming. _This will allow your module to work properly even when chained with another module that uses the qualifying action + claim approach_.
 
@@ -7181,178 +7488,77 @@ HSG/MHSG write function argument.
 }
 ```
 
-# 💼 Hats Account SDK
+### <mark style="color:purple;">ModuleCreationArgs</mark>
 
-## Overview
+The arguments that are passed to the module [factory's creation function](create-new-instance-s.md#createnewinstance). The arguments are divided into two arrays: `immutable` and `mutable`. The `immutable` array contains arguments that are set once when the module instance is created and cannot be changed. The `mutable` array contains arguments that can be changed after the module instance is created.
 
-HatsAccount gives every Hats Protocol hat a smart contract account. Each hat can have multiple flavors of HatsAccount, each following the ERC6551 standard and designed to be deployed via the ERC6551Registry factory.
-
-HatsAccount gives every hat the ability to do the following:
-
-* Send ETH, ERC20, ERC721, and ERC1155 tokens
-* Sign ERC1271-compatible messages, e.g. as a signer on a multisig
-* Become a member of a DAO and make/vote on proposals, e.g. in a Moloch DAO
-* Call functions on other contracts
-* `Delegatecall` to other contracts, via [tokenbound](https://github.com/tokenbound/contracts)'s [sandbox](https://github.com/jaydenwindle/delegatecall-sandbox/) concept
-* Be assigned permissions in address-based onchain access control schemes
-
-Apart from the first and last, all of these actions are performed by the hat's wearer(s), with the security model determined by the flavor of HatsAccount.
-
-The SDK is an open source JavaScript client for creating and interacting with Hats Account instances and was designed to work both in the browser and in Node.js.
-
-{% content-ref url="1-of-n-hats-account/" %}
-[1-of-n-hats-account](1-of-n-hats-account/)
-{% endcontent-ref %}
-
-# 1 of N Hats Account
-
-HatsAccount1ofN is a flavor of HatsAccount that mirrors the typical 1-of-n security model of hat-based role and permission management. Any single wearer of a HatsAccount1ofN instance's hat has full control over that HatsAccount. If a hat has multiple wearers, they each individually have full control.
-
-{% content-ref url="getting-started.md" %}
-[getting-started.md](getting-started.md)
-{% endcontent-ref %}
-
-{% content-ref url="creating-new-instances.md" %}
-[creating-new-instances.md](creating-new-instances.md)
-{% endcontent-ref %}
-
-# Getting Started
-
-### _Install_
-
-yarn:
-
-```bash
-yarn add @hatsprotocol/hats-account-sdk viem
-```
-
-npm:
-
-```bash
-npm install @hatsprotocol/hats-account-sdk viem
-```
-
-The SDK uses Viem in order to interact with the various chains and includes it as a peer dependency.
-
-### _HatsAccount1ofNClient Initialization_
-
-Import and initialize _HatsAccount1ofNClient_:
-
-```typescript
-import { HatsAccount1ofNClient } from "@hatsprotocol/hats-account-sdk";
-
-const hatsAccount1ofNClient = new HatsAccount1ofNClient({
-    publicClient,
-    walletClient,
-});
-```
-
-_**Arguments**_:
+* `useHatId` - By default, new instances should be created with the `hatId` value set to the target hat's ID.  A `false` value here indicates that the module's `hatId` value should be set to zero.
+* In both the `immutable` and `mutable` array properties, the order of the arguments must match the order expected by the contract.
 
 ```typescript
 {
-    publicClient: PublicClient;
-    walletClient: WalletClient;
+  useHatId: boolean; 
+  immutable: ModuleCreationArg[];
+  mutable: ModuleCreationArg[];
 }
 ```
 
-* `publicClient` - A Viem Public Client, used for onchain read operations.
-* `walletClient` - A Viem Wallet Client, used for onchain write operations.&#x20;
+### <mark style="color:purple;">ModuleCreationArg</mark>
 
-# Creating New Instances
+Immutable/mutable argument, provided in the module's [creation arguments](types.md#modulecreationargs).
 
-Create new Instances of a 1 of N Hats Account, and/or predict the addresses of accounts.
+<pre class="language-typescript"><code class="lang-typescript">{
+  name: string; // arg's name
+  description: string; // arg's description
+  type: string; // arg's solidity type, e.g. 'uint256'
+  example: unknown; // example value 
+  displayType: string; // a free-text field that tells front ends how to generate a proper UI component for the parameter
+<strong>  optional?: boolean;
+</strong>}
+</code></pre>
 
-### <mark style="color:purple;">createAccount</mark>
+### <mark style="color:purple;">Registry</mark>
 
-Create a new 1 of N Hats Account instance.
-
-```typescript
-const createHatsAccountResult = await hatsAccount1ofNClient.createAccount({
-    account,
-    hatId,
-    salt,
-});
-```
-
-_**Arguments**_:
+A [Hats Modules Registry](../building-hats-modules/modules-registry.md) object.
 
 ```typescript
 {
-    account: Account | Address;
-    hatId: bigint;
-    salt: bigint;
+  modules: Module[];
 }
 ```
 
-* `account` - Viem account (Address for JSON-RPC accounts or Account for other types).
-* `hatId` - ID of the hat for which to create the account.
-* `signersHatId` - arbitrary number as "salt".
+### <mark style="color:purple;">ModuleParameter</mark>
 
-_**Response**_:
+Module parameter object, as returned by the [getInstanceParameters](interact-with-instances.md#getinstanceparameters) function.
 
 ```typescript
 {
-  status: "success" | "reverted";
-  transactionHash: `0x${string}`;
-  newAccount: `0x${string}`;
+  label: string;
+  value: unknown;
+  solidityType: string;
+  displayType: string;
 }
 ```
 
-An object of type [CreateAccountResult](types.md#createaccountresult), includes:
+### <mark style="color:purple;">ArgumentTsType</mark>
 
-* `status` - "success" if transaction was successful, "reverted" if transaction reverted.
-* `transactionHash` - transaction's hash.
-* `newAccount` - In case of success, the address of the new account.
-
-### <mark style="color:purple;">predictAccountAddress</mark>
-
-Predict the address of a 1 of N Hats Account instance.
+A Typescript type, as returned by the [solidityToTypescriptType function](utilities.md#soliditytotypescripttype).
 
 ```typescript
-const predictedAccount = await hatsAccount1ofNClient.predictAccountAddress({
-    hatId,
-    salt,
-});
+| "number"
+| "bigint"
+| "string"
+| "boolean"
+| "number[]"
+| "bigint[]"
+| "string[]"
+| "boolean[]"
+| "unknown";
 ```
 
-_**Arguments**_:
+### <mark style="color:purple;">Ruleset</mark>
 
-```typescript
-{
-    hatId: bigint;
-    salt: bigint;
-}
-```
-
-* `hatId` - ID of the hat for which to create the account.
-* `signersHatId` - arbitrary number as "salt".
-
-_**Response**_:
-
-```typescript
-`0x${string}`
-```
-
-The predicted account address.
-
-# Executing From An Instance
-
-Execute operations from a Hats Account instance. Only wearers of the instance's hat can call the following functions.
-
-### <mark style="color:purple;">execute</mark>
-
-Execute an operation.
-
-```typescript
-const executionResult = await hatsAccount1ofNClient.execute({
-    account,
-    instance,
-    operation,
-});
-```
-
-_**Arguments**_:
+A modules ruleset is an array of module instances which are chained together with an 'AND' logical operator.&#x20;
 
 ```typescript
 {
