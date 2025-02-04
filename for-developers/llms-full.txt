@@ -5135,3 +5135,500 @@ There are a couple stock extensions to HatsModule.sol that are useful starting p
 * HatsEligibilityModule.sol: implements [`IHatsEligibility.sol`](../../../hats-protocol-for-developers/eligibility-modules.md)
 * HatsToggleModule.sol: implements [`IHatsToggle.sol`](../../../hats-protocol-for-developers/toggle-modules.md)
 
+# Immutable Arguments
+
+Immutable arguments are variables which are set at each module instance creation (via the HatsModuleFactory) and are then constant through out the instance's lifetime.&#x20;
+
+Accessing these variables is significantly cheaper than accessing regular storage variables, and so using this kind of variables is recommended for any variables which can be defined once, during instance creation, and then stay constant.
+
+### Standard HatsModule Immutable Args
+
+HatsModule includes several immutable arguments as standard, which are then included in any inheriting module.&#x20;
+
+* `IMPLEMENTATION`: The address of the implementation contract of which the instance is a clone.
+* `HATS`: The Hats Protocol address (Hats.sol).
+* `hatId`: The hat ID for which the instance has been deployed. This can be utilized in various ways depending on the module's use case.
+
+### Immutable Arg "Storage"
+
+LibClone.sol handles "storage" of these values in the instance's bytecode, with the following layout:
+
+<table><thead><tr><th width="105">Offset</th><th>Constant</th><th width="111">Type</th><th width="115">Length</th><th>Source</th></tr></thead><tbody><tr><td>0</td><td>IMPLEMENTATION</td><td>address</td><td>20</td><td>HatsModule</td></tr><tr><td>20</td><td>HATS</td><td>address</td><td>20</td><td>HatsModule</td></tr><tr><td>40</td><td>hatId</td><td>address</td><td>32</td><td>HatsModule</td></tr><tr><td>[72+]</td><td>[other args]</td><td>[type]</td><td>[len]</td><td>[your module]</td></tr></tbody></table>
+
+Each is accessible by a pure function based on utility functions from LibClone.sol.
+
+```solidity
+function IMPLEMENTATION() public pure returns (address) {
+    return _getArgAddress(0);
+}
+
+function HATS() public pure returns (IHats) {
+    return IHats(_getArgAddress(20));
+}
+
+function hatId() public pure returns (uint256) {
+    return _getArgUint256(40);
+}
+```
+
+### Custom Immutable Arguments
+
+Modules can include as many additional immutable arguments as they need, and each can be made accessible by similar pure functions.
+
+Note that the immutable arguments of an instance are passed to the [createHatsModule](../how-module-instances-are-deployed.md#create-new-instance) function in the factory, rather than to the instance's contract itself. See the next section for more details on how that works.
+
+# Module Setup
+
+Each module instance is initialized at creation time by the public [setUp](https://github.com/Hats-Protocol/hats-module/blob/5a69da357e70cc2e3727d6ec02097711439ec32b/src/HatsModule.sol#L65) function, which is triggered by the [`createHatsModule`](../how-module-instances-are-deployed.md#create-new-instance)  function in [HatsModuleFactory](../how-module-instances-are-deployed.md). This is where custom initial (mutable) variables and other configurations are set.
+
+That custom logic can be implemented in the virtual [\_setUp](https://github.com/Hats-Protocol/hats-module/blob/5a69da357e70cc2e3727d6ec02097711439ec32b/src/HatsModule.sol#L70) function, which the module implementation should override.
+
+```solidity
+function _setUp(bytes calldata _initData) internal virtual { }
+```
+
+_Parameters:_
+
+* `_initData` - abi-encoded initialization data.
+
+{% hint style="info" %}
+The `setUp` function is modified by OpenZeppelin's [initializable](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/proxy/utils/Initializable.sol), which prevents any future calls that could re-initialize the instance. `setUp` will be called even if `_setUp` is empty, ensuring that all instances are properly initialized.
+{% endhint %}
+
+# Versioning
+
+HatsModule includes a single storage variable for versioning purposes.
+
+```solidity
+string public version_;
+```
+
+This variable is set in the constructor, which means that it has a value only in the implementation contract and not in any instances (since instance clones are not created with the constructor).
+
+To get the version for a module instance use the [version](https://github.com/Hats-Protocol/hats-module/blob/5a69da357e70cc2e3727d6ec02097711439ec32b/src/HatsModule.sol#L56) function instead.
+
+```solidity
+function version() public view returns (string memory) {
+    return HatsModule(IMPLEMENTATION()).version_();
+}
+```
+
+# Creating New Modules
+
+### Getting Started
+
+The [hats-module-template](https://github.com/Hats-Protocol/hats-module-template) repository makes it easy to get started building a new module. It has everything you need, including:
+
+* An initialized Foundry project with a Hats-relevant config.
+* Initial dependencies added: `forge-std` and `hats-module`.
+* A stubbed out starter module contract.
+* Test & deployment files boilerplate.
+* Github CI workflows for Forge tests and gas cost diffs.
+
+For eligibility modules, import and inherit from the [HatsEligibilityModule](https://github.com/Hats-Protocol/hats-module/blob/main/src/HatsEligibilityModule.sol) contract, which inherits from HatsModule and additionally implements the [IHatsEligibility](../../v1-protocol-spec/interfaces/ihatseligibility.sol.md) interface:
+
+```solidity
+import { HatsEligibilityModule } from "hats-module/HatsModule.sol";
+```
+
+Similarly, for toggle modules, import and inherit from the [HatsToggleModule](https://github.com/Hats-Protocol/hats-module/blob/main/src/HatsToggleModule.sol) contract, which inherits from HatsModule and additionally implements the [IHatsToggle](../../v1-protocol-spec/interfaces/ihatstoggle.sol.md) interface:
+
+```solidity
+import { HatsToggleModule } from "hats-module/HatsModule.sol";
+```
+
+### Best Practices
+
+For compatibility with [module chains](../../building-hats-modules/about-module-chains.md), it is strongly recommended to adhere to the following practices:
+
+#### Pull, don't push
+
+Avoid pushing hat or hat wearer status directly to the protocol, i.e. via `IHats.setHatStatus` or `IHats.setHatWearerStatus`. These functions are only authorized to contracts set directly on the given hat as the toggle or eligibility module, respectively. Those calls would therefore revert when called from a module in a chain.
+
+The simplest alternative is to not force the protocol to recognize any status updates, just let it pull them in dynamically the next time they are checked.
+
+If you must have the protocol immediately recognize a new status, have the protocol pull the updates, ie via `IHats.checkHatStatus` or `IHats.checkHatWearerStatus`. These are fully public functions that will trigger the protocol to pull the current status from the modules set on the hat; if that's a chain, it will read from all the modules in the chain.
+
+#### Don't force claiming
+
+Some eligibility modules (such as [agreement-eligibility.md](../../../hats-integrations/eligibility-and-accountability-criteria/agreement-eligibility.md "mention") and [staking-eligibility.md](../../../hats-integrations/eligibility-and-accountability-criteria/staking-eligibility.md "mention")) include an option for would-be-wearers to [claim the hat](../../v1-sdk/core/claiming-hats.md) at the same time as they take an action to become eligible (e.g., signing the agreement and staking, respectively).
+
+When building such a module, avoid _requiring_ that would-be-wearers claim the hat at the same time as taking the action to become eligible. Instead, give them an option to take the qualifying action independently, as well as bundled with claiming. _This will allow your module to work properly even when chained with another module that uses the qualifying action + claim approach_.
+
+This is necessary because of the way the protocol handles minting when an eligibility module is attached to the hat. With a module attached, the protocol will only allow the hat to be minted if the recipient wearer is "explicitly eligible," i.e. eligible according to the module. In the case of a module chain, this will include eligibility information from all the modules in the chain, and so the would-be wearer may not be eligible for the hat as a whole even after they execute the qualifying action for one of its chained modules.
+
+### Learn From Examples
+
+To learn more and get inspiration, check out the awesome module that are already here:
+
+* [Eligibility Modules](../../../hats-integrations/eligibility-and-accountability-criteria/#existing-modules)
+* [Toggle Modules](../../../hats-integrations/activation-and-deactivation-criteria/#existing-modules)
+* [Hatter Modules](../../../hats-integrations/hatter-modules/#existing-modules)
+
+# How Module Instances Are Deployed
+
+All contracts that inherit from [HatsModule](https://github.com/Hats-Protocol/hats-module/blob/main/src/HatsModule.sol) can be deployed as minimal proxy clones via [HatsModuleFactory](https://github.com/Hats-Protocol/hats-module/blob/main/src/HatsModuleFactory.sol), which offers several operations:
+
+* create a single module instance
+* batch create multiple module instances
+* predict the address of a module instance
+* check if a module instance has already been deployed
+
+Each of these functions can be called directly on the HatsModuleFactory contract, or they can be accessed via the [Modules SDK](../modules-sdk/) to easily deploy new module instances and more.
+
+### Create New Instance
+
+The [createHatsModule](https://github.com/Hats-Protocol/hats-module/blob/5a69da357e70cc2e3727d6ec02097711439ec32b/src/HatsModuleFactory.sol#L69) function deploys a new proxy instance, for the provided implementation, to a deterministic address. The instance's immutable arguments are set its creation, and then `instance.setUp` is called with the provided initialization data.
+
+```solidity
+function createHatsModule(
+    address _implementation,
+    uint256 _hatId,
+    bytes calldata _otherImmutableArgs,
+    bytes calldata _initData
+) public returns (address _instance)
+```
+
+_Parameters:_
+
+* `_implementation` - The address of the implementation contract for which to deploy a clone.
+* `_hatId` - The hat for which to deploy the module.
+* `_otherImmutableArgs`: Immutable arguments to pass to the clone, packed encoded (via `abi.encodePacked`). These are additional to the ones [already included in HatsModule](inside-a-hats-module/#immutable-arguments).
+* `_initData` - Encoded data (via abi.encode) to pass to the `setUp` function of the new instance.
+
+_Returns_:
+
+* `_instance` - The new instance's address.
+
+_Events_:
+
+Once the new module deployment and setup have completed, the function will emit the following event, which contains the new instance address:
+
+```solidity
+event HatsModuleFactory_ModuleDeployed(
+    address implementation, address instance, uint256 hatId, bytes otherImmutableArgs, bytes initData
+);
+```
+
+### Batch Create Multiple Instances
+
+The [batchCreateHatsModule](https://github.com/Hats-Protocol/hats-module/blob/5a69da357e70cc2e3727d6ec02097711439ec32b/src/HatsModuleFactory.sol#L106) function creates multiple instances, using the [createHatsModule](how-module-instances-are-deployed.md#create-new-instance) function.&#x20;
+
+The necessary creation parameters are passed as arrays, which must have the same length, equal to the number of modules to be created. For each module, the `createHatsModule` function will be called with the arrays entries, on the same corresponding index.
+
+```solidity
+function batchCreateHatsModule(
+    address[] calldata _implementations,
+    uint256[] calldata _hatIds,
+    bytes[] calldata _otherImmutableArgsArray,
+    bytes[] calldata _initDataArray
+) public returns (bool success)
+```
+
+_Parameters:_
+
+* `_implementations` - The addresses of the implementation contracts for which to deploy a clone.
+* `_hatIds` - The hats for which to deploy the modules.
+* `_otherImmutableArgsArray`: Immutable argumentss to pass to the clones, packed encoded (via `abi.encodePacked`). These are additional to the ones [already included in HatsModule](inside-a-hats-module/#immutable-arguments).
+* `_initDataArray` - Encoded data (via abi.encode) to pass to the `setUp` function of each new module instance.
+
+_Returns_:
+
+* `success` - `True` if all modules were successfully created and initialized, `false` otherwise.
+
+_Events_:
+
+For every successfully created module, the function will emit the following event, which contains the new instance address:
+
+```solidity
+event HatsModuleFactory_ModuleDeployed(
+    address implementation, address instance, uint256 hatId, bytes otherImmutableArgs, bytes initData
+);
+```
+
+### Predict Module's Address
+
+The [getHatsModuleAddress](https://github.com/Hats-Protocol/hats-module/blob/5a69da357e70cc2e3727d6ec02097711439ec32b/src/HatsModuleFactory.sol#L136) function predicts the address of a module instance before it was created.
+
+```solidity
+function getHatsModuleAddress(address _implementation, uint256 _hatId, bytes calldata _otherImmutableArgs)
+    public
+    view
+returns (address)
+```
+
+_Parameters:_
+
+* `_implementation` - The address of the implementation contract.
+* `_hatId` - The hat for which to deploy a module.
+* `_otherImmutableArgs`: Immutable arguments to pass to the clone, packed encoded (via `abi.encodePacked`). These are additional to the ones [already included in HatsModule](inside-a-hats-module/#immutable-arguments).
+
+_Returns_:
+
+* The predicted instance address.&#x20;
+
+### Check If Deployed
+
+The [deployed](https://github.com/Hats-Protocol/hats-module/blob/5a69da357e70cc2e3727d6ec02097711439ec32b/src/HatsModuleFactory.sol#L154) function checks if a certain module instance has been deployed.
+
+```solidity
+function deployed(address _implementation, uint256 _hatId, bytes calldata _otherImmutableArgs)
+    public
+    view
+returns (bool)
+```
+
+_Parameters:_
+
+* `_implementation` - The address of the implementation contract.
+* `_hatId` - The hat for which to deploy a module.
+* `_otherImmutableArgs`: Immutable arguments to pass to the clone, packed encoded (via `abi.encodePacked`). These are additional to the ones [already included in HatsModule](inside-a-hats-module/#immutable-arguments).
+
+_Returns_:
+
+* `True` if the instance has been deployed, `false` otherwise.&#x20;
+
+### HatsModuleFactory Deployments
+
+HatsModuleFactory [v0.6.0](https://github.com/Hats-Protocol/hats-module/releases/tag/v0.6.0) is deployed to the same address on all networks: 0xfE661c01891172046feE16D3a57c3Cf456729efA
+
+It is known to have been deployed to the following networks:
+
+* [Ethereum Mainnet](https://etherscan.io/address/0xfE661c01891172046feE16D3a57c3Cf456729efA)
+* [Optimism](https://optimistic.etherscan.io/address/0xfE661c01891172046feE16D3a57c3Cf456729efA)
+* [Gnosis Chain](https://gnosisscan.io/address/0xfE661c01891172046feE16D3a57c3Cf456729efA)
+* [Polygon](https://polygonscan.com/address/0xfe661c01891172046fee16d3a57c3cf456729efa)
+* [Arbitrum](https://arbiscan.io/address/0xfe661c01891172046fee16d3a57c3cf456729efa)
+* [PGN](https://explorer.publicgoods.network/address/0xfE661c01891172046feE16D3a57c3Cf456729efA)
+* [Celo](https://explorer.celo.org/mainnet/address/0xfE661c01891172046feE16D3a57c3Cf456729efA)
+* [Base](https://basescan.org/address/0xfe661c01891172046fee16d3a57c3cf456729efa)
+* [Sepolia testnet](https://sepolia.etherscan.io/address/0xfe661c01891172046fee16d3a57c3cf456729efa)
+* [Goerli testnet](https://goerli.etherscan.io/address/0xfE661c01891172046feE16D3a57c3Cf456729efA)
+
+# Modules Registry
+
+Creating new modules is important, but they really only come to life when users of Hats Protocol can attach them to hats. We've built several tools to help developers put modules in the hands of users.
+
+* [Modules Registry](https://github.com/Hats-Protocol/modules-registry)
+* [Modules SDK](../modules-sdk/)
+
+## Modules Registry
+
+The Hats Modules Registry is a curated modules database. Tools, apps, and platforms in the Hats ecosystem — including the [Modules SDK](../modules-sdk/) — use it as the source of truth for safe, high quality modules they can serve to users and other developers.&#x20;
+
+Today, the primary consumer of the registry is the Modules SDK, which is used by the [Hats App](https://app.hatsprotocol.xyz/) to enable users to easily discover, configure, and attach modules to hats.
+
+### Submit a module to the registry
+
+To submit a module to the registry, open a pull requests to the [registry repo](https://github.com/Hats-Protocol/modules-registry). You will need the following information for your submission:
+
+* Module name
+* Module description
+* The module's Github repo and repo owner/org
+* The module type: eligibility, toggle, and/or hatter
+* Implementation contract address
+* Deployments to the implementation address, including chain ID and block number
+* The list of immutable args, with name, description, type, and example for each
+* The list of mutable args (initData), with name, description, type, and example for each
+* The module's ABI
+
+For more specifics on the submission requirements, see the [registry repo README](https://github.com/Hats-Protocol/modules-registry/blob/main/README.md).
+
+### Governance
+
+The registry is currently governed and curated by the Hats Protocol core team. Over time, however, curation will decentralize to the wider Hats community.
+
+{% hint style="info" %}
+Modules do not need to be on the registry to be compatible at the protocol level. Hats Protocol itself is fully permissionless. The registry is a separate mechanism.
+{% endhint %}
+
+# About Module Chains
+
+What if you want an eligibility criteria to be a combination of conditions implemented in separate modules? For example, to be eligible, a person has to own a certain NFT (e.g. representing a DAO membership) and additionally win an election? That's exactly what the eligibilities/toggles chain modules are for.
+
+[HatsEligibilitiesChain](https://github.com/Hats-Protocol/hats-module/blob/main/src/HatsEligibilitiesChain.sol) is an eligibility module that composes any amount of eligibility modules with "and"/"or" logical operations. Similarly, [HatsTogglesChain](https://github.com/Hats-Protocol/hats-module/blob/main/src/HatsTogglesChain.sol) is a toggle module that composes any amount of toggle modules.
+
+Both of these modules have a similar structure. Modules are chained in a format of a disjunction of conjunction clauses. For example, "(module1 && module2) || module3" has 2 conjunction clauses:&#x20;
+
+1. "(module1 && module2)
+2. "module3"&#x20;
+
+These clauses are chained together with an "or" operation.&#x20;
+
+**Deriving Wearer Eligibility:**
+
+For the eligibilities chain module, a wearer's eligibility is derived by checking eligibility in each module and combining the results according to the chosen logical operations. However, if a wearer is in a bad standing according to any one of the modules, then the module will return a result of "not eligible" and "is in bad standing".
+
+**Deriving Hat Status:**
+
+For the toggles chain module, a hat's status is derived by checking it's status in each module and combining the results according to the chosen logical operations.&#x20;
+
+### Create New Eligibilities/Toggles Chain Module
+
+The module does not use any mutable storage variables and does not use initialization data. It only uses the following immutable variables, which are set at the module instance's creation time:
+
+1. Number of conjunction clauses.
+2. Conjunction clauses lengths.
+3. The list of eligibility/toggle modules.
+
+Using the example above, here's an example immutable arguments that will be used for the module's deployment:
+
+```solidity
+bytes memory otherImmutableArgs = abi.encodePacked(2, [2,1], module1Address, module2Address, module3Address);
+```
+
+The module includes the following getters for these immutable variables:
+
+```solidity
+function NUM_CONJUCTION_CLAUSES() public pure returns (uint256)
+
+function CONJUCTION_CLAUSE_LENGTHS() public pure returns (uint256[] memory)
+
+function MODULES() public pure returns (address[] memory)
+
+```
+
+# 🔏 Hats Signer Gate v2
+
+Hats Signer Gate (HSG) v2 is a contract that grants multisig signing rights to addresses wearing a given hats, enabling on-chain organizations to revocably delegate to individuals constrained authority and responsibility to operate an account (i.e. a Safe) owned by the organization.
+
+### **Zodiac Module**
+
+[HatsSignerGate.sol](https://github.com/hats-protocol/hats-zodiac) is a [Zodiac](https://github.com/gnosisguild/zodiac) **module** that...
+
+1. Grants multisig signing rights to addresses based on whether they are wearing the appropriate Hat(s).
+2. Removes signers who are no long valid (i.e. no longer wearing the signer Hat)
+3. Manages the multisig threshold within the owner-specified range as new signers are added or removed.
+
+### **Zodiac Guard**
+
+Since Hat-wearing is dynamic — Hats can be programmatically revoked from wearers — this contract also services as a [Zodiac](https://github.com/gnosisguild/zodiac) **guard** to ensure that:
+
+A) **Only valid signers can execute transactions**, i.e. only signatures made by accounts currently wearing a valid signer Hat count towards the threshold.
+
+B) **Signers cannot execute transactions that remove the constraint in (A)**. Specifically, this contract guards against signers...
+
+1. Executing _calls_ to the Safe itself. This prevents the signers from changing any of the Safe's storage values, including those referenced below.
+2. Executing _delegatecalls_ to any [target contract](hats-signer-gate-v2.md#delegatecall-targets) not approved by the HSG owner
+3. Executing any delegatecall (even to an approved target contract) that does the any of following
+   1. Removes HSG as a guard on the Safe
+   2. Removes HSG as a module on the Safe — or changing/adding any other modules
+   3. Changes the Safe threshold
+   4. Changes the Safe owners (aka signers)
+   5. Changes the Safe fallback handler
+
+{% hint style="warning" %}
+Protections against (3c) and (3d) above only hold if the Safe does not have any authority over the signer Hat(s). If it does — e.g. it wears an admin Hat of the signer Hat(s) or is an eligibility or toggle module on the signer Hat(s) — then in some cases the signers may be able to indirectly change the Safe threshold or owners.
+
+Proceed with caution if granting such authority to a Safe attached to HatsSignerGate.
+{% endhint %}
+
+### Signer Management
+
+Hats Signer Gate provides several ways to manage Safe signers based on their hat-wearing status:
+
+#### **Claiming Signer Rights**
+
+* Individual hat wearers can claim their own signing rights via `claimSigner()`
+* Must be wearing a valid signer hat at time of claim
+* Each signer's hat ID is registered and tracked for future validation
+
+#### **Claiming for Others**
+
+When enabled by the owner (`claimableFor = true`):
+
+* Anyone can claim signing rights on behalf of valid hat wearers via `claimSignerFor()` or `claimSignersFor()`
+* Useful for batch onboarding of signers
+* Prevents re-registration if signer is still wearing their currently registered hat
+
+#### **Signer Removal**
+
+* Signers who no longer wear their registered hat can be removed via `removeSigner()`
+* Threshold automatically adjusts according to the threshold configuration
+* If the removed signer was the last valid signer, the contract itself becomes the sole owner
+
+### Threshold Configuration
+
+The threshold (number of required signatures) is managed dynamically based on the `ThresholdConfig`:
+
+#### **Threshold Types**
+
+1. **ABSOLUTE**
+   * Sets a fixed target number of required signatures
+   * Example: Always require exactly 3 signatures
+   * Bounded by min threshold and number of valid signers
+2. **PROPORTIONAL**
+   * Sets a percentage of total signers required (in basis points)
+   * Example: Require 51% of signers (5100 basis points)
+   * Actual number of required signatures rounds up
+   * Still bounded by min threshold
+
+#### **Configuration Parameters**
+
+* `min`: Minimum number of required signatures (must be > 0)
+* `target`: Either fixed number (ABSOLUTE) or percentage in basis points (PROPORTIONAL)
+* `thresholdType`: ABSOLUTE (0) or PROPORTIONAL (1)
+
+The Safe's threshold is automatically adjusted when:
+
+* New signers are added
+* Existing signers are removed
+* Threshold configuration is changed
+
+### Delegatecall Targets
+
+HSG restricts delegatecalls to protect the Safe from unauthorized modifications. Only approved targets can receive delegatecalls.
+
+**Default Enabled Targets**
+
+The following MultiSend libraries are enabled by default:
+
+<table><thead><tr><th>Address</th><th width="118">Version</th><th width="100">Type</th></tr></thead><tbody><tr><td><code>0x40A2aCCbd92BCA938b02010E17A5b8929b49130D</code></td><td>v1.3.0</td><td>canonical</td></tr><tr><td><code>0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B</code></td><td>v1.3.0</td><td>eip155</td></tr><tr><td><code>0x9641d764fc13c8B624c04430C7356C1C7C8102e2</code></td><td>v1.4.1</td><td>canonical</td></tr></tbody></table>
+
+See [safe-deployments](https://github.com/safe-global/safe-deployments/tree/main/src/assets) for more information.
+
+### **Security Considerations**
+
+* Delegatecalls can modify Safe state if not properly restricted. Owners should NOT approve delegatecall targets that enable the following:
+  * Directly modifying any of the Safe's state, including the Safe's nonce.
+  * Additional delegatecalls. For example, the [MultiSend.sol](https://github.com/safe-global/safe-smart-account/blob/v1.4.1-3/contracts/libraries/MultiSend.sol) library that is _not_ "call only" should not be approved. The [MultiSendCallOnly.sol](https://github.com/safe-global/safe-smart-account/blob/v1.4.1-3/contracts/libraries/MultiSendCallOnly.sol) is approved by default.
+* HSG validates that approved delegatecalls don't modify critical Safe parameters, but relies on the Safe' nonce to do so.
+* Direct calls to the Safe are always prohibited
+* When detaching HSG from a Safe — i.e. when calling `detach()` — the owner must trust that admin(s) of the signer Hat(s) will not front-run the detachment to add arbitrary signers. Since admins in Hats Protocol are already trusted (and can be revoked, held accountable, etc.) this is not an additional risk, but HSG owners should nonetheless be aware of this risk.
+
+### Contract Ownership
+
+The wearer of the `ownerHat` can make the following changes to Hats Signer Gate:
+
+1. "Transfer" ownership to a new Hat by changing the `ownerHat`
+2. Change the threshold configuration
+3. Enable other Zodiac modules on HSG itself
+4. Enable another Zodiac guard on HSG itself
+5. Add other Hats as valid signer Hats
+6. Enable or disable the ability for others to claim signer rights on behalf of valid hat wearers (`claimableFor`)
+7. Detach HatsSignerGate from the Safe (removing it as both guard and module)
+8. Migrate to a new HatsSignerGate instance
+9. Enable or disable specific delegatecall targets
+10. Lock the contract permanently, preventing any further owner changes
+
+### Deploying New Instances
+
+Instances of HSG can be created via the [Zodiac module proxy factory](https://github.com/gnosisguild/zodiac/blob/18b7575bb342424537883f7ebe0a94cd7f3ec4f6/contracts/factory/ModuleProxyFactory.sol).
+
+Instances can be created for an existing Safe by passing the Safe address on initialization, or for a new Safe to be deployed from within HSG's initialization.
+
+### Security Audits
+
+v2 — the present version — has received the following security audits. See the v2 audits directory for the detailed reports.
+
+| Auditor  | Report Date       | Commit Hash                                                                                             | Notes                     |
+| -------- | ----------------- | ------------------------------------------------------------------------------------------------------- | ------------------------- |
+| Sherlock | December 13, 2024 | [a9e3f4f](https://github.com/Hats-Protocol/hats-zodiac/commit/a9e3f4f0e968fb332800a468eddcb993fc6d5cd2) | 166 auditors participated |
+
+{% hint style="info" %}
+Since this audit was completed, HSG code was updated to add a variable salt to the Safe proxy creation within the `SafeManagerLib.deploySafeAndAttachHSG` function. This ensures that the address of the Safe proxy is unique to the HSG instance.
+{% endhint %}
+
+### Recent Deployments
+
+See [Releases](https://github.com/Hats-Protocol/hats-zodiac/releases) for deployments. Specific deployment parameters are stored here.
