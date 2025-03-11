@@ -1,0 +1,4 @@
+root: ./
+
+redirects:
+  for-developers/llms-full.txt: https://raw.githubusercontent.com/Hats-Protocol/docs/main/for-developers/llms-full.txt
