@@ -2,7 +2,7 @@
 
 Check the [GitHub repository](https://github.com/Hats-Protocol/subgraph/tree/main) README for example queries and general documentation and/or our [Subgraph SDK](v1-sdk/subgraph/).
 
-**Hosted Endpoints (Free)**:
+**Hosted Endpoints (development)**:
 
 * [Ethereum (mainnet](https://api.studio.thegraph.com/query/55784/hats-v1-ethereum/version/latest))
 * [Arbitrum](https://api.studio.thegraph.com/query/55784/hats-v1-arbitrum/version/latest)

@@ -417,6 +417,6 @@ Subgraph endpoints configuration, optionally provided at the client's creation.
 
 ```typescript
 interface EndpointsConfig {
-  [chainId: number]: { endpoint: string };
+  [chainId: number]: { endpoint: string, authToken?: string };
 }
 ```
