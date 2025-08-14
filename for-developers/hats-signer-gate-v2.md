@@ -109,6 +109,11 @@ See [safe-deployments](https://github.com/safe-global/safe-deployments/tree/main
 * HSG validates that approved delegatecalls don't modify critical Safe parameters, but relies on the Safe' nonce to do so.
 * Direct calls to the Safe are always prohibited
 * When detaching HSG from a Safe — i.e. when calling `detach()` — the owner must trust that admin(s) of the signer Hat(s) will not front-run the detachment to add arbitrary signers. Since admins in Hats Protocol are already trusted (and can be revoked, held accountable, etc.) this is not an additional risk, but HSG owners should nonetheless be aware of this risk.
+* Non-HSG modules enabled on the Safe are risky since HSG cannot prevent them from executing Safe transactions, including to detach HSG. This is why HSG rejects any signer-initiated transaction to add another module.&#x20;
+
+{% hint style="danger" %}
+If attaching HSG to an existing Safe, it is strongly recommended to detach any existing modules on that Safe. If they are necessary for functionality of that Safe, they can be re-attached to HSG, which allows those modules to execute Safe transactions but with the necessary protections.
+{% endhint %}
 
 ### Contract Ownership
 
